@@ -45,30 +45,29 @@
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5cs-iy-1vQ">
-                                                    <rect key="frame" x="343.66666666666669" y="11" width="29.333333333333314" height="26"/>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5cs-iy-1vQ">
+                                                    <rect key="frame" x="343.66666666666674" y="11" width="29.333333333333314" height="26"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                     <state key="normal" image="likeButton_isActive"/>
                                                 </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="LtW-KM-ORH" firstAttribute="leading" secondItem="grT-68-ZmP" secondAttribute="leadingMargin" constant="8" id="6ZW-sM-1nU"/>
-                                                <constraint firstItem="grT-68-ZmP" firstAttribute="trailingMargin" secondItem="5cs-iy-1vQ" secondAttribute="trailing" constant="-4" id="Hvb-3R-AoJ"/>
                                                 <constraint firstItem="grT-68-ZmP" firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="LtW-KM-ORH" secondAttribute="trailing" constant="8" id="MQV-tK-T2e"/>
                                                 <constraint firstAttribute="trailing" secondItem="grT-68-ZmP" secondAttribute="trailing" constant="16" id="bwH-z8-fFa"/>
                                                 <constraint firstItem="grT-68-ZmP" firstAttribute="bottomMargin" secondItem="LtW-KM-ORH" secondAttribute="bottom" constant="11" id="lVp-gy-aZr"/>
                                                 <constraint firstItem="grT-68-ZmP" firstAttribute="centerX" secondItem="oQb-kr-YfS" secondAttribute="centerX" id="lXx-Pa-yaR"/>
                                                 <constraint firstItem="grT-68-ZmP" firstAttribute="centerY" secondItem="oQb-kr-YfS" secondAttribute="centerY" id="nHd-vj-VuA"/>
-                                                <constraint firstItem="5cs-iy-1vQ" firstAttribute="top" secondItem="grT-68-ZmP" secondAttribute="topMargin" constant="3" id="rBy-KS-W4T"/>
                                                 <constraint firstItem="grT-68-ZmP" firstAttribute="leading" secondItem="oQb-kr-YfS" secondAttribute="leading" constant="16" id="s8P-hg-aMa"/>
                                                 <constraint firstItem="grT-68-ZmP" firstAttribute="top" secondItem="oQb-kr-YfS" secondAttribute="top" id="ynS-Hb-fnB"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" name="YP Black"/>
                                         <connections>
-                                            <outlet property="cellImage" destination="grT-68-ZmP" id="Yko-KU-R3O"/>
                                             <outlet property="dateLabel" destination="LtW-KM-ORH" id="1Xt-Er-X5h"/>
                                             <outlet property="likeButton" destination="5cs-iy-1vQ" id="OPM-c1-mkh"/>
+                                            <outlet property="previewImage" destination="grT-68-ZmP" id="Yko-KU-R3O"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

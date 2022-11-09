@@ -11,6 +11,17 @@ class ImagesListViewController: UIViewController {
         tableView.dataSource = self
         photosName = Array(0..<20).map{ "\($0)" }
     }
+
+    
+    // Date formater
+    private lazy var dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .long
+        formatter.timeStyle = .none
+        return formatter
+    }()
+
+    
     
 }
 
@@ -25,7 +36,7 @@ extension ImagesListViewController: UITableViewDelegate {
 extension ImagesListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return photosName.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -39,9 +50,31 @@ extension ImagesListViewController: UITableViewDataSource {
         configCell(for: imageListCell, with: indexPath)
         return imageListCell
     }
-    
+}
+
+
+// MARK: - cell configurator
+
+extension ImagesListViewController {
+
     func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
         
+        guard let currentPhotoName = UIImage(named: photosName[indexPath.row]) else {
+            return
+        }
+        
+        cell.previewImage.image = currentPhotoName
+        cell.dateLabel.text = dateFormatter.string(from: Date())
+        
+        let isLiked = isEven(indexPath.row)
+        var likePicture = isLiked ? UIImage(named: "likeButton_isActive") : UIImage(named: "likeButton_isNotActive")
+        cell.likeButton.setImage(likePicture, for: .normal)
+
     }
+    
+    private func isEven(_ number: Int) -> Bool {
+        number % 2 == 0 ? true : false
+    }
+     
     
 }
