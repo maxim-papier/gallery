@@ -11,7 +11,6 @@ class ImagesListViewController: UIViewController {
         tableView.dataSource = self
         photosName = Array(0..<20).map{ "\($0)" }
     }
-
     
     // Date formater
     private lazy var dateFormatter: DateFormatter = {
@@ -20,9 +19,6 @@ class ImagesListViewController: UIViewController {
         formatter.timeStyle = .none
         return formatter
     }()
-
-    
-    
 }
 
 extension ImagesListViewController: UITableViewDelegate {
@@ -75,6 +71,5 @@ extension ImagesListViewController {
     private func isEven(_ number: Int) -> Bool {
         number % 2 == 0 ? true : false
     }
-     
     
 }
