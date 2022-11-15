@@ -6,7 +6,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -76,6 +75,7 @@
                                             <outlet property="dateLabel" destination="LtW-KM-ORH" id="1Xt-Er-X5h"/>
                                             <outlet property="likeButton" destination="5cs-iy-1vQ" id="OPM-c1-mkh"/>
                                             <outlet property="previewImage" destination="grT-68-ZmP" id="Yko-KU-R3O"/>
+                                            <segue destination="HLf-dc-9jD" kind="show" id="0Wj-4M-vAx"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -183,18 +183,33 @@
             </objects>
             <point key="canvasLocation" x="-941" y="299"/>
         </scene>
-        <!--View Controller-->
+        <!--Single Image View Controller-->
         <scene sceneID="Wx9-tn-wuz">
             <objects>
-                <viewController id="HLf-dc-9jD" sceneMemberID="viewController">
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ptO-d8-514" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <viewController id="HLf-dc-9jD" customClass="SingleImageViewController" customModule="Gallery" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8ay-uZ-T75">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="10" translatesAutoresizingMaskIntoConstraints="NO" id="vAy-bs-BAt">
+                                <rect key="frame" x="0.0" y="92" width="414" height="721"/>
+                            </imageView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="KmQ-z0-Aqv"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" name="YP Black"/>
+                        <constraints>
+                            <constraint firstItem="vAy-bs-BAt" firstAttribute="top" secondItem="KmQ-z0-Aqv" secondAttribute="top" id="6fu-fv-XHc"/>
+                            <constraint firstItem="vAy-bs-BAt" firstAttribute="leading" secondItem="KmQ-z0-Aqv" secondAttribute="leading" id="pBY-XD-Hm6"/>
+                            <constraint firstItem="KmQ-z0-Aqv" firstAttribute="bottom" secondItem="vAy-bs-BAt" secondAttribute="bottom" id="pRo-J7-pHo"/>
+                            <constraint firstItem="KmQ-z0-Aqv" firstAttribute="trailing" secondItem="vAy-bs-BAt" secondAttribute="trailing" id="qLY-lm-2bT"/>
+                        </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="xUd-Rs-xkQ"/>
+                    <connections>
+                        <outlet property="imageView" destination="vAy-bs-BAt" id="pAR-7d-SH8"/>
+                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ptO-d8-514" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-122" y="-824"/>
         </scene>
@@ -226,6 +241,7 @@
     </scenes>
     <resources>
         <image name="0" width="200" height="132"/>
+        <image name="10" width="200" height="133"/>
         <image name="UserPic" width="70" height="70"/>
         <image name="exit" width="24" height="24"/>
         <image name="likeButton_isActive" width="42" height="42"/>
@@ -243,8 +259,5 @@
         <namedColor name="YP White">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
     </resources>
 </document>
