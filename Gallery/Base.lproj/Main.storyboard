@@ -75,7 +75,6 @@
                                             <outlet property="dateLabel" destination="LtW-KM-ORH" id="1Xt-Er-X5h"/>
                                             <outlet property="likeButton" destination="5cs-iy-1vQ" id="OPM-c1-mkh"/>
                                             <outlet property="previewImage" destination="grT-68-ZmP" id="Yko-KU-R3O"/>
-                                            <segue destination="HLf-dc-9jD" kind="show" id="0Wj-4M-vAx"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -97,6 +96,7 @@
                     <navigationItem key="navigationItem" id="y7m-zI-VWl"/>
                     <connections>
                         <outlet property="tableView" destination="PFI-VJ-pel" id="xJ5-8H-HJw"/>
+                        <segue destination="HLf-dc-9jD" kind="show" identifier="ShowSingleImage" id="Xzi-g7-Izf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -186,7 +186,6 @@
         <!--Single Image View Controller-->
         <scene sceneID="Wx9-tn-wuz">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ptO-d8-514" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <viewController id="HLf-dc-9jD" customClass="SingleImageViewController" customModule="Gallery" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8ay-uZ-T75">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
@@ -210,8 +209,9 @@
                         <outlet property="imageView" destination="vAy-bs-BAt" id="pAR-7d-SH8"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ptO-d8-514" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-122" y="-824"/>
+            <point key="canvasLocation" x="1713" y="-3"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="LY4-gf-XT7">
