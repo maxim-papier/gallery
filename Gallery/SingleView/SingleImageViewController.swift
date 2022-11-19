@@ -8,11 +8,15 @@ class SingleImageViewController: UIViewController {
             imageView.image = image
         }
     }
-    @IBOutlet var imageView: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         imageView.image = image
+    }
+    
+    @IBOutlet var imageView: UIImageView!
+    @IBAction func didTapBackwardButton() {
+        dismiss(animated: true)
     }
     
 }
