@@ -192,7 +192,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DUV-qe-2V7">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="DUV-qe-2V7">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="10" translatesAutoresizingMaskIntoConstraints="NO" id="vAy-bs-BAt">
@@ -206,6 +206,9 @@
                                 </constraints>
                                 <viewLayoutGuide key="contentLayoutGuide" id="nfI-Px-NHk"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="jjv-G6-jki"/>
+                                <connections>
+                                    <outlet property="delegate" destination="HLf-dc-9jD" id="LJQ-yp-e1z"/>
+                                </connections>
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cY0-vB-cqk" userLabel="backward_button">
                                 <rect key="frame" x="9" y="57" width="48" height="48"/>
@@ -235,6 +238,7 @@
                     <navigationItem key="navigationItem" id="xUd-Rs-xkQ"/>
                     <connections>
                         <outlet property="imageView" destination="vAy-bs-BAt" id="pAR-7d-SH8"/>
+                        <outlet property="scrollView" destination="DUV-qe-2V7" id="Fc2-J6-Nis"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ptO-d8-514" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
