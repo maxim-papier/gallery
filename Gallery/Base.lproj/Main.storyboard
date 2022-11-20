@@ -188,15 +188,15 @@
         <scene sceneID="Wx9-tn-wuz">
             <objects>
                 <viewController id="HLf-dc-9jD" customClass="SingleImageViewController" customModule="Gallery" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="8ay-uZ-T75">
+                    <view key="view" opaque="NO" contentMode="scaleToFill" id="8ay-uZ-T75">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="DUV-qe-2V7">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="10" translatesAutoresizingMaskIntoConstraints="NO" id="vAy-bs-BAt">
-                                        <rect key="frame" x="0.0" y="0.0" width="200" height="133"/>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="0" translatesAutoresizingMaskIntoConstraints="NO" id="vAy-bs-BAt">
+                                        <rect key="frame" x="0.0" y="0.0" width="200" height="132"/>
                                     </imageView>
                                 </subviews>
                                 <constraints>
@@ -210,7 +210,7 @@
                                     <outlet property="delegate" destination="HLf-dc-9jD" id="LJQ-yp-e1z"/>
                                 </connections>
                             </scrollView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cY0-vB-cqk" userLabel="backward_button">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cY0-vB-cqk" userLabel="Backward Button">
                                 <rect key="frame" x="9" y="57" width="48" height="48"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="48" id="Ggv-QR-5oG"/>
@@ -222,14 +222,32 @@
                                     <action selector="didTapBackwardButton" destination="HLf-dc-9jD" eventType="touchUpInside" id="PTL-X4-oKb"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="80Y-bL-ioW" userLabel="Share Button">
+                                <rect key="frame" x="182" y="796" width="50" height="50"/>
+                                <color key="backgroundColor" name="YP Black"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="83b-OH-v5P"/>
+                                    <constraint firstAttribute="width" constant="50" id="JyZ-jT-Vql"/>
+                                </constraints>
+                                <color key="tintColor" name="YP White"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="sharing_icon">
+                                    <color key="titleShadowColor" name="YP Black"/>
+                                </state>
+                                <connections>
+                                    <action selector="didTapShareButton:" destination="HLf-dc-9jD" eventType="touchUpInside" id="z3Z-zC-Qnf"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="KmQ-z0-Aqv"/>
-                        <color key="backgroundColor" name="YP Black"/>
+                        <color key="backgroundColor" name="YP Background"/>
                         <constraints>
                             <constraint firstItem="DUV-qe-2V7" firstAttribute="leading" secondItem="8ay-uZ-T75" secondAttribute="leading" id="DfI-BK-txs"/>
                             <constraint firstItem="cY0-vB-cqk" firstAttribute="top" secondItem="KmQ-z0-Aqv" secondAttribute="top" constant="9" id="FKM-g4-SGy"/>
                             <constraint firstAttribute="trailing" secondItem="DUV-qe-2V7" secondAttribute="trailing" id="LSo-JC-id0"/>
                             <constraint firstAttribute="bottom" secondItem="DUV-qe-2V7" secondAttribute="bottom" id="MWs-ox-jHx"/>
+                            <constraint firstItem="80Y-bL-ioW" firstAttribute="centerX" secondItem="8ay-uZ-T75" secondAttribute="centerX" id="kof-hr-AOL"/>
+                            <constraint firstItem="KmQ-z0-Aqv" firstAttribute="bottom" secondItem="80Y-bL-ioW" secondAttribute="bottom" constant="16" id="ngn-a2-ud9"/>
                             <constraint firstItem="cY0-vB-cqk" firstAttribute="leading" secondItem="KmQ-z0-Aqv" secondAttribute="leading" constant="9" id="qTC-YN-3qR"/>
                             <constraint firstItem="vAy-bs-BAt" firstAttribute="leading" secondItem="nfI-Px-NHk" secondAttribute="leading" id="voi-fZ-meY"/>
                             <constraint firstItem="DUV-qe-2V7" firstAttribute="top" secondItem="8ay-uZ-T75" secondAttribute="top" id="zfY-9s-BQc"/>
@@ -239,22 +257,26 @@
                     <connections>
                         <outlet property="imageView" destination="vAy-bs-BAt" id="pAR-7d-SH8"/>
                         <outlet property="scrollView" destination="DUV-qe-2V7" id="Fc2-J6-Nis"/>
+                        <outlet property="shareButton" destination="80Y-bL-ioW" id="VLz-gU-Nv0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ptO-d8-514" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1713" y="-3"/>
+            <point key="canvasLocation" x="1711.5942028985507" y="-3.3482142857142856"/>
         </scene>
     </scenes>
     <resources>
         <image name="0" width="200" height="132"/>
-        <image name="10" width="200" height="133"/>
         <image name="UserPic" width="70" height="70"/>
         <image name="backward" width="24" height="24"/>
         <image name="exit" width="24" height="24"/>
         <image name="likeButton_isActive" width="42" height="42"/>
+        <image name="sharing_icon" width="30" height="30"/>
         <image name="tab_editorial_active" width="30" height="30"/>
         <image name="tab_profile_active" width="30" height="30"/>
+        <namedColor name="YP Background">
+            <color red="0.10199999809265137" green="0.10599999874830246" blue="0.13300000131130219" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="YP Black">
             <color red="0.10196078431372549" green="0.10588235294117647" blue="0.13333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

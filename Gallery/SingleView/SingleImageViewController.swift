@@ -12,17 +12,25 @@ class SingleImageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        zoomSettings()
+        applySettings()
         imageView.image = image
         rescaleAndCenterImageInScrollView(image: image)
     }
     
     @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var imageView: UIImageView!
+    @IBOutlet var shareButton: UIButton!
+    
     @IBAction func didTapBackwardButton() {
         dismiss(animated: true)
     }
     
+    @IBAction func didTapShareButton(_ sender: Any) {
+        let share = UIActivityViewController(
+            activityItems: [image!], // force unwrap так как выше проверил, что он есть
+            applicationActivities: nil)
+        present(share, animated: true)
+    }
 }
 
 
@@ -35,11 +43,25 @@ extension SingleImageViewController: UIScrollViewDelegate {
     }
 }
 
+// Setup
+
 extension SingleImageViewController {
-    
+    func applySettings() {
+        cornerRadiusDidSet()
+        zoomSettings()
+    }
+}
+
+extension SingleImageViewController {
     func zoomSettings() {
         scrollView.minimumZoomScale = 0.1
         scrollView.maximumZoomScale = 1.25
+    }
+}
+
+extension SingleImageViewController {
+    func cornerRadiusDidSet() {
+        shareButton.layer.cornerRadius = 25
     }
 }
 
