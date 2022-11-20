@@ -192,9 +192,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="10" translatesAutoresizingMaskIntoConstraints="NO" id="vAy-bs-BAt">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DUV-qe-2V7">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                            </imageView>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="10" translatesAutoresizingMaskIntoConstraints="NO" id="vAy-bs-BAt">
+                                        <rect key="frame" x="0.0" y="0.0" width="200" height="133"/>
+                                    </imageView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="nfI-Px-NHk" firstAttribute="bottom" secondItem="vAy-bs-BAt" secondAttribute="bottom" id="IMC-Of-lAl"/>
+                                    <constraint firstItem="vAy-bs-BAt" firstAttribute="top" secondItem="nfI-Px-NHk" secondAttribute="top" id="b8P-hA-Opn"/>
+                                    <constraint firstItem="vAy-bs-BAt" firstAttribute="trailing" secondItem="nfI-Px-NHk" secondAttribute="trailing" id="vIr-Tz-PNq"/>
+                                </constraints>
+                                <viewLayoutGuide key="contentLayoutGuide" id="nfI-Px-NHk"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="jjv-G6-jki"/>
+                            </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cY0-vB-cqk" userLabel="backward_button">
                                 <rect key="frame" x="9" y="57" width="48" height="48"/>
                                 <constraints>
@@ -211,12 +223,13 @@
                         <viewLayoutGuide key="safeArea" id="KmQ-z0-Aqv"/>
                         <color key="backgroundColor" name="YP Black"/>
                         <constraints>
-                            <constraint firstItem="vAy-bs-BAt" firstAttribute="top" secondItem="8ay-uZ-T75" secondAttribute="top" id="6fu-fv-XHc"/>
+                            <constraint firstItem="DUV-qe-2V7" firstAttribute="leading" secondItem="8ay-uZ-T75" secondAttribute="leading" id="DfI-BK-txs"/>
                             <constraint firstItem="cY0-vB-cqk" firstAttribute="top" secondItem="KmQ-z0-Aqv" secondAttribute="top" constant="9" id="FKM-g4-SGy"/>
-                            <constraint firstItem="vAy-bs-BAt" firstAttribute="leading" secondItem="8ay-uZ-T75" secondAttribute="leading" id="pBY-XD-Hm6"/>
-                            <constraint firstAttribute="bottom" secondItem="vAy-bs-BAt" secondAttribute="bottom" id="pRo-J7-pHo"/>
-                            <constraint firstAttribute="trailing" secondItem="vAy-bs-BAt" secondAttribute="trailing" id="qLY-lm-2bT"/>
+                            <constraint firstAttribute="trailing" secondItem="DUV-qe-2V7" secondAttribute="trailing" id="LSo-JC-id0"/>
+                            <constraint firstAttribute="bottom" secondItem="DUV-qe-2V7" secondAttribute="bottom" id="MWs-ox-jHx"/>
                             <constraint firstItem="cY0-vB-cqk" firstAttribute="leading" secondItem="KmQ-z0-Aqv" secondAttribute="leading" constant="9" id="qTC-YN-3qR"/>
+                            <constraint firstItem="vAy-bs-BAt" firstAttribute="leading" secondItem="nfI-Px-NHk" secondAttribute="leading" id="voi-fZ-meY"/>
+                            <constraint firstItem="DUV-qe-2V7" firstAttribute="top" secondItem="8ay-uZ-T75" secondAttribute="top" id="zfY-9s-BQc"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="xUd-Rs-xkQ"/>
