@@ -217,7 +217,7 @@
                                     <constraint firstAttribute="height" constant="48" id="M48-Gk-Mxt"/>
                                 </constraints>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" image="backward"/>
+                                <state key="normal" image="backward_icon"/>
                                 <connections>
                                     <action selector="didTapBackwardButton" destination="HLf-dc-9jD" eventType="touchUpInside" id="PTL-X4-oKb"/>
                                 </connections>
@@ -268,7 +268,7 @@
     <resources>
         <image name="0" width="200" height="132"/>
         <image name="UserPic" width="70" height="70"/>
-        <image name="backward" width="24" height="24"/>
+        <image name="backward_icon" width="24" height="24"/>
         <image name="exit" width="24" height="24"/>
         <image name="likeButton_isActive" width="42" height="42"/>
         <image name="sharing_icon" width="30" height="30"/>

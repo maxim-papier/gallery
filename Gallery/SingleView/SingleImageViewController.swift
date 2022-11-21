@@ -76,7 +76,7 @@ extension SingleImageViewController {
         let minZoomScale = scrollView.minimumZoomScale
         let maxZoomScale = scrollView.maximumZoomScale
         
-        view.layoutIfNeeded() // Не понял зачем это здесь ???
+        view.layoutIfNeeded()
         
         let visibleRectSize = scrollView.bounds.size
         let imageSize = image.size
