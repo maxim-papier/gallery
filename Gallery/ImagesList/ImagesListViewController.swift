@@ -5,12 +5,13 @@ class ImagesListViewController: UIViewController {
     @IBOutlet private var tableView: UITableView!
     
     private let ShowSingleImageID = "ShowSingleImage"
-    private var photosName = [String]()
+    private var photoNames = [String]()
     
     override func viewDidLoad() {
+        super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        photosName = Array(0..<20).map{ "\($0)" }
+        photoNames = Array(0..<20).map{ "\($0)" }
     }
     
     // Utility
@@ -20,7 +21,7 @@ class ImagesListViewController: UIViewController {
         if segue.identifier == ShowSingleImageID {
             let viewController = segue.destination as! SingleImageViewController
             let indexPath = sender as! IndexPath
-            let image = UIImage(named: photosName[indexPath.row])
+            let image = UIImage(named: photoNames[indexPath.row])
             viewController.image = image
         } else {
             super.prepare(for: segue, sender: sender)
@@ -46,7 +47,7 @@ class ImagesListViewController: UIViewController {
 extension ImagesListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return photosName.count
+        return photoNames.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -81,7 +82,7 @@ extension ImagesListViewController {
     func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
         
         guard let currentPhotoName = UIImage(
-            named: photosName[indexPath.row]) else { return }
+            named: photoNames[indexPath.row]) else { return }
         
         cell.previewImage.image = currentPhotoName
         cell.dateLabel.text = dateFormatter.string(from: Date())

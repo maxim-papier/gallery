@@ -26,10 +26,12 @@ class SingleImageViewController: UIViewController {
     }
     
     @IBAction func didTapShareButton(_ sender: Any) {
-        let share = UIActivityViewController(
-            activityItems: [image!], // force unwrap так как выше проверил, что он есть
-            applicationActivities: nil)
-        present(share, animated: true)
+        if let image {
+            let share = UIActivityViewController(
+                activityItems: [image],
+                applicationActivities: nil)
+            present(share, animated: true)
+        }
     }
 }
 
@@ -74,7 +76,7 @@ extension SingleImageViewController {
         let minZoomScale = scrollView.minimumZoomScale
         let maxZoomScale = scrollView.maximumZoomScale
         
-        view.layoutIfNeeded() // Не понял зачем это здесь ???
+        view.layoutIfNeeded()
         
         let visibleRectSize = scrollView.bounds.size
         let imageSize = image.size
