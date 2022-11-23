@@ -194,6 +194,9 @@
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.maskBound" value="YES"/>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <segue destination="cdR-qm-Oly" kind="presentation" identifier="ShowWebView" modalPresentationStyle="fullScreen" id="NEh-0Z-5un"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="2xM-Uu-knh"/>
