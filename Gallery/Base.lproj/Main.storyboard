@@ -222,13 +222,56 @@
                     <view key="view" contentMode="scaleToFill" id="m5j-5Z-kTw">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ayc-9f-ujC">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <color key="backgroundColor" name="YP White"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QHV-gF-46j" userLabel="Backward Button">
+                                <rect key="frame" x="9" y="57" width="48" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="I6M-Fi-yN4"/>
+                                    <constraint firstAttribute="width" constant="48" id="cxt-8s-j1J"/>
+                                </constraints>
+                                <color key="tintColor" name="YP Black"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="backward_icon"/>
+                                <connections>
+                                    <action selector="didTapBackwardButton" destination="HLf-dc-9jD" eventType="touchUpInside" id="XsF-Kc-0Xt"/>
+                                    <action selector="didTapBackwardButton" destination="cdR-qm-Oly" eventType="touchUpInside" id="lG4-uk-vcS"/>
+                                </connections>
+                            </button>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progressViewStyle="bar" translatesAutoresizingMaskIntoConstraints="NO" id="By8-vO-ksX">
+                                <rect key="frame" x="0.0" y="113" width="414" height="2.5"/>
+                                <color key="progressTintColor" name="YP Black"/>
+                            </progressView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="GWV-DZ-V8s"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="By8-vO-ksX" firstAttribute="top" secondItem="QHV-gF-46j" secondAttribute="bottom" constant="8" id="0NK-o9-kP3"/>
+                            <constraint firstAttribute="bottom" secondItem="Ayc-9f-ujC" secondAttribute="bottom" id="A4S-Gl-pWz"/>
+                            <constraint firstItem="GWV-DZ-V8s" firstAttribute="trailing" secondItem="By8-vO-ksX" secondAttribute="trailing" id="AOy-Ks-pYB"/>
+                            <constraint firstAttribute="trailing" secondItem="Ayc-9f-ujC" secondAttribute="trailing" id="CQz-k2-5ny"/>
+                            <constraint firstItem="Ayc-9f-ujC" firstAttribute="leading" secondItem="m5j-5Z-kTw" secondAttribute="leading" id="S1Z-UH-fjx"/>
+                            <constraint firstItem="By8-vO-ksX" firstAttribute="leading" secondItem="GWV-DZ-V8s" secondAttribute="leading" id="SrR-Fr-7bB"/>
+                            <constraint firstItem="QHV-gF-46j" firstAttribute="leading" secondItem="GWV-DZ-V8s" secondAttribute="leading" constant="9" id="TGn-Ea-Itb"/>
+                            <constraint firstItem="Ayc-9f-ujC" firstAttribute="top" secondItem="m5j-5Z-kTw" secondAttribute="top" id="l03-dm-jI5"/>
+                            <constraint firstItem="QHV-gF-46j" firstAttribute="top" secondItem="GWV-DZ-V8s" secondAttribute="top" constant="9" id="oMP-tt-NkW"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="authWebView" destination="Ayc-9f-ujC" id="6Zy-SV-jzg"/>
+                        <outlet property="progressView" destination="By8-vO-ksX" id="itY-67-Zef"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hdU-be-jfF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3218" y="-699"/>
+            <point key="canvasLocation" x="3477" y="-572"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Qk1-bf-O7L">
