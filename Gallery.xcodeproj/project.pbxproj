@@ -21,6 +21,7 @@
 		8D93572C29238D7300E82C2F /* SingleImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D93572B29238D7300E82C2F /* SingleImageViewController.swift */; };
 		8DCEDB7A292DBE4000011C80 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCEDB79292DBE4000011C80 /* Constants.swift */; };
 		8DCEDB7C292E468500011C80 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCEDB7B292E468500011C80 /* AuthViewController.swift */; };
+		8DDCBBCF29344D8100F19310 /* OAuthTokenResponseBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DDCBBCE29344D8100F19310 /* OAuthTokenResponseBody.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		8D93572B29238D7300E82C2F /* SingleImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleImageViewController.swift; sourceTree = "<group>"; };
 		8DCEDB79292DBE4000011C80 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		8DCEDB7B292E468500011C80 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
+		8DDCBBCE29344D8100F19310 /* OAuthTokenResponseBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuthTokenResponseBody.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +96,7 @@
 				8D13536E29226D2E0009C517 /* Profile */,
 				8D5997092918AF2F000D87A6 /* ImagesList */,
 				8D43F50028FB946800A88BCE /* Main.storyboard */,
+				8DDCBBD029344D8800F19310 /* Models */,
 				8D93572D29238D9900E82C2F /* SingleView */,
 				8D43F50328FB946900A88BCE /* Assets.xcassets */,
 				8D13536B292269430009C517 /* Fonts */,
@@ -129,6 +132,14 @@
 				8D444874292E63CF00AF024E /* WebViewViewController.swift */,
 			);
 			path = Auth;
+			sourceTree = "<group>";
+		};
+		8DDCBBD029344D8800F19310 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				8DDCBBCE29344D8100F19310 /* OAuthTokenResponseBody.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -208,6 +219,7 @@
 				8D5997082918AF21000D87A6 /* ImagesListCell.swift in Sources */,
 				8D13536D29226CF80009C517 /* ProfileViewController.swift in Sources */,
 				8D43F4FB28FB946800A88BCE /* AppDelegate.swift in Sources */,
+				8DDCBBCF29344D8100F19310 /* OAuthTokenResponseBody.swift in Sources */,
 				8DCEDB7C292E468500011C80 /* AuthViewController.swift in Sources */,
 				8DCEDB7A292DBE4000011C80 /* Constants.swift in Sources */,
 				8D93572C29238D7300E82C2F /* SingleImageViewController.swift in Sources */,

@@ -224,7 +224,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ayc-9f-ujC">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <rect key="frame" x="0.0" y="87" width="414" height="809"/>
                                 <color key="backgroundColor" name="YP White"/>
                                 <wkWebViewConfiguration key="configuration">
                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
@@ -246,21 +246,21 @@
                                 </connections>
                             </button>
                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progressViewStyle="bar" translatesAutoresizingMaskIntoConstraints="NO" id="By8-vO-ksX">
-                                <rect key="frame" x="0.0" y="113" width="414" height="2.5"/>
+                                <rect key="frame" x="0.0" y="105" width="414" height="2.5"/>
                                 <color key="progressTintColor" name="YP Black"/>
                             </progressView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="GWV-DZ-V8s"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="By8-vO-ksX" firstAttribute="top" secondItem="QHV-gF-46j" secondAttribute="bottom" constant="8" id="0NK-o9-kP3"/>
+                            <constraint firstItem="By8-vO-ksX" firstAttribute="top" secondItem="QHV-gF-46j" secondAttribute="bottom" id="0NK-o9-kP3"/>
                             <constraint firstAttribute="bottom" secondItem="Ayc-9f-ujC" secondAttribute="bottom" id="A4S-Gl-pWz"/>
                             <constraint firstItem="GWV-DZ-V8s" firstAttribute="trailing" secondItem="By8-vO-ksX" secondAttribute="trailing" id="AOy-Ks-pYB"/>
                             <constraint firstAttribute="trailing" secondItem="Ayc-9f-ujC" secondAttribute="trailing" id="CQz-k2-5ny"/>
                             <constraint firstItem="Ayc-9f-ujC" firstAttribute="leading" secondItem="m5j-5Z-kTw" secondAttribute="leading" id="S1Z-UH-fjx"/>
                             <constraint firstItem="By8-vO-ksX" firstAttribute="leading" secondItem="GWV-DZ-V8s" secondAttribute="leading" id="SrR-Fr-7bB"/>
                             <constraint firstItem="QHV-gF-46j" firstAttribute="leading" secondItem="GWV-DZ-V8s" secondAttribute="leading" constant="9" id="TGn-Ea-Itb"/>
-                            <constraint firstItem="Ayc-9f-ujC" firstAttribute="top" secondItem="m5j-5Z-kTw" secondAttribute="top" id="l03-dm-jI5"/>
+                            <constraint firstItem="Ayc-9f-ujC" firstAttribute="top" secondItem="m5j-5Z-kTw" secondAttribute="top" constant="87" id="l03-dm-jI5"/>
                             <constraint firstItem="QHV-gF-46j" firstAttribute="top" secondItem="GWV-DZ-V8s" secondAttribute="top" constant="9" id="oMP-tt-NkW"/>
                         </constraints>
                     </view>
