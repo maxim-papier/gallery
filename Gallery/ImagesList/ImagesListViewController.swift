@@ -92,11 +92,8 @@ extension ImagesListViewController {
         
         let isLiked = isEven(indexPath.row)
         let likePicture = {
-            if isLiked == true {
-                return UIImage(named: "likeButton_isActive")
-            } else {
-                return UIImage(named: "likeButton_isNotActive")
-            }
+            isLiked == true ? UIImage(named: "likeButton_isActive") :
+            UIImage(named: "likeButton_isNotActive")
         }()
         cell.likeButton.setImage(likePicture, for: .normal)
         
