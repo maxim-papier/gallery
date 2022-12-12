@@ -1,6 +1,7 @@
 import UIKit
 
-class AuthViewController {
+class AuthViewController: UIViewController {
     
+    private let ShowWebViewID = "ShowWebView"
     
 }
