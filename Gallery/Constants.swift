@@ -5,5 +5,7 @@ struct K {
     static let secretKey = "Iuk0CV-2rMm4MSaTUvQ3UzPfWb1xdCsPHpe9u-FjUTc"
     static let redirectUri = "urn:ietf:wg:oauth:2.0:oob"
     static let accessScope = "public+read_user+write_likes"
+    
     static let defaultBaseURL = URL(string: "https://api.unsplash.com")
+    static let authURLString = "https://unsplash.com/oauth/authorize"
 }
