@@ -345,7 +345,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8VP-jQ-74e">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <rect key="frame" x="0.0" y="91" width="414" height="805"/>
                                 <color key="backgroundColor" name="YP White"/>
                                 <wkWebViewConfiguration key="configuration">
                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
@@ -363,19 +363,27 @@
                                     <action selector="didTapBackButton:" destination="Glh-Dx-D6M" eventType="touchUpInside" id="OPD-Fh-mqh"/>
                                 </connections>
                             </button>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eWC-wV-Siy">
+                                <rect key="frame" x="0.0" y="88" width="414" height="4"/>
+                                <color key="progressTintColor" name="YP Black"/>
+                            </progressView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="g12-64-vii"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="eWC-wV-Siy" firstAttribute="top" secondItem="VCP-2Y-7uy" secondAttribute="bottom" constant="7" id="88o-bI-t4S"/>
+                            <constraint firstItem="eWC-wV-Siy" firstAttribute="leading" secondItem="Pxg-a8-6xQ" secondAttribute="leading" id="WLm-RJ-ZNM"/>
                             <constraint firstAttribute="trailing" secondItem="8VP-jQ-74e" secondAttribute="trailing" id="XR7-iL-3yI"/>
-                            <constraint firstItem="8VP-jQ-74e" firstAttribute="top" secondItem="Pxg-a8-6xQ" secondAttribute="top" id="XRg-hi-RRh"/>
+                            <constraint firstItem="8VP-jQ-74e" firstAttribute="top" secondItem="g12-64-vii" secondAttribute="top" constant="43" id="XRg-hi-RRh"/>
                             <constraint firstItem="VCP-2Y-7uy" firstAttribute="top" secondItem="g12-64-vii" secondAttribute="top" constant="9" id="bBV-Kn-yc8"/>
                             <constraint firstItem="VCP-2Y-7uy" firstAttribute="leading" secondItem="Pxg-a8-6xQ" secondAttribute="leading" constant="9" id="fBX-Bt-24T"/>
                             <constraint firstAttribute="bottom" secondItem="8VP-jQ-74e" secondAttribute="bottom" id="jUQ-Ff-R3C"/>
+                            <constraint firstItem="g12-64-vii" firstAttribute="trailing" secondItem="eWC-wV-Siy" secondAttribute="trailing" id="o2C-cx-FFL"/>
                             <constraint firstItem="8VP-jQ-74e" firstAttribute="leading" secondItem="Pxg-a8-6xQ" secondAttribute="leading" id="uGv-Ut-M5O"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="progressView" destination="eWC-wV-Siy" id="Ktm-Zu-lmL"/>
                         <outlet property="webView" destination="8VP-jQ-74e" id="qx4-lP-F8d"/>
                     </connections>
                 </viewController>
