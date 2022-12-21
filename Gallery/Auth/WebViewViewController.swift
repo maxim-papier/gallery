@@ -5,7 +5,11 @@ import WebKit
 class WebViewViewController: UIViewController {
     
     @IBOutlet private var webView: WKWebView!
-    @IBAction private func didTapBackButton(_ sender: Any) {}
+    @IBAction private func didTapBackButton(_ sender: Any) {
+        delegate?.webViewViewControllerDidCancel(self)
+    }
+    
+    var delegate: WebViewViewControllerDelegate?
     
     override func viewDidLoad() {
         
@@ -55,50 +59,40 @@ extension WebViewViewController: WKNavigationDelegate {
         _ webView: WKWebView,
         decidePolicyFor navigationAction: WKNavigationAction,
         decisionHandler: @escaping (WKNavigationActionPolicy) -> Void
-    ) {
+    )   {
         if let code = code(from: navigationAction) {
-            
             decisionHandler(.cancel)
-            
         } else {
-            
             decisionHandler(.allow)
-            
         }
         
     }
     
     
     // Check if navigation action was right (getting "code")
-    
+ 
     private func code(from navigationAction: WKNavigationAction) -> String? {
         
-        if
+        guard
             let url = navigationAction.request.url,
             let urlComponents = URLComponents(string: url.absoluteString),
             urlComponents.path == "/oauth/authorize/native",
             let items = urlComponents.queryItems,
-            let codeItems = items.first(where: { $0.name == "code" } )
-        {
-
-            return codeItems.value
-            
-        } else {
-            
-            return nil
-            
-        }
-                
+            let codeItem = items.first(where: { $0.name == "code" })
+        else { return nil }
+        
+        return codeItem.value
+        
     }
-    
+ 
 }
 
 
 // MARK: - PROTOCOL
 
-protocol WebViewViewControllerDelegate {
+protocol WebViewViewControllerDelegate: AnyObject {
     
-    // WebViewviewControll got code
+    // WebViewviewControll got the code
     func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String)
     
     // The user taped backward button and canceled registration
