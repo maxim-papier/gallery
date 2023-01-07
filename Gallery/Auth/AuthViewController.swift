@@ -21,7 +21,15 @@ extension AuthViewController: WebViewViewControllerDelegate {
     
     func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String) {
         //TODO: process code
-        getToken.fetchAuthToken(code: code, completion: <#(Result<String, Error>) -> Void#>)
+        getToken.fetchAuthToken(code: code, completion: {result in
+            
+            switch result {
+                
+            case .success()
+                
+            }
+            
+        })
     }
     
     func webViewViewControllerDidCancel(_ vc: WebViewViewController) {

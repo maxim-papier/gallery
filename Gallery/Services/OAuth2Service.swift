@@ -48,12 +48,11 @@ class OAuth2Service {
             
             if let data = data {
                 
+                
                 do {
                     
                     let tokenResponse = try JSONDecoder().decode(OAuthTokenResponseBody.self, from: data)
-                    
-                    print("TOKEN RESPONSE: \(tokenResponse)")
-                    
+                                        
                     DispatchQueue.main.async {
                         completion(.success(tokenResponse.accessToken))
                     }
