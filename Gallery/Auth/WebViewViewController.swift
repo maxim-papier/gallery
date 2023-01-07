@@ -23,12 +23,12 @@ final class WebViewViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        observerOn() // Progress bar
+        observerOn() // Progress bar (subscribe)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        observerOff()
+        observerOff() // unsubscribe
     }
 
     
