@@ -12,7 +12,7 @@ class OAuth2Service {
         
         // MARK: - Settings
         
-        var urlRequest = URLRequest(url: URL(string: K.authURLString)!)
+        var urlRequest = URLRequest(url: URL(string: K.getTokenURL)!)
         urlRequest.httpMethod = "POST"
         urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
@@ -46,6 +46,7 @@ class OAuth2Service {
             guard let response = response as? HTTPURLResponse, (200...299).contains(response.statusCode) else {
                 DispatchQueue.main.async {
                     completion(.failure(FetchError.invalidResponse))
+                    print("RESPONSE: \(String(describing: response))")
                 }
                 return
             }

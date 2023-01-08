@@ -8,4 +8,5 @@ struct K {
     
     static let defaultBaseURL = URL(string: "https://api.unsplash.com")
     static let authURLString = "https://unsplash.com/oauth/authorize"
+    static let getTokenURL = "https://unsplash.com/oauth/token"
 }

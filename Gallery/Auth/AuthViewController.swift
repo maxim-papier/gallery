@@ -22,10 +22,12 @@ class AuthViewController: UIViewController {
 extension AuthViewController: WebViewViewControllerDelegate {
     
     func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String) {
-        
+                
         getTokenService.fetchAuthToken(code: code) { [weak self] result in
             guard let self else { return }
         
+            print("RESULT \(result)")
+            
             switch result {
             case .success(let token):
                 self.tokenStorage.token = token
