@@ -105,7 +105,6 @@ final class WebViewViewController: UIViewController {
             updateProgress()
         } else {
             super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
-            
         }
     }
     
@@ -122,6 +121,7 @@ extension WebViewViewController: WKNavigationDelegate {
         decisionHandler: @escaping (WKNavigationActionPolicy) -> Void
     )   {
         if let code = code(from: navigationAction) {
+            print("CODE: \(code)")
             decisionHandler(.cancel)
         } else {
             decisionHandler(.allow)
@@ -153,7 +153,7 @@ extension WebViewViewController: WKNavigationDelegate {
 
 protocol WebViewViewControllerDelegate: AnyObject {
     
-    // WebViewviewControll got the code
+    // WebViewViewController got the code
     func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String)
     
     // The user taped backward button and canceled registration

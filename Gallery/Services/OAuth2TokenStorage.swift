@@ -6,13 +6,8 @@ struct OAuth2TokenStorage {
     
     var token: String? {
         
-        set {
-            UserDefaults.standard.set(newValue, forKey: tokenKey)
-        }
-        
-        get {
-            return UserDefaults.standard.string(forKey: tokenKey)
-        }
+        set { UserDefaults.standard.set(newValue, forKey: tokenKey) }
+        get { return UserDefaults.standard.string(forKey: tokenKey) }
         
     }
     

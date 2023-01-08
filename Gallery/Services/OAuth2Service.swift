@@ -10,9 +10,13 @@ class OAuth2Service {
     
     func fetchAuthToken(code: String, completion: @escaping (Result<String, Error>) -> Void) {
         
+        // MARK: - Settings
+        
         var urlRequest = URLRequest(url: URL(string: K.authURLString)!)
         urlRequest.httpMethod = "POST"
         urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        print("PRINTING: \(urlRequest)")
         
         let parameters: [String: Any] = [
             "client_id": K.accessKey,
@@ -28,11 +32,11 @@ class OAuth2Service {
             print("JSON serialization error \(error)")
         }
         
-        // Send request to the server
+        // MARK: - Send request to the server
         
         URLSession.shared.dataTask(with: urlRequest) { data, response, error in
             
-            if let error = error {
+            if let error {
                 DispatchQueue.main.async {
                     completion(.failure(error))
                 }
@@ -46,25 +50,22 @@ class OAuth2Service {
                 return
             }
             
-            if let data = data {
-                
+            // Check data
+            if let data {
                 
                 do {
-                    
                     let tokenResponse = try JSONDecoder().decode(OAuthTokenResponseBody.self, from: data)
                                         
                     DispatchQueue.main.async {
-                        completion(.success(tokenResponse.accessToken))
+                        let token = tokenResponse.accessToken
+                        completion(.success(token))
+                        print("TOKEN \(token)")
                     }
                     
                 } catch {
                     completion(.failure(FetchError.decodingError))
                 }
-                
             }
-            
         }.resume()
-        
     }
-    
 }
