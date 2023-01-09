@@ -2,6 +2,17 @@ import UIKit
 import WebKit
 
 
+protocol WebViewViewControllerDelegate: AnyObject {
+    
+    // WebViewViewController got the code
+    func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String)
+    
+    // The user taped backward button and canceled registration
+    func webViewViewControllerDidCancel(_ vc: WebViewViewController)
+    
+}
+
+
 final class WebViewViewController: UIViewController {
     
     @IBOutlet private var webView: WKWebView!
@@ -147,19 +158,6 @@ extension WebViewViewController: WKNavigationDelegate {
         
     }
  
-}
-
-
-// MARK: - PROTOCOL
-
-protocol WebViewViewControllerDelegate: AnyObject {
-    
-    // WebViewViewController got the code
-    func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String)
-    
-    // The user taped backward button and canceled registration
-    func webViewViewControllerDidCancel(_ vc: WebViewViewController)
-    
 }
 
 
