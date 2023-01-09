@@ -2,7 +2,7 @@ import UIKit
 
 protocol AuthViewControllerDelegate: AnyObject {
     
-    func didAuthenticate(_ vc: AuthViewController)
+    func didAuthenticate()
     
 }
 
@@ -38,6 +38,7 @@ extension AuthViewController: WebViewViewControllerDelegate {
             switch result {
             case .success(let token):
                 self.tokenStorage.token = token
+                self.delegate?.didAuthenticate()
             case .failure(let error):
                 print("ERROR: \(error.localizedDescription)")
             }

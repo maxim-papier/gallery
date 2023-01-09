@@ -76,18 +76,15 @@ extension SplashViewController {
             viewController.delegate = self
             
         } else {
-            
             super.prepare(for: segue, sender: sender)
-            
         }
-        
     }
     
 }
 
 extension SplashViewController: AuthViewControllerDelegate {
  
-    func didAuthenticate(_ vc: AuthViewController) {
+    func didAuthenticate() {
         switchToTabBarController()
     }
         
