@@ -8,13 +8,14 @@ enum SplashError: String {
 
 final class SplashViewController: UIViewController {
     
-    let ShowAuthScreenSegueID = "ShowAuthenticationScreen"
+    let showAuthScreenSegueID = "ShowAuthenticationScreen"
+    let tabBarStoryboardID = "TabBarViewController"
     
     let getTokenService = OAuth2Service()
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        isTokenAlreadyExist()
+        switchToAuthOrTabBar()
     }
     
 }
@@ -24,10 +25,8 @@ final class SplashViewController: UIViewController {
 
 extension SplashViewController {
         
-    func isTokenAlreadyExist() {
-        
-        let tokenStorage = OAuth2TokenStorage()
-        
+    func switchToAuthOrTabBar(tokenStorage: OAuth2TokenStorage = OAuth2TokenStorage()) {
+                
         if tokenStorage.token != nil {
             // logged in
             switchToTabBarController()
@@ -51,7 +50,7 @@ extension SplashViewController {
         guard let window = UIApplication.shared.windows.first else
         { fatalError(SplashError.invalidConfiguration.rawValue) }
         
-        let tabBarController = UIStoryboard(name: "Main", bundle: .main).instantiateViewController(withIdentifier: "TabBarViewController")
+        let tabBarController = UIStoryboard(name: "Main", bundle: .main).instantiateViewController(withIdentifier: tabBarStoryboardID)
         
         window.rootViewController = tabBarController
         
@@ -65,12 +64,12 @@ extension SplashViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if segue.identifier == ShowAuthScreenSegueID {
+        if segue.identifier == showAuthScreenSegueID {
             
             guard
                 let navigationController = segue.destination as? UINavigationController,
                 let viewController = navigationController.viewControllers.first as? AuthViewController else {
-                fatalError(SplashError.failedToPrepSegue.rawValue + ShowAuthScreenSegueID)
+                fatalError(SplashError.failedToPrepSegue.rawValue + showAuthScreenSegueID)
             }
             
             viewController.delegate = self
