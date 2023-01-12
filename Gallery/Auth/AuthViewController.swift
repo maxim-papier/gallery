@@ -1,4 +1,5 @@
 import UIKit
+import ProgressHUD
 
 protocol AuthViewControllerDelegate: AnyObject {
     
@@ -17,7 +18,7 @@ final class AuthViewController: UIViewController {
     weak var delegate: AuthViewControllerDelegate?
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-
+        
         guard segue.identifier == showWebViewSegueID,
                 let webViewViewController = segue.destination as? WebViewViewController
         else { return }
@@ -32,9 +33,11 @@ extension AuthViewController: WebViewViewControllerDelegate {
     
     func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String) {
                 
+        ProgressHUD.show()
+        
         getTokenService.fetchAuthToken(code: code) { [weak self] result in
             guard let self else { return }
-                    
+            
             
             DispatchQueue.main.async {
                 

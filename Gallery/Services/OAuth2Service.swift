@@ -8,10 +8,25 @@ enum FetchError: Error {
 
 class OAuth2Service {
     
+    
+    // Attempts to get the token from the server by passing "code" as the parameter
+    
     func fetchAuthToken(code: String, completion: @escaping (Result<String, Error>) -> Void) {
         
-        // MARK: - Settings
-        
+        do {
+            let urlRequest = try buildURLRequest(code: code)
+            sendRequest(urlRequest: urlRequest, completion: completion)
+        } catch {
+            completion(.failure(error))
+        }
+
+    }
+    
+    
+    // MARK: - Build URL request
+    
+    private func buildURLRequest(code: String) throws -> URLRequest {
+                
         var urlRequest = URLRequest(url: URL(string: K.getTokenURL)!)
         urlRequest.httpMethod = "POST"
         urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -30,8 +45,14 @@ class OAuth2Service {
             print("JSON serialization error \(error)")
         }
         
-        // MARK: - Send request to the server
+        return urlRequest
         
+    }
+    
+    // MARK: - Send request to the server
+    
+    private func sendRequest(urlRequest: URLRequest, completion: @escaping (Result<String, Error>) -> Void ) {
+                
         URLSession.shared.dataTask(with: urlRequest) { data, response, error in
             
             if let error {
@@ -64,5 +85,8 @@ class OAuth2Service {
                 }
             }
         }.resume()
+
+        
     }
+    
 }

@@ -1,4 +1,5 @@
 import UIKit
+import ProgressHUD
 
 enum SplashError: String {
     case invalidConfiguration = "Invalid Configuration"
@@ -32,7 +33,7 @@ extension SplashViewController {
             switchToTabBarController()
         } else {
             // is NOT logged in
-            performSegue(withIdentifier: "ShowAuthenticationScreen", sender: nil)
+            performSegue(withIdentifier: showAuthScreenSegueID, sender: nil)
         }
         
     }
@@ -46,7 +47,7 @@ extension SplashViewController {
 extension SplashViewController {
     
     func switchToTabBarController() {
-        
+                
         guard let window = UIApplication.shared.windows.first else
         { fatalError(SplashError.invalidConfiguration.rawValue) }
         
@@ -57,8 +58,6 @@ extension SplashViewController {
     }
     
 }
-
-// MARK: -
 
 extension SplashViewController {
     
@@ -84,6 +83,7 @@ extension SplashViewController {
 extension SplashViewController: AuthViewControllerDelegate {
  
     func didAuthenticate() {
+        ProgressHUD.dismiss()
         switchToTabBarController()
     }
         
