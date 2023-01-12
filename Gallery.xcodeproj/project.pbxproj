@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8D05F24A296E7156008B19F4 /* ProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 8D05F249296E7156008B19F4 /* ProgressHUD */; };
+		8D05F24E296FF5BD008B19F4 /* UIBlockingProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D05F24D296FF5BD008B19F4 /* UIBlockingProgressHUD.swift */; };
 		8D1353682922692C0009C517 /* YS Display-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8D1353662922692B0009C517 /* YS Display-Bold.ttf */; };
 		8D1353692922692C0009C517 /* YS Display-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8D1353672922692C0009C517 /* YS Display-Medium.ttf */; };
 		8D13536D29226CF80009C517 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D13536C29226CF80009C517 /* ProfileViewController.swift */; };
@@ -29,6 +30,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8D05F24D296FF5BD008B19F4 /* UIBlockingProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBlockingProgressHUD.swift; sourceTree = "<group>"; };
 		8D1353662922692B0009C517 /* YS Display-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "YS Display-Bold.ttf"; sourceTree = "<group>"; };
 		8D1353672922692C0009C517 /* YS Display-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "YS Display-Medium.ttf"; sourceTree = "<group>"; };
 		8D13536C29226CF80009C517 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -63,6 +65,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8D05F24B296FF53D008B19F4 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				8D787DF0296C22E600026524 /* SplashViewController */,
+				8DD3EFC02946B502000FEA48 /* Auth */,
+				8D13536E29226D2E0009C517 /* Profile */,
+				8D5997092918AF2F000D87A6 /* ImagesList */,
+				8D93572D29238D9900E82C2F /* SingleView */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		8D05F24C296FF57E008B19F4 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				8D05F24D296FF5BD008B19F4 /* UIBlockingProgressHUD.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		8D13536B292269430009C517 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -99,21 +121,18 @@
 		8D43F4F928FB946800A88BCE /* Gallery */ = {
 			isa = PBXGroup;
 			children = (
-				8D787DF0296C22E600026524 /* SplashViewController */,
+				8D05F24C296FF57E008B19F4 /* Helpers */,
 				8D97A81929541A41000E4001 /* Services */,
 				8D97A81629541975000E4001 /* Models */,
-				8DD3EFC02946B502000FEA48 /* Auth */,
-				8D43F4FA28FB946800A88BCE /* AppDelegate.swift */,
-				8D43F4FC28FB946800A88BCE /* SceneDelegate.swift */,
-				8D13536E29226D2E0009C517 /* Profile */,
-				8D5997092918AF2F000D87A6 /* ImagesList */,
+				8D05F24B296FF53D008B19F4 /* Scenes */,
 				8D43F50028FB946800A88BCE /* Main.storyboard */,
-				8D93572D29238D9900E82C2F /* SingleView */,
 				8D43F50328FB946900A88BCE /* Assets.xcassets */,
+				8DCC22FA29460FC6008E84AA /* Constants.swift */,
 				8D13536B292269430009C517 /* Fonts */,
 				8D43F50528FB946900A88BCE /* LaunchScreen.storyboard */,
 				8D43F50828FB946900A88BCE /* Info.plist */,
-				8DCC22FA29460FC6008E84AA /* Constants.swift */,
+				8D43F4FA28FB946800A88BCE /* AppDelegate.swift */,
+				8D43F4FC28FB946800A88BCE /* SceneDelegate.swift */,
 			);
 			path = Gallery;
 			sourceTree = "<group>";
@@ -261,6 +280,7 @@
 				8D93572C29238D7300E82C2F /* SingleImageViewController.swift in Sources */,
 				8DD3EFC42946B624000FEA48 /* WebViewViewController.swift in Sources */,
 				8D43F4FD28FB946800A88BCE /* SceneDelegate.swift in Sources */,
+				8D05F24E296FF5BD008B19F4 /* UIBlockingProgressHUD.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -6,12 +6,23 @@ enum FetchError: Error {
     case decodingError
 }
 
-class OAuth2Service {
+final class OAuth2Service {
+    
+    private let urlSession = URLSession.shared
+    
+    private var task: URLSessionTask?
+    private var lastCode: String?
     
     
     // Attempts to get the token from the server by passing "code" as the parameter
     
     func fetchAuthToken(code: String, completion: @escaping (Result<String, Error>) -> Void) {
+        
+        assert(Thread.isMainThread)
+        
+        guard lastCode != code else { return }
+        task?.cancel()
+        lastCode = code
         
         do {
             let urlRequest = try buildURLRequest(code: code)

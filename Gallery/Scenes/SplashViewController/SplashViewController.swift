@@ -83,7 +83,7 @@ extension SplashViewController {
 extension SplashViewController: AuthViewControllerDelegate {
  
     func didAuthenticate() {
-        ProgressHUD.dismiss()
+        UIBlockingProgressHUD.dismiss()
         switchToTabBarController()
     }
         
