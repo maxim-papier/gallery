@@ -9,10 +9,10 @@ enum SplashError: String {
 
 final class SplashViewController: UIViewController {
     
-    let showAuthScreenSegueID = "ShowAuthenticationScreen"
-    let tabBarStoryboardID = "TabBarViewController"
+    private let showAuthScreenSegueID = "ShowAuthenticationScreen"
+    private let tabBarStoryboardID = "TabBarViewController"
     
-    let getTokenService = OAuth2Service()
+    private let getTokenService = OAuth2Service()
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -23,7 +23,7 @@ final class SplashViewController: UIViewController {
 
 
 // MARK: - Checking if this is logged in user:
-
+#warning("refactor this later")
 extension SplashViewController {
         
     func switchToAuthOrTabBar(tokenStorage: OAuth2TokenStorage = OAuth2TokenStorage()) {
