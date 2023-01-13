@@ -28,7 +28,7 @@ final class ProfileService {
         request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         request.httpMethod = "GET"
         
-        urlSession.dataTask(with: request) { data, response, error in
+        let task = urlSession.dataTask(with: request) { data, response, error in
             if let error = error {
                 DispatchQueue.main.async {
                     completion(.failure(error))
@@ -38,7 +38,8 @@ final class ProfileService {
             
             self.handleResponse(response, data: data, completion: completion)
             
-        }.resume()
+        }
+        task.resume()
     }
     
     /// Handle the API response and check for errors

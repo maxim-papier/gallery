@@ -67,7 +67,7 @@ final class OAuth2Service {
     
     private func sendRequest(urlRequest: URLRequest, completion: @escaping (Result<String, Error>) -> Void ) {
                 
-        urlSession.dataTask(with: urlRequest) { data, response, error in
+        let task = urlSession.dataTask(with: urlRequest) { data, response, error in
             
             if let error {
                 DispatchQueue.main.async {
@@ -98,7 +98,9 @@ final class OAuth2Service {
                     completion(.failure(FetchTokenError.decodingError))
                 }
             }
-        }.resume()
+        }
+            
+        task.resume()
         
     }
     
