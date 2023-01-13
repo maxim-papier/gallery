@@ -1,7 +1,7 @@
 import Foundation
 
 
-enum FetchError: Error {
+enum FetchTokenError: Error {
     case noResponse
     case invalidResponse
     case decodingError
@@ -40,9 +40,9 @@ final class OAuth2Service {
     
     private func buildURLRequest(code: String) throws -> URLRequest {
                 
-        var urlRequest = URLRequest(url: URL(string: K.getTokenURL)!)
-        urlRequest.httpMethod = "POST"
-        urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        var request = URLRequest(url: URL(string: K.getTokenURL)!)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
                 
         let parameters: [String: Any] = [
             "client_id": K.accessKey,
@@ -53,12 +53,12 @@ final class OAuth2Service {
         ]
         
         do {
-            urlRequest.httpBody = try JSONSerialization.data(withJSONObject: parameters)
+            request.httpBody = try JSONSerialization.data(withJSONObject: parameters)
         } catch {
             print("JSON serialization error \(error)")
         }
         
-        return urlRequest
+        return request
         
     }
     
@@ -67,7 +67,7 @@ final class OAuth2Service {
     
     private func sendRequest(urlRequest: URLRequest, completion: @escaping (Result<String, Error>) -> Void ) {
                 
-        URLSession.shared.dataTask(with: urlRequest) { data, response, error in
+        urlSession.dataTask(with: urlRequest) { data, response, error in
             
             if let error {
                 DispatchQueue.main.async {
@@ -78,7 +78,7 @@ final class OAuth2Service {
             
             guard let response = response as? HTTPURLResponse, (200...299).contains(response.statusCode) else {
                 DispatchQueue.main.async {
-                    completion(.failure(FetchError.invalidResponse))
+                    completion(.failure(FetchTokenError.invalidResponse))
                 }
                 return
             }
@@ -95,7 +95,7 @@ final class OAuth2Service {
                     }
                     
                 } catch {
-                    completion(.failure(FetchError.decodingError))
+                    completion(.failure(FetchTokenError.decodingError))
                 }
             }
         }.resume()

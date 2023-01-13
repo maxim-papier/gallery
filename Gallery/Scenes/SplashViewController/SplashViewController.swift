@@ -18,7 +18,7 @@ final class SplashViewController: UIViewController {
         super.viewDidAppear(animated)
         switchToAuthOrTabBar()
     }
-    
+        
 }
 
 
