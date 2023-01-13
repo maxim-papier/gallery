@@ -1,10 +1,12 @@
 import Foundation
 
+
 enum FetchError: Error {
     case noResponse
     case invalidResponse
     case decodingError
 }
+
 
 final class OAuth2Service {
     
@@ -50,7 +52,7 @@ final class OAuth2Service {
             "grant_type": "authorization_code"
         ]
         
-        do  {
+        do {
             urlRequest.httpBody = try JSONSerialization.data(withJSONObject: parameters)
         } catch {
             print("JSON serialization error \(error)")
@@ -59,6 +61,7 @@ final class OAuth2Service {
         return urlRequest
         
     }
+    
     
     // MARK: - Send request to the server
     
@@ -96,7 +99,6 @@ final class OAuth2Service {
                 }
             }
         }.resume()
-
         
     }
     

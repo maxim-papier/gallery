@@ -23,7 +23,7 @@ final class SplashViewController: UIViewController {
 
 
 // MARK: - Checking if this is logged in user:
-#warning("refactor this later")
+
 extension SplashViewController {
         
     func switchToAuthOrTabBar(tokenStorage: OAuth2TokenStorage = OAuth2TokenStorage()) {
