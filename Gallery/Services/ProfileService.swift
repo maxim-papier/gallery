@@ -9,6 +9,8 @@ enum FetchProfileError: Error {
 final class ProfileService {
     
     let urlSession = URLSession.shared
+    private var task: URLSessionTask?
+
     
     /// Fetch profile from the API
     /// - Parameters:
@@ -16,6 +18,9 @@ final class ProfileService {
     ///   - completion: A callback that will be called with the result of the API request
     
     func fetchProfile(_ token: String, completion: @escaping (Result<Profile, Error>) -> Void) {
+        
+        assert(Thread.isMainThread)
+        task?.cancel()
         
         let url = K.defaultBaseURL!.appendingPathComponent("/me")
         
@@ -42,7 +47,7 @@ final class ProfileService {
     ///   - data: The data received in the response
     ///   - completion: A callback that will be called with the result of the API request
     
-    func handleResponse(_ response: URLResponse?, data: Data?, completion: @escaping (Result<Profile, Error>) -> Void) {
+    private func handleResponse(_ response: URLResponse?, data: Data?, completion: @escaping (Result<Profile, Error>) -> Void) {
         guard let response = response as? HTTPURLResponse, (200...299).contains(response.statusCode) else {
             DispatchQueue.main.async {
                 completion(.failure(FetchProfileError.invalidResponse))
@@ -59,7 +64,7 @@ final class ProfileService {
     ///   - data: The data received from the API
     ///   - completion: A callback that will be called with the result of decoding the data
     
-    func handleData(_ data: Data?, completion: @escaping (Result<Profile, Error>) -> Void) {
+    private func handleData(_ data: Data?, completion: @escaping (Result<Profile, Error>) -> Void) {
         if let data = data {
             decodeData(data, completion: completion)
         } else {
@@ -72,7 +77,7 @@ final class ProfileService {
     ///   - data: The data to be decoded
     ///   - completion: A callback that will be called with the result of decoding the data
     
-    func decodeData(_ data: Data, completion: @escaping (Result<Profile, Error>) -> Void) {
+    private func decodeData(_ data: Data, completion: @escaping (Result<Profile, Error>) -> Void) {
         let decoder = JSONDecoder()
         do {
             let profileResult = try decoder.decode(ProfileResult.self, from: data)
@@ -83,4 +88,5 @@ final class ProfileService {
             completion(.failure(FetchProfileError.decodingData))
         }
     }
+    
 }
