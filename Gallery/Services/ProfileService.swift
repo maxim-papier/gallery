@@ -7,6 +7,8 @@ enum FetchProfileError: Error {
 }
 
 final class ProfileService {
+
+    #warning("Раздели ответственности")
     
     let urlSession = URLSession.shared
     
@@ -41,12 +43,13 @@ final class ProfileService {
                 do {
                     let profileResult = try decoder.decode(ProfileResult.self, from: data)
                     let profile = Profile(result: profileResult)
+                    print(profile)
+                    
+                    completion(.success(profile))
+                                        
                 } catch {
                     print("Decoding failed: \(error)")
                 }
-            
-
-                
                 
             } else {
                 completion(.failure(FetchProfileError.dataError))
