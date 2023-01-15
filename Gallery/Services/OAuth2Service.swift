@@ -1,6 +1,5 @@
 import Foundation
 
-
 enum FetchTokenError: Error {
     case noResponse
     case invalidResponse
