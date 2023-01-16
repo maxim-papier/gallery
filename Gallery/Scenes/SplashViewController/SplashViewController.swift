@@ -127,8 +127,9 @@ extension SplashViewController {
                 
                 switch result {
                 
-                case.success:
+                case.success(let profileResult):
                     UIBlockingProgressHUD.dismiss()
+                    self.updateProfile(with: profileResult)
                     self.switchToTabBarController()
                     
                 case.failure(let error):
@@ -138,4 +139,13 @@ extension SplashViewController {
             }
         }
     }
+}
+
+extension SplashViewController {
+    
+    func updateProfile(with data: Profile) {
+        
+    }
+
+    
 }

@@ -11,23 +11,23 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        profileService.fetchProfile(token!) { [weak self] result in
-            guard let self else { return }
-            
-            DispatchQueue.main.async {
-                
-                switch result {
-                case.success(let result):
-                    self.nameLabel.text = result.name
-                    self.loginNameLabel.text = result.loginName
-                    self.descriptionLabel.text = result.bio
-                case.failure(let error):
-                    print("ERROR: \(error.localizedDescription)")
-                }
-            }
-        }
+        updateProfile()
     }
+}
+
+extension ProfileViewController {
+    
+    private func updateProfile() {
+        
+        let profileService = ProfileService.shared
+        let profile = profileService.profile
+        
+        nameLabel.text = profile?.username
+        loginNameLabel.text = profile?.loginName
+        descriptionLabel.text = profile?.bio
+        
+    }
+    
 }
 
 
