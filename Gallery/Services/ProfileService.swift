@@ -34,7 +34,7 @@ final class ProfileService {
         request.httpMethod = "GET"
         
         let task = urlSession.dataTask(with: request) { data, response, error in
-            if let error = error {
+            if let error {
                 DispatchQueue.main.async {
                     completion(.failure(error))
                 }
@@ -61,7 +61,6 @@ final class ProfileService {
             }
             return
         }
-        
         handleData(data, completion: completion)
         
     }
@@ -72,7 +71,7 @@ final class ProfileService {
     ///   - completion: A callback that will be called with the result of decoding the data
     
     private func handleData(_ data: Data?, completion: @escaping (Result<Profile, Error>) -> Void) {
-        if let data = data {
+        if let data {
             decodeData(data, completion: completion)
         } else {
             completion(.failure(FetchProfileError.dataError))

@@ -47,7 +47,7 @@ final class WebViewViewController: UIViewController {
     
     private func composeAuthorizationURL() -> URL {
         
-        var urlComponents = URLComponents(string: K.authURLString)!
+        var urlComponents = URLComponents(string: K.authURL)!
         
         urlComponents.queryItems = [
             URLQueryItem(name: "client_id", value: K.accessKey),

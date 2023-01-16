@@ -16,22 +16,24 @@ final class SplashViewController: UIViewController {
     private var tokenStorage = OAuth2TokenStorage()
     private let profileService = ProfileService.shared
     
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         switchToAuthOrTabBar()
     }
-        
+    
 }
 
 
 // MARK: - Checking if this is logged in user:
 
 extension SplashViewController {
-        
+    
     func switchToAuthOrTabBar(tokenStorage: OAuth2TokenStorage = OAuth2TokenStorage()) {
-                
+        
         if let token = tokenStorage.token {
             // logged in
+            print("TOKEN::: \(token)")
             fetchProfile(with: token)
         } else {
             // is NOT logged in
@@ -39,7 +41,7 @@ extension SplashViewController {
         }
         
     }
-
+    
 }
 
 
@@ -49,7 +51,7 @@ extension SplashViewController {
 extension SplashViewController {
     
     func switchToTabBarController() {
-                
+        
         guard let window = UIApplication.shared.windows.first else
         { fatalError(SplashError.invalidConfiguration.rawValue) }
         
@@ -85,7 +87,7 @@ extension SplashViewController {
 extension SplashViewController: AuthViewControllerDelegate {
     
     func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String) {
-                
+        
         UIBlockingProgressHUD.show()
         fetchAuthToken(with: code)
         
@@ -105,13 +107,13 @@ extension SplashViewController: AuthViewControllerDelegate {
                 case .failure(let error):
                     print("ERROR: \(error.localizedDescription)")
                 }
-        
+                
             }
             
         }
-
-    }
         
+    }
+    
 }
 
 //
@@ -126,10 +128,10 @@ extension SplashViewController {
             DispatchQueue.main.async {
                 
                 switch result {
-                
-                case.success(let profileResult):
+                    
+                case.success(_):
                     UIBlockingProgressHUD.dismiss()
-                    self.updateProfile(with: profileResult)
+                    self.fetchProfileImageURL()
                     self.switchToTabBarController()
                     
                 case.failure(let error):
@@ -141,11 +143,39 @@ extension SplashViewController {
     }
 }
 
+
 extension SplashViewController {
     
-    func updateProfile(with data: Profile) {
+    func fetchProfileImageURL() {
+        
+        print("fetchProfileImageURL has been run")
+        
+        let profile = profileService.profile
+        let username = profile?.username
+        print("USERNAME::: \(username)")
+
+        ProfileImageService.shared.fetchProfileImageURL(username: username!) { [weak self] result in
+            guard let self else { return }
+            
+            DispatchQueue.main.async {
+                
+                switch result {
+                    
+                case .success(let avatarURL):
+                    print(avatarURL)
+                    
+                case .failure(let error):
+                    print("Profile image fetch error: \(error)")
+                    
+                }
+                
+                
+                
+            }
+            
+            
+            
+        }
         
     }
-
-    
 }

@@ -1,5 +1,12 @@
 import Foundation
 
+enum TokenStorageError: Error {
+    
+    case tokenNotFound
+    
+}
+
+
 struct OAuth2TokenStorage {
     
     private let tokenKey = "BearerToken"
