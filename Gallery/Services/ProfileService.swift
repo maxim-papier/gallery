@@ -4,9 +4,14 @@ enum FetchProfileError: Error {
     case dataError
     case decodingData
     case invalidResponse
+    case noProfileData
 }
 
 final class ProfileService {
+    
+    static let shared = ProfileService() // Singleton
+    
+    private(set) var profile: Profile?
     
     let urlSession = URLSession.shared
     private var task: URLSessionTask?
@@ -52,6 +57,7 @@ final class ProfileService {
         guard let response = response as? HTTPURLResponse, (200...299).contains(response.statusCode) else {
             DispatchQueue.main.async {
                 completion(.failure(FetchProfileError.invalidResponse))
+                return
             }
             return
         }
@@ -70,6 +76,7 @@ final class ProfileService {
             decodeData(data, completion: completion)
         } else {
             completion(.failure(FetchProfileError.dataError))
+            return
         }
     }
     
@@ -79,15 +86,23 @@ final class ProfileService {
     ///   - completion: A callback that will be called with the result of decoding the data
     
     private func decodeData(_ data: Data, completion: @escaping (Result<Profile, Error>) -> Void) {
+        
         let decoder = JSONDecoder()
+        
         do {
             let profileResult = try decoder.decode(ProfileResult.self, from: data)
-            let profile = Profile(result: profileResult)
+            profile = Profile(result: profileResult)
+            
+            guard let profile else {
+                completion(.failure(FetchProfileError.noProfileData))
+                return
+            }
             completion(.success(profile))
         } catch {
-            print("Decoding failed: \(error)")
             completion(.failure(FetchProfileError.decodingData))
+            return
         }
+        
     }
     
 }

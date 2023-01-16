@@ -13,6 +13,8 @@ final class SplashViewController: UIViewController {
     private let tabBarStoryboardID = "TabBarViewController"
     
     private let getTokenService = OAuth2Service()
+    private var tokenStorage = OAuth2TokenStorage()
+    private let profileService = ProfileService.shared
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -28,16 +30,16 @@ extension SplashViewController {
         
     func switchToAuthOrTabBar(tokenStorage: OAuth2TokenStorage = OAuth2TokenStorage()) {
                 
-        if tokenStorage.token != nil {
+        if let token = tokenStorage.token {
             // logged in
-            switchToTabBarController()
+            fetchProfile(with: token)
         } else {
             // is NOT logged in
             performSegue(withIdentifier: showAuthScreenSegueID, sender: nil)
         }
         
     }
-    
+
 }
 
 
@@ -81,10 +83,69 @@ extension SplashViewController {
 }
 
 extension SplashViewController: AuthViewControllerDelegate {
- 
-    func didAuthenticate() {
-        UIBlockingProgressHUD.dismiss()
-        switchToTabBarController()
+    
+    func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String) {
+                
+        UIBlockingProgressHUD.show()
+        fetchAuthToken(with: code)
+        
+    }
+    
+    func fetchAuthToken(with code: String) {
+        
+        getTokenService.fetchAuthToken(code: code) { [weak self] result in
+            guard let self else { return }
+            
+            DispatchQueue.main.async {
+                
+                switch result {
+                case .success(let token):
+                    self.tokenStorage.token = token
+                    self.fetchProfile(with: token)
+                case .failure(let error):
+                    print("ERROR: \(error.localizedDescription)")
+                }
+        
+            }
+            
+        }
+
     }
         
+}
+
+//
+
+extension SplashViewController {
+    
+    func fetchProfile(with token: String) {
+        
+        profileService.fetchProfile(token) { [weak self] result in
+            guard let self else { return }
+            
+            DispatchQueue.main.async {
+                
+                switch result {
+                
+                case.success(let profileResult):
+                    UIBlockingProgressHUD.dismiss()
+                    self.updateProfile(with: profileResult)
+                    self.switchToTabBarController()
+                    
+                case.failure(let error):
+                    print("ERROR: \(error.localizedDescription)")
+                    break
+                }
+            }
+        }
+    }
+}
+
+extension SplashViewController {
+    
+    func updateProfile(with data: Profile) {
+        
+    }
+
+    
 }
