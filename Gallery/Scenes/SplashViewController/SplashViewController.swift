@@ -13,6 +13,7 @@ final class SplashViewController: UIViewController {
     private let tabBarStoryboardID = "TabBarViewController"
     
     private let getTokenService = OAuth2Service()
+    private var tokenStorage = OAuth2TokenStorage()
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -81,10 +82,34 @@ extension SplashViewController {
 }
 
 extension SplashViewController: AuthViewControllerDelegate {
- 
+    
+    func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String) {
+                
+        UIBlockingProgressHUD.show()
+        
+        getTokenService.fetchAuthToken(code: code) { [weak self] result in
+            guard let self else { return }
+            
+            DispatchQueue.main.async {
+                
+                switch result {
+                case .success(let token):
+                    self.tokenStorage.token = token
+                    self.didAuthenticate()
+                case .failure(let error):
+                    print("ERROR: \(error.localizedDescription)")
+                }
+                
+            }
+        }
+    }
     func didAuthenticate() {
         UIBlockingProgressHUD.dismiss()
         switchToTabBarController()
     }
         
 }
+
+//
+
+
