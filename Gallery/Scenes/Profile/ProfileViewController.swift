@@ -6,13 +6,13 @@ class ProfileViewController: UIViewController {
     @IBOutlet var loginNameLabel: UILabel!
     @IBOutlet var descriptionLabel: UILabel!
     
-    let prof = ProfileService()
+    let profileService = ProfileService()
     let token = OAuth2TokenStorage().token
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        prof.fetchProfile(token!) { [weak self] result in
+        profileService.fetchProfile(token!) { [weak self] result in
             guard let self else { return }
             
             DispatchQueue.main.async {

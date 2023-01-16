@@ -8,6 +8,8 @@ enum FetchProfileError: Error {
 
 final class ProfileService {
     
+    static let shared = ProfileService() // Singleton
+    
     let urlSession = URLSession.shared
     private var task: URLSessionTask?
 
