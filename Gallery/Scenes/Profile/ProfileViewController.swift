@@ -47,7 +47,7 @@ extension ProfileViewController {
         let profileService = ProfileService.shared
         let profile = profileService.profile
         
-        nameLabel.text = profile?.username
+        nameLabel.text = profile?.name
         loginNameLabel.text = profile?.loginName
         descriptionLabel.text = profile?.bio
         
