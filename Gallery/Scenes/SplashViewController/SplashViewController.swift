@@ -148,34 +148,10 @@ extension SplashViewController {
     
     func fetchProfileImageURL() {
         
-        print("fetchProfileImageURL has been run")
-        
         let profile = profileService.profile
         let username = profile?.username
-        print("USERNAME::: \(username)")
 
-        ProfileImageService.shared.fetchProfileImageURL(username: username!) { [weak self] result in
-            guard let self else { return }
-            
-            DispatchQueue.main.async {
-                
-                switch result {
-                    
-                case .success(let avatarURL):
-                    print(avatarURL)
-                    
-                case .failure(let error):
-                    print("Profile image fetch error: \(error)")
-                    
-                }
-                
-                
-                
-            }
-            
-            
-            
-        }
+        ProfileImageService.shared.fetchProfileImageURL(username: username!) { _ in }
         
     }
 }
