@@ -12,6 +12,8 @@ enum FetchProfileImageError: Error {
 final class ProfileImageService {
     
     static let shared = ProfileImageService() // Singleton
+    static let DidChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange") // Notification name
+
     
     private(set) var avatarURL: String?
         
@@ -83,6 +85,7 @@ final class ProfileImageService {
         }
 
         completion(.success(avatarURL))
+        NotificationCenter.default.post(name: ProfileImageService.DidChangeNotification, object: self, userInfo: ["URL": avatarURL]) // Publish notification
 
     }
 
