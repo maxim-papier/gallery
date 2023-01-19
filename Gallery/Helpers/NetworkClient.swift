@@ -8,13 +8,6 @@ enum NetworkError: Error {
     case dataError
 }
 
-enum FetchProfileImageError: Error {
-    case invalidResponse
-    case dataError
-    case noImageDataFound
-    case decodingData
-}
-
 
 // MARK: - Prepare for request
 
@@ -49,7 +42,7 @@ extension URLSession {
         }
         
         let task = dataTask(with: request) { data, response, error in
-            if let error = error {
+            if let error {
                 completionOnMainThread(.failure(NetworkError.urlRequestError(error)))
                 return
             }
@@ -64,7 +57,7 @@ extension URLSession {
                 return
             }
             
-            guard let data = data else {
+            guard let data else {
                 completionOnMainThread(.failure(NetworkError.dataError))
                 return
             }
