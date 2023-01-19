@@ -8,13 +8,6 @@ enum NetworkError: Error {
     case dataError
 }
 
-enum FetchProfileError: Error {
-    case dataError
-    case decodingData
-    case invalidResponse
-    case noProfileData
-}
-
 enum FetchProfileImageError: Error {
     case invalidResponse
     case dataError

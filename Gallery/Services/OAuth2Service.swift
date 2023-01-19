@@ -2,13 +2,13 @@ import Foundation
 
 enum FetchTokenError: Error {
     case serializationError(Error)
-    
 }
 
 final class OAuth2Service {
     
     private let session = URLSession.shared
     private var task: URLSessionTask?
+    
     private var lastCode: String?
 
     private (set) var authToken: String? {
@@ -16,7 +16,9 @@ final class OAuth2Service {
             return OAuth2TokenStorage().token
         }
         set {
-            guard let newValue = newValue else { return }
+            guard let newValue = newValue else {
+                
+            return }
             OAuth2TokenStorage().updateToken(with: newValue)
         }
     }
