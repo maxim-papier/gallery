@@ -95,7 +95,7 @@ extension SplashViewController: AuthViewControllerDelegate {
     
     func fetchAuthToken(with code: String) {
         
-        getTokenService.fetchAuthToken(code: code) { [weak self] result in
+        getTokenService.fetchAuthToken(code) { [weak self] result in
             guard let self else { return }
             
             DispatchQueue.main.async {

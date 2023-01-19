@@ -10,7 +10,7 @@ enum TokenStorageError: Error {
 struct OAuth2TokenStorage {
     
     private let tokenKey = "BearerToken"
-    
+
     var token: String? {
         
         set { UserDefaults.standard.set(newValue, forKey: tokenKey) }
@@ -18,5 +18,8 @@ struct OAuth2TokenStorage {
         
     }
     
+    func updateToken(with newValue: String?) {
+        UserDefaults.standard.set(newValue, forKey: tokenKey)
+    }
     
 }

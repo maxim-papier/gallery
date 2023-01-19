@@ -1,12 +1,5 @@
 import Foundation
 
-enum FetchProfileError: Error {
-    case dataError
-    case decodingData
-    case invalidResponse
-    case noProfileData
-}
-
 final class ProfileService {
     
     static let shared = ProfileService() // Singleton
@@ -15,7 +8,6 @@ final class ProfileService {
     
     let urlSession = URLSession.shared
     private var task: URLSessionTask?
-
     
     /// Fetch profile from the API
     /// - Parameters:
@@ -27,11 +19,13 @@ final class ProfileService {
         assert(Thread.isMainThread)
         task?.cancel()
         
-        let url = K.defaultBaseURL!.appendingPathComponent("/me")
+        var request = URLRequest.makeHTTPRequest(
+            path: "/me",
+            httpMethod: "GET",
+            baseURL: K.defaultBaseAPIURL
+        )
         
-        var request = URLRequest(url: url)
         request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        request.httpMethod = "GET"
         
         let task = urlSession.dataTask(with: request) { data, response, error in
             if let error {
