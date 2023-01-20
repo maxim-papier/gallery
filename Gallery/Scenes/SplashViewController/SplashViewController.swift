@@ -95,7 +95,7 @@ extension SplashViewController: AuthViewControllerDelegate {
     
     func fetchAuthToken(with code: String) {
         
-        getTokenService.fetchAuthToken(code: code) { [weak self] result in
+        getTokenService.fetchAuthToken(code) { [weak self] result in
             guard let self else { return }
             
             DispatchQueue.main.async {
@@ -105,7 +105,7 @@ extension SplashViewController: AuthViewControllerDelegate {
                     self.tokenStorage.token = token
                     self.fetchProfile(with: token)
                 case .failure(let error):
-                    print("ERROR: \(error.localizedDescription)")
+                    self.showErrorAlert(for: error)
                 }
                 
             }
@@ -135,7 +135,7 @@ extension SplashViewController {
                     self.switchToTabBarController()
                     
                 case.failure(let error):
-                    print("ERROR: \(error.localizedDescription)")
+                    self.showErrorAlert(for: error)
                     break
                 }
             }
@@ -154,4 +154,16 @@ extension SplashViewController {
         ProfileImageService.shared.fetchProfileImageURL(username: username!) { _ in }
         
     }
+}
+
+extension SplashViewController {
+
+    func showErrorAlert(for error: Error) {
+    
+        let message: Error = error
+        let alert = AlertService(vc: self)
+        alert.showErrorAlert(on: self, error: message)
+        
+    }
+    
 }

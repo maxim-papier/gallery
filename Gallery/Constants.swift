@@ -6,7 +6,14 @@ struct K {
     static let redirectUri = "urn:ietf:wg:oauth:2.0:oob"
     static let accessScope = "public+read_user+write_likes"
     
-    static let defaultBaseURL = URL(string: "https://api.unsplash.com")
+    static let defaultBaseAPIURL = URL(string: "https://api.unsplash.com")
+    static let defaultBaseURL = URL(string: "https://unsplash.com")
+    
+    
     static let authURL = "https://unsplash.com/oauth/authorize"
+    static let authURLPath = "/oauth/authorize"
+    
     static let getTokenURL = "https://unsplash.com/oauth/token"
+    static let getTokenURLPath = "/oauth/token"
+    
 }
