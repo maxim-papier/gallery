@@ -30,7 +30,7 @@ final class SplashViewController: UIViewController {
 extension SplashViewController {
     
     func switchToAuthOrTabBar(tokenStorage: OAuth2TokenStorage = OAuth2TokenStorage()) {
-        
+            
         if let token = tokenStorage.token {
             // logged in
             print("TOKEN::: \(token)")
