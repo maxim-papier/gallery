@@ -73,9 +73,17 @@ extension ProfileViewController {
         }
         
         DispatchQueue.main.async {
-            let processor = RoundCornerImageProcessor(cornerRadius: 32)
-            self.avatar.kf.setImage(with: url, placeholder: UIImage(named: "placeholder.svg"),
-                options: [.processor(processor)])
+            
+            let cache = ImageCache.default
+            cache.clearMemoryCache()
+            cache.clearDiskCache()
+
+
+
+            
+            // let processor = RoundCornerImageProcessor(cornerRadius: 32)
+            self.avatar.kf.setImage(with: url, placeholder: UIImage(named: "placeholder.svg"))
+                                    //,options: [.processor(processor)])
         }
         
        

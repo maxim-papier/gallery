@@ -10,9 +10,7 @@ enum TokenStorageError: Error {
 
 struct OAuth2TokenStorage {
     
-    private let tokenKey = "BearerToken"
-    let removeSuccessful: Bool = KeychainWrapper.standard.removeObject(forKey: "BearerToken")
-    
+    private let tokenKey = "BearerToken"    
 
     var token: String? {
         
