@@ -20,16 +20,21 @@ final class ProfileImageService {
     
     func fetchProfileImageURL(username: String, _ completion: @escaping (Result<String, Error>) -> Void) {
         
-        let request = URLRequest.makeHTTPRequest(
-            path: "/user/\(username)",
+        let token = tokenStorage.token
+        
+        var request = URLRequest.makeHTTPRequest(
+            path: "/users/\(username)",
             httpMethod: "GET",
             baseURL: K.defaultBaseAPIURL
         )
         
-        guard tokenStorage.token != nil else {
-            completion(.failure(TokenStorageError.tokenNotFound))
-            return
-        }
+        if let token {
+             request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+         } else {
+             completion(.failure(TokenStorageError.tokenNotFound))
+             return
+         }
+        
         
         task = session.objectTask(for: request) { [weak self] (result: Result<UserResult, Error>) in
             guard let self = self else { return }
@@ -37,13 +42,15 @@ final class ProfileImageService {
             switch result {
             
             case .success(let profileImageResult):
-                
-                guard let avatarURL = profileImageResult.profileImage.small else {
+                            
+                guard let avatarURL = profileImageResult.profileImage.medium else {
                     completion(.failure(FetchProfileImageError.noImageDataFound))
                     return
                 }
                 self.avatarURL = avatarURL
                 completion(.success(avatarURL))
+                
+                print("AVATARURL: \(avatarURL)")
                 
                 NotificationCenter.default.post(name: ProfileImageService.DidChangeNotification, object: self, userInfo: ["URL": avatarURL])
             

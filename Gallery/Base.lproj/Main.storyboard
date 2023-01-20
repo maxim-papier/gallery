@@ -161,6 +161,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" tag="1" title="" image="tab_profile_active" id="jPA-ox-vJr"/>
                     <connections>
+                        <outlet property="avatar" destination="xbw-ju-mgF" id="dT7-7u-EgQ"/>
                         <outlet property="descriptionLabel" destination="kNR-Tg-t9E" id="U9J-6d-KXO"/>
                         <outlet property="loginNameLabel" destination="R3e-0D-o17" id="OKH-9i-ef5"/>
                         <outlet property="nameLabel" destination="cNi-I2-p0G" id="6w6-IK-AaX"/>
