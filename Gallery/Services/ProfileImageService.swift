@@ -1,5 +1,12 @@
 import Foundation
 
+enum FetchProfileImageError: Error {
+    case invalidResponse
+    case dataError
+    case noImageDataFound
+    case decodingData
+}
+
 final class ProfileImageService {
     
     private let session = URLSession.shared
