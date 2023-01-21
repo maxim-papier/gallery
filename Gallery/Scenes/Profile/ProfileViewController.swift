@@ -1,10 +1,12 @@
 import UIKit
+import Kingfisher
 
 class ProfileViewController: UIViewController {
     
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var loginNameLabel: UILabel!
     @IBOutlet var descriptionLabel: UILabel!
+    @IBOutlet var avatar: UIImageView!
     
     let token = OAuth2TokenStorage().token
     
@@ -14,6 +16,7 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
         updateProfile()
         addObserverForNotifications()
+        updateAvatar()
     }
 }
 
@@ -22,7 +25,7 @@ class ProfileViewController: UIViewController {
 extension ProfileViewController {
     
     private func addObserverForNotifications() {
-        
+                
         profileImageServiceObserver = NotificationCenter.default.addObserver(
             forName: ProfileImageService.DidChangeNotification,
             object: nil,
@@ -63,8 +66,23 @@ extension ProfileViewController {
         guard
             let profileImageURL = ProfileImageService.shared.avatarURL,
             let url = URL(string: profileImageURL)
-        else { return }
-        #warning("KINGFISHER")
+
+        else {
+            print("Error creating URL with profileImageURL = \(String(describing: ProfileImageService.shared.avatarURL))")
+            return
+        }
+        
+        DispatchQueue.main.async {
+            
+            let cache = ImageCache.default
+            cache.clearMemoryCache()
+            cache.clearDiskCache()
+            
+            self.avatar.kf.setImage(with: url, placeholder: UIImage(named: "placeholder.svg"))
+        }
+        
+       
+
         
     }
     

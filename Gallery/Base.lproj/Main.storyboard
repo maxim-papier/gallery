@@ -121,7 +121,17 @@
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="UserPic" translatesAutoresizingMaskIntoConstraints="NO" id="xbw-ju-mgF" userLabel="UserPic Image">
                                                 <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="70" id="4zI-xL-8Ld"/>
+                                                    <constraint firstAttribute="height" constant="70" id="JGt-ZA-pk2"/>
+                                                </constraints>
                                                 <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="default"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <integer key="value" value="35"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.maskBounds" value="YES"/>
+                                                </userDefinedRuntimeAttributes>
                                             </imageView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5TD-GZ-Cro" userLabel="Exit Button">
                                                 <rect key="frame" x="70" y="0.0" width="304" height="70"/>
@@ -161,6 +171,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" tag="1" title="" image="tab_profile_active" id="jPA-ox-vJr"/>
                     <connections>
+                        <outlet property="avatar" destination="xbw-ju-mgF" id="dT7-7u-EgQ"/>
                         <outlet property="descriptionLabel" destination="kNR-Tg-t9E" id="U9J-6d-KXO"/>
                         <outlet property="loginNameLabel" destination="R3e-0D-o17" id="OKH-9i-ef5"/>
                         <outlet property="nameLabel" destination="cNi-I2-p0G" id="6w6-IK-AaX"/>

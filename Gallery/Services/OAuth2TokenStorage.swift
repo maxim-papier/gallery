@@ -1,25 +1,42 @@
 import Foundation
+import SwiftKeychainWrapper
+
 
 enum TokenStorageError: Error {
-    
     case tokenNotFound
-    
+    case newValueError
 }
 
 
 struct OAuth2TokenStorage {
     
-    private let tokenKey = "BearerToken"
+    private let tokenKey = "BearerToken"    
 
     var token: String? {
         
-        set { UserDefaults.standard.set(newValue, forKey: tokenKey) }
-        get { return UserDefaults.standard.string(forKey: tokenKey) }
+        set {
+            
+            if let newValue = newValue {
+                KeychainWrapper.standard.set(newValue, forKey: tokenKey)
+            } else {
+                return
+            }
+            
+        }
+        get { return KeychainWrapper.standard.string(forKey: tokenKey) }
         
     }
     
     func updateToken(with newValue: String?) {
-        UserDefaults.standard.set(newValue, forKey: tokenKey)
+        
+        if let newValue = newValue {
+            
+            KeychainWrapper.standard.set(newValue, forKey: tokenKey)
+            
+        } else {
+            return
+        }
     }
+    
     
 }
