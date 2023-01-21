@@ -13,6 +13,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
         window?.rootViewController = UIStoryboard(name: "Main", bundle: .main).instantiateInitialViewController()
+        window?.makeKeyAndVisible()
+        
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
