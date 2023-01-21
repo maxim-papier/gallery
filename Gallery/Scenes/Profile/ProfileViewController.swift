@@ -77,13 +77,10 @@ extension ProfileViewController {
             let cache = ImageCache.default
             cache.clearMemoryCache()
             cache.clearDiskCache()
-            
+            self.avatar.kf.indicatorType = .activity
             self.avatar.kf.setImage(with: url, placeholder: UIImage(named: "placeholder.svg"))
         }
-        
-       
 
-        
     }
     
 }
