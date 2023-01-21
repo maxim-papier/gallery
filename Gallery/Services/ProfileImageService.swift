@@ -50,7 +50,7 @@ final class ProfileImageService {
                 self.avatarURL = avatarURL
                 completion(.success(avatarURL))
                 
-                print("AVATARURL: \(avatarURL)")
+                print("AVATAR URL: \(avatarURL)")
                 
                 NotificationCenter.default.post(name: ProfileImageService.DidChangeNotification, object: self, userInfo: ["URL": avatarURL])
             
