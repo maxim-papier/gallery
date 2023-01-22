@@ -8,13 +8,11 @@ enum SplashError: String {
 final class SplashViewController: UIViewController, AuthViewControllerDelegate {
         
     private let getTokenService = OAuth2Service()
-    private let tokenStorage = OAuth2TokenStorage()
+    private var tokenStorage = OAuth2TokenStorage()
     private let profileService = ProfileService.shared
-    
     
     let tabBarVCID = "TabBarViewControllerID"
     let authViewVCID = "AuthViewControllerID"
-    
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
