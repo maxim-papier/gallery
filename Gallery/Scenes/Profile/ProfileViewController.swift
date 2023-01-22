@@ -3,131 +3,128 @@ import Kingfisher
 
 class ProfileViewController: UIViewController {
     
-
+    
     let token = OAuth2TokenStorage().token
     
+    var avatar = UIImageView()
+    var nameLabel = UILabel()
+    var loginNameLabel = UILabel()
+    var descriptionLabel = UILabel()
+    var logoutButton = UIButton()
+    
     private var profileImageServiceObserver: NSObjectProtocol?
-        
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUI()
+        setupUI()
         updateProfile()
         addObserverForNotifications()
         updateAvatar()
     }
+    
 }
 
 
-// UI settings
+// MARK: - UI setup
 
 extension ProfileViewController {
     
-    private func setUI() {
+    func setupUI() {
         
         view.backgroundColor = UIColor.blackYP
         
-        let avatar: UIImageView = {
-            
-            let profileImage = UIImage(named: "UserPic")
-            let imageView = UIImageView(image: profileImage)
-            imageView.clipsToBounds = true
-            imageView.contentMode = .scaleAspectFill
-            
-            imageView.translatesAutoresizingMaskIntoConstraints = false
-            view.addSubview(imageView)
-            
-            imageView.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor).isActive = true
-            imageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32).isActive = true
-            imageView.widthAnchor.constraint(equalToConstant: 70).isActive = true
-            imageView.heightAnchor.constraint(equalToConstant: 70).isActive = true
-            
-            return imageView
-            
-        }()
+        // Setting up the avatar
         
-        let nameLabel: UILabel = {
-            
-            let nameLabel = UILabel()
-            
-            nameLabel.text = "Name"
-            nameLabel.font = UIFont.boldSystemFont(ofSize: 18)
-            nameLabel.textColor = UIColor.whiteYP
-            
-            nameLabel.translatesAutoresizingMaskIntoConstraints = false
-            view.addSubview(nameLabel)
-            
-            nameLabel.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor).isActive = true
-            nameLabel.topAnchor.constraint(equalTo: avatar.bottomAnchor, constant: 8).isActive = true
-            
-            return nameLabel
-            
-        }()
+        let profileImage = UIImage(named: "UserPic")
+        
+        avatar.image = profileImage
+        
+        avatar.layer.cornerRadius = 35
+        avatar.clipsToBounds = true
+        avatar.contentMode = .scaleAspectFill
         
         
-        let loginNameLabel: UILabel = {
-            
-            let loginNameLabel = UILabel()
-            
-            loginNameLabel.text = "@username"
-            loginNameLabel.font = UIFont.boldSystemFont(ofSize: 13)
-            loginNameLabel.textColor = UIColor.grayYP
-            
-            loginNameLabel.translatesAutoresizingMaskIntoConstraints = false
-            view.addSubview(loginNameLabel)
-            
-            loginNameLabel.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor).isActive = true
-            loginNameLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8).isActive = true
-            
-            return loginNameLabel
-            
-        }()
+        avatar.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(avatar)
+        
+        avatar.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor).isActive = true
+        avatar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32).isActive = true
+        avatar.widthAnchor.constraint(equalToConstant: 70).isActive = true
+        avatar.heightAnchor.constraint(equalToConstant: 70).isActive = true
         
         
-        let descriptionLabel: UILabel = {
-            
-            let descriptionLabel = UILabel()
-            
-            descriptionLabel.text = "Biography"
-            descriptionLabel.font = UIFont.systemFont(ofSize: 13)
-            descriptionLabel.textColor = UIColor.whiteYP
-            
-            descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
-            view.addSubview(descriptionLabel)
-            
-            descriptionLabel.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor).isActive = true
-            descriptionLabel.topAnchor.constraint(equalTo: loginNameLabel.bottomAnchor, constant: 8).isActive = true
-            
-            return descriptionLabel
-            
-        }()
+        
+        // Setting up the nameLabel
+        
+        nameLabel.text = "Name"
+        nameLabel.font = UIFont.boldSystemFont(ofSize: 18)
+        nameLabel.textColor = UIColor.whiteYP
+        
+        nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(nameLabel)
+        
+        nameLabel.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor).isActive = true
+        nameLabel.topAnchor.constraint(equalTo: avatar.bottomAnchor, constant: 8).isActive = true
         
         
-        let logoutButton: UIButton = {
-            
-            let image = UIImage(named: "logout_icon")
-            let logoutButton = UIButton()
-            logoutButton.setBackgroundImage(image, for: .normal)
-            
-            logoutButton.translatesAutoresizingMaskIntoConstraints = false
-            view.addSubview(logoutButton)
-            
-            logoutButton.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor, constant: -8).isActive = true
-            logoutButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 55).isActive = true
-            
-            return logoutButton
-            
-        }()
+        
+        // Setting up the loginNameLabel
+        
+        loginNameLabel.text = "@username"
+        loginNameLabel.font = UIFont.boldSystemFont(ofSize: 13)
+        loginNameLabel.textColor = UIColor.grayYP
+        
+        loginNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(loginNameLabel)
+        
+        loginNameLabel.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor).isActive = true
+        loginNameLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8).isActive = true
+        
+        
+        
+        // Setting up the descriptionLabel
+        
+        descriptionLabel.text = "Biography"
+        descriptionLabel.font = UIFont.systemFont(ofSize: 13)
+        descriptionLabel.textColor = UIColor.whiteYP
+        
+        descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(descriptionLabel)
+        
+        descriptionLabel.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor).isActive = true
+        descriptionLabel.topAnchor.constraint(equalTo: loginNameLabel.bottomAnchor, constant: 8).isActive = true
+        
+        
+        
+        // Setting up the logoutButton
+        
+        let image = UIImage(named: "logout_icon")
+        
+        logoutButton.setBackgroundImage(image, for: .normal)
+        logoutButton.tintColor = UIColor.redYP
+        
+        
+        logoutButton.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(logoutButton)
+        
+        logoutButton.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor, constant: -8).isActive = true
+        logoutButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 55).isActive = true
+        
         
     }
+
+    
 }
 
 
-// Adding an observer
+
+
+// MARK: - Adding an observer
 
 extension ProfileViewController {
-
+    
     private func addObserverForNotifications() {
-
+        
         profileImageServiceObserver = NotificationCenter.default.addObserver(
             forName: ProfileImageService.DidChangeNotification,
             object: nil,
@@ -137,52 +134,53 @@ extension ProfileViewController {
                 self.updateAvatar()
             }
         )
-
+        
     }
-
+    
 }
 
- // MARK: - UI updates section
+// MARK: - UI updates section
 
 
 extension ProfileViewController {
-
+    
     private func updateProfile() {
-
+        
         let profileService = ProfileService.shared
         let profile = profileService.profile
-
+        
         nameLabel.text = profile?.name
         loginNameLabel.text = profile?.loginName
         descriptionLabel.text = profile?.bio
-
+        
     }
-
+    
 }
 
 
 extension ProfileViewController {
-
+    
     func updateAvatar() {
-
+        
+        
         guard
             let profileImageURL = ProfileImageService.shared.avatarURL,
             let url = URL(string: profileImageURL)
-
+                
         else {
             print("Error creating URL with profileImageURL = \(String(describing: ProfileImageService.shared.avatarURL))")
             return
         }
-
+        
         DispatchQueue.main.async {
-
+            
             let cache = ImageCache.default
             cache.clearMemoryCache()
             cache.clearDiskCache()
             self.avatar.kf.indicatorType = .activity
             self.avatar.kf.setImage(with: url, placeholder: UIImage(named: "placeholder.svg"))
         }
-
+        
     }
-
+    
 }
