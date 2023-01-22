@@ -3,27 +3,56 @@ import ProgressHUD
 
 enum SplashError: String {
     case invalidConfiguration = "Invalid Configuration"
-    case failedToPrepSegue = "Failed to prepare to segue for: "
 }
 
 
-final class SplashViewController: UIViewController {
-    
-    private let showAuthScreenSegueID = "ShowAuthenticationScreen"
-    private let tabBarStoryboardID = "TabBarViewController"
-    
+final class SplashViewController: UIViewController, AuthViewControllerDelegate {
+        
     private let getTokenService = OAuth2Service()
     private var tokenStorage = OAuth2TokenStorage()
     private let profileService = ProfileService.shared
     
+    let authViewController = AuthViewController()
+    
+    let tabBarVCID = "TabBarViewControllerID"
+    let authViewVCID = "AuthViewControllerID"
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        authViewController.delegate = self
+    }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        setupUI()
         switchToAuthOrTabBar()
     }
     
 }
 
+
+// MARK: - UI
+
+
+extension SplashViewController {
+    
+    func setupUI() {
+        
+        view.backgroundColor = UIColor.blackYP
+        
+        let logoImageYP = UIImage(named: "YPLogo")
+        let logoImage = UIImageView(image: logoImageYP)
+        
+        logoImage.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(logoImage)
+        
+        logoImage.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        logoImage.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+
+    }
+    
+}
 
 // MARK: - Checking if this is logged in user:
 
@@ -37,12 +66,21 @@ extension SplashViewController {
             fetchProfile(with: token)
         } else {
             // is NOT logged in
-            performSegue(withIdentifier: showAuthScreenSegueID, sender: nil)
+            print("NO TOKEN FOUND")
+            
+            
+            let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AuthViewControllerID") as! AuthViewController
+            
+            self.present(controller, animated: true, completion: nil)
+
+            
+
         }
         
     }
     
 }
+
 
 
 // MARK: - Switch to the TabBarController if user is authorized
@@ -55,7 +93,7 @@ extension SplashViewController {
         guard let window = UIApplication.shared.windows.first else
         { fatalError(SplashError.invalidConfiguration.rawValue) }
         
-        let tabBarController = UIStoryboard(name: "Main", bundle: .main).instantiateViewController(withIdentifier: tabBarStoryboardID)
+        let tabBarController = UIStoryboard(name: "Main", bundle: .main).instantiateViewController(withIdentifier: tabBarVCID)
         
         window.rootViewController = tabBarController
         
@@ -64,27 +102,6 @@ extension SplashViewController {
 }
 
 extension SplashViewController {
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        if segue.identifier == showAuthScreenSegueID {
-            
-            guard
-                let navigationController = segue.destination as? UINavigationController,
-                let viewController = navigationController.viewControllers.first as? AuthViewController else {
-                fatalError(SplashError.failedToPrepSegue.rawValue + showAuthScreenSegueID)
-            }
-            
-            viewController.delegate = self
-            
-        } else {
-            super.prepare(for: segue, sender: sender)
-        }
-    }
-    
-}
-
-extension SplashViewController: AuthViewControllerDelegate {
     
     func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String) {
         
@@ -167,3 +184,4 @@ extension SplashViewController {
     }
     
 }
+
