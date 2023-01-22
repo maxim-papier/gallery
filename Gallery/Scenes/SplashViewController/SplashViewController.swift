@@ -1,5 +1,4 @@
 import UIKit
-import ProgressHUD
 
 enum SplashError: String {
     case invalidConfiguration = "Invalid Configuration"
@@ -9,17 +8,13 @@ enum SplashError: String {
 final class SplashViewController: UIViewController, AuthViewControllerDelegate {
         
     private let getTokenService = OAuth2Service()
-    private var tokenStorage = OAuth2TokenStorage()
+    private let tokenStorage = OAuth2TokenStorage()
     private let profileService = ProfileService.shared
     
     
     let tabBarVCID = "TabBarViewControllerID"
     let authViewVCID = "AuthViewControllerID"
     
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -59,13 +54,13 @@ extension SplashViewController {
     func switchToAuthOrTabBar(tokenStorage: OAuth2TokenStorage = OAuth2TokenStorage()) {
             
         if let token = tokenStorage.token {
-            // logged in
+
             print("TOKEN::: \(token)")
             fetchProfile(with: token)
+
         } else {
-            // is NOT logged in
+
             print("NO TOKEN FOUND")
-            
             
             let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AuthViewControllerID") as! AuthViewController
             
@@ -167,10 +162,8 @@ extension SplashViewController {
     func fetchProfileImageURL() {
         
         let profile = profileService.profile
-        let username = profile?.username
-
-        ProfileImageService.shared.fetchProfileImageURL(username: username!) { _ in }
-        
+        guard let username = profile?.username else { return }
+        ProfileImageService.shared.fetchProfileImageURL(username: username) { _ in }
     }
 }
 

@@ -4,13 +4,13 @@ import Kingfisher
 class ProfileViewController: UIViewController {
     
     
-    let token = OAuth2TokenStorage().token
+    private let token = OAuth2TokenStorage().token
     
-    var avatar = UIImageView()
-    var nameLabel = UILabel()
-    var loginNameLabel = UILabel()
-    var descriptionLabel = UILabel()
-    var logoutButton = UIButton()
+    let avatar = UIImageView()
+    let nameLabel = UILabel()
+    let loginNameLabel = UILabel()
+    let descriptionLabel = UILabel()
+    let logoutButton = UIButton()
     
     private var profileImageServiceObserver: NSObjectProtocol?
     

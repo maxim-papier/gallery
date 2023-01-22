@@ -64,7 +64,7 @@ extension OAuth2Service {
     private func authTokenRequest(with code: String) -> URLRequest {
         
         var request = URLRequest.makeHTTPRequest(
-            path: K.getTokenURLPath,
+            path: K.tokenURLPath,
             httpMethod: "POST",
             baseURL: K.defaultBaseURL)
         
