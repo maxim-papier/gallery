@@ -1,6 +1,6 @@
 import UIKit
 
-enum SplashError: String {
+enum SplashError: String, Error {
     case invalidConfiguration = "Invalid Configuration"
 }
 
@@ -66,13 +66,9 @@ extension SplashViewController {
 
             controller.delegate = self
             
-
         }
-        
     }
-    
 }
-
 
 
 // MARK: - Switch to the TabBarController if user is authorized
@@ -83,7 +79,7 @@ extension SplashViewController {
     func switchToTabBarController() {
         
         guard let window = UIApplication.shared.windows.first else
-        { fatalError(SplashError.invalidConfiguration.rawValue) }
+        { fatalError(SplashError.invalidConfiguration.localizedDescription) }
         
         let tabBarController = UIStoryboard(name: "Main", bundle: .main).instantiateViewController(withIdentifier: tabBarVCID)
         
