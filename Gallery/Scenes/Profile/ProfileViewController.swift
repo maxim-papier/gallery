@@ -25,98 +25,101 @@ class ProfileViewController: UIViewController {
 }
 
 
-// MARK: - UI setup
+// MARK: - UI
 
 extension ProfileViewController {
     
     func setupUI() {
         
+        // MARK: - SETUP UI
+        
         view.backgroundColor = UIColor.blackYP
         
-        // Setting up the avatar
+        
+        /// Avatar
         
         let profileImage = UIImage(named: "UserPic")
         
         avatar.image = profileImage
-        
         avatar.layer.cornerRadius = 35
         avatar.clipsToBounds = true
         avatar.contentMode = .scaleAspectFill
         
-        
         avatar.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(avatar)
         
-        avatar.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor).isActive = true
-        avatar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32).isActive = true
-        avatar.widthAnchor.constraint(equalToConstant: 70).isActive = true
-        avatar.heightAnchor.constraint(equalToConstant: 70).isActive = true
         
-        
-        
-        // Setting up the nameLabel
+        /// Name
         
         nameLabel.text = "Name"
+        
         nameLabel.font = UIFont.boldSystemFont(ofSize: 18)
         nameLabel.textColor = UIColor.whiteYP
         
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(nameLabel)
         
-        nameLabel.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor).isActive = true
-        nameLabel.topAnchor.constraint(equalTo: avatar.bottomAnchor, constant: 8).isActive = true
         
-        
-        
-        // Setting up the loginNameLabel
+        /// Username
         
         loginNameLabel.text = "@username"
+        
         loginNameLabel.font = UIFont.boldSystemFont(ofSize: 13)
         loginNameLabel.textColor = UIColor.grayYP
         
         loginNameLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(loginNameLabel)
         
-        loginNameLabel.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor).isActive = true
-        loginNameLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8).isActive = true
         
-        
-        
-        // Setting up the descriptionLabel
+        /// Bio/Description
         
         descriptionLabel.text = "Biography"
+        
         descriptionLabel.font = UIFont.systemFont(ofSize: 13)
         descriptionLabel.textColor = UIColor.whiteYP
         
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(descriptionLabel)
         
-        descriptionLabel.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor).isActive = true
-        descriptionLabel.topAnchor.constraint(equalTo: loginNameLabel.bottomAnchor, constant: 8).isActive = true
         
-        
-        
-        // Setting up the logoutButton
+        // Logout button
         
         let image = UIImage(named: "logout_icon")
         
         logoutButton.setBackgroundImage(image, for: .normal)
         logoutButton.tintColor = UIColor.redYP
         
-        
         logoutButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(logoutButton)
         
+        
+        // MARK: - CONSTRAINTS
+        
+        /// Avatar
+        avatar.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor).isActive = true
+        avatar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32).isActive = true
+        avatar.widthAnchor.constraint(equalToConstant: 70).isActive = true
+        avatar.heightAnchor.constraint(equalToConstant: 70).isActive = true
+        
+        /// Name
+        nameLabel.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor).isActive = true
+        nameLabel.topAnchor.constraint(equalTo: avatar.bottomAnchor, constant: 8).isActive = true
+        
+        /// Login
+        loginNameLabel.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor).isActive = true
+        loginNameLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8).isActive = true
+        
+        /// Bio/Description
+        descriptionLabel.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor).isActive = true
+        descriptionLabel.topAnchor.constraint(equalTo: loginNameLabel.bottomAnchor, constant: 8).isActive = true
+        
+        /// Logout Button
         logoutButton.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor, constant: -8).isActive = true
         logoutButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 55).isActive = true
         
         
     }
-
-    
 }
-
-
 
 
 // MARK: - Adding an observer
