@@ -100,6 +100,9 @@ extension SplashViewController {
     
 }
 
+
+// MARK: - Fetches
+
 extension SplashViewController {
     
     func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String) {
@@ -132,7 +135,6 @@ extension SplashViewController {
     
 }
 
-//
 
 extension SplashViewController {
     
@@ -171,6 +173,9 @@ extension SplashViewController {
         
     }
 }
+
+
+// MARK: - Alerts
 
 extension SplashViewController {
 
