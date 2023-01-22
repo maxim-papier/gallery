@@ -12,7 +12,6 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
     private var tokenStorage = OAuth2TokenStorage()
     private let profileService = ProfileService.shared
     
-    let authViewController = AuthViewController()
     
     let tabBarVCID = "TabBarViewControllerID"
     let authViewVCID = "AuthViewControllerID"
@@ -20,7 +19,6 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        authViewController.delegate = self
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -73,6 +71,7 @@ extension SplashViewController {
             
             self.present(controller, animated: true, completion: nil)
 
+            controller.delegate = self
             
 
         }
