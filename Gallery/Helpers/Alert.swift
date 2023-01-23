@@ -1,20 +1,12 @@
 import UIKit
 
 final class AlertService {
+        
+    init() {}
     
-    private let vc: UIViewController
-    
-    init(vc: UIViewController) {
-        self.vc = vc
-    }
-    
-    func showErrorAlert(on vc: UIViewController, error: Error) {
+    func showErrorAlert(on vc: UIViewController, error: Error, handler: @escaping () -> Void) {
         let alert = UIAlertController(title: "Что-то пошло не так", message: error.localizedDescription, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
-            DispatchQueue.main.async {
-                alert.dismiss(animated: true, completion: nil)
-            }
-        }))
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in handler() }))
         vc.present(alert, animated: true)
     }
 

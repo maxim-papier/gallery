@@ -1,4 +1,5 @@
 import UIKit
+import SwiftKeychainWrapper
 
 enum SplashError: String, Error {
     case invalidConfiguration = "Invalid Configuration"
@@ -13,6 +14,12 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
     
     let tabBarVCID = "TabBarViewControllerID"
     let authViewVCID = "AuthViewControllerID"
+    
+    override func viewDidLoad() {
+        
+        tokenStorage.token = nil
+        
+    }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -50,7 +57,10 @@ extension SplashViewController {
 extension SplashViewController {
     
     func switchToAuthOrTabBar(tokenStorage: OAuth2TokenStorage = OAuth2TokenStorage()) {
-            
+        
+        //deleteToken()
+        //sleep(2)
+        
         if let token = tokenStorage.token {
 
             print("TOKEN::: \(token)")
@@ -60,11 +70,13 @@ extension SplashViewController {
 
             print("NO TOKEN FOUND")
             
-            let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AuthViewControllerID") as! AuthViewController
+            let nextVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AuthViewControllerID") as! AuthViewController
             
-            self.present(controller, animated: true, completion: nil)
+            nextVC.modalPresentationStyle = .fullScreen
+            self.present(nextVC, animated: true, completion: nil)
 
-            controller.delegate = self
+        
+            nextVC.delegate = self
             
         }
     }
@@ -96,7 +108,7 @@ extension SplashViewController {
     
     func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String) {
         
-        UIBlockingProgressHUD.show()
+        //UIBlockingProgressHUD.show()
         fetchAuthToken(with: code)
         
     }
@@ -121,9 +133,10 @@ extension SplashViewController {
         }
         
     }
-    
+        
 }
 
+#warning("РАЗБЕРИСЬ С ОТОБРАЖАНИЕМ АУТВЬЮВС")
 
 extension SplashViewController {
     
@@ -137,7 +150,7 @@ extension SplashViewController {
                 switch result {
                     
                 case.success(_):
-                    UIBlockingProgressHUD.dismiss()
+                    // UIBlockingProgressHUD.dismiss()
                     self.fetchProfileImageURL()
                     self.switchToTabBarController()
                     
@@ -167,12 +180,20 @@ extension SplashViewController {
 extension SplashViewController {
 
     func showErrorAlert(for error: Error) {
-    
+        var activeVC: UIViewController = self
+
+        while let presentedVC = activeVC.presentedViewController {
+            activeVC = presentedVC
+        }
+
         let message: Error = error
-        let alert = AlertService(vc: self)
-        alert.showErrorAlert(on: self, error: message)
+        let alert = AlertService()
+        alert.showErrorAlert(on: activeVC, error: message) {
+            activeVC.dismiss(animated: true)
+        }
         
     }
     
 }
+
 
