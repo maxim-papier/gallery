@@ -1,5 +1,4 @@
 import UIKit
-import SwiftKeychainWrapper
 
 enum SplashError: String, Error {
     case invalidConfiguration = "Invalid Configuration"
@@ -17,7 +16,7 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
     
     override func viewDidLoad() {
         
-        tokenStorage.token = nil
+        tokenStorage.token = nil // for testing
         
     }
     
@@ -47,6 +46,9 @@ extension SplashViewController {
         
         logoImage.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         logoImage.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        
+        logoImage.widthAnchor.constraint(equalToConstant: 70).isActive = true
+        logoImage.heightAnchor.constraint(equalToConstant: 70).isActive = true
 
     }
     
@@ -57,10 +59,7 @@ extension SplashViewController {
 extension SplashViewController {
     
     func switchToAuthOrTabBar(tokenStorage: OAuth2TokenStorage = OAuth2TokenStorage()) {
-        
-        //deleteToken()
-        //sleep(2)
-        
+                
         if let token = tokenStorage.token {
 
             print("TOKEN::: \(token)")
@@ -108,7 +107,7 @@ extension SplashViewController {
     
     func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String) {
         
-        //UIBlockingProgressHUD.show()
+        UIBlockingProgressHUD.show()
         fetchAuthToken(with: code)
         
     }
@@ -120,6 +119,8 @@ extension SplashViewController {
             
             DispatchQueue.main.async {
                 
+                UIBlockingProgressHUD.dismiss()
+                
                 switch result {
                 case .success(let token):
                     self.tokenStorage.token = token
@@ -127,6 +128,8 @@ extension SplashViewController {
                 case .failure(let error):
                     self.showErrorAlert(for: error)
                 }
+                
+
                 
             }
             
@@ -136,7 +139,6 @@ extension SplashViewController {
         
 }
 
-#warning("РАЗБЕРИСЬ С ОТОБРАЖАНИЕМ АУТВЬЮВС")
 
 extension SplashViewController {
     
@@ -150,7 +152,6 @@ extension SplashViewController {
                 switch result {
                     
                 case.success(_):
-                    // UIBlockingProgressHUD.dismiss()
                     self.fetchProfileImageURL()
                     self.switchToTabBarController()
                     
