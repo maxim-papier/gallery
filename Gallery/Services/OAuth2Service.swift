@@ -1,21 +1,75 @@
 import Foundation
 
-enum FetchError: Error {
-    case noResponse
-    case invalidResponse
-    case decodingError
+enum FetchTokenError: Error {
+    case serializationError(Error)
 }
 
-class OAuth2Service {
+final class OAuth2Service {
     
-    func fetchAuthToken(code: String, completion: @escaping (Result<String, Error>) -> Void) {
-        
-        // MARK: - Settings
-        
-        var urlRequest = URLRequest(url: URL(string: K.getTokenURL)!)
-        urlRequest.httpMethod = "POST"
-        urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+    private let session = URLSession.shared
+    private var task: URLSessionTask?
+    
+    private var lastCode: String?
+
+    private (set) var authToken: String? {
+        get {
+            return OAuth2TokenStorage().token
+        }
+        set {
+            guard let newValue = newValue else {
                 
+            return }
+            OAuth2TokenStorage().updateToken(with: newValue)
+        }
+    }
+
+    
+    // Attempts to get the token from the server by passing "code" as the parameter
+
+    func fetchAuthToken(
+        _ code: String,
+        completion: @escaping (Result<String, Error>) -> Void
+    ) {
+        
+        assert(Thread.isMainThread)
+        
+        guard lastCode != code else { return }
+        task?.cancel()
+        lastCode = code
+        
+        
+        let request = authTokenRequest(with: code)
+        
+        task = session.objectTask(for: request) { [weak self] (result: Result<OAuthTokenResponseBody, Error>) in
+            guard let self else { return }
+        
+            switch result {
+                
+            case .success(let body):
+                let receivedAuthToken = body.accessToken
+                self.authToken = receivedAuthToken
+                completion(.success(receivedAuthToken))
+                
+            case .failure(let error):
+                completion(.failure(error))
+                
+            }
+        }
+    }
+}
+
+
+extension OAuth2Service {
+    
+    private func authTokenRequest(with code: String) -> URLRequest {
+        
+        var request = URLRequest.makeHTTPRequest(
+            path: K.tokenURLPath,
+            httpMethod: "POST",
+            baseURL: K.defaultBaseURL)
+        
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
         let parameters: [String: Any] = [
             "client_id": K.accessKey,
             "client_secret": K.secretKey,
@@ -24,45 +78,11 @@ class OAuth2Service {
             "grant_type": "authorization_code"
         ]
         
-        do  {
-            urlRequest.httpBody = try JSONSerialization.data(withJSONObject: parameters)
-        } catch {
-            print("JSON serialization error \(error)")
-        }
-        
-        // MARK: - Send request to the server
-        
-        URLSession.shared.dataTask(with: urlRequest) { data, response, error in
-            
-            if let error {
-                DispatchQueue.main.async {
-                    completion(.failure(error))
-                }
-                return
-            }
-            
-            guard let response = response as? HTTPURLResponse, (200...299).contains(response.statusCode) else {
-                DispatchQueue.main.async {
-                    completion(.failure(FetchError.invalidResponse))
-                }
-                return
-            }
-            
-            // Check data
-            if let data {
-                
-                do {
-                    let tokenResponse = try JSONDecoder().decode(OAuthTokenResponseBody.self, from: data)
-                                        
-                    DispatchQueue.main.async {
-                        let token = tokenResponse.accessToken
-                        completion(.success(token))
-                    }
-                    
-                } catch {
-                    completion(.failure(FetchError.decodingError))
-                }
-            }
-        }.resume()
+        request.httpBody = try? JSONSerialization.data(withJSONObject: parameters)
+        return request
     }
+    
 }
+
+
+
