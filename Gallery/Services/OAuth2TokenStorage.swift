@@ -2,7 +2,7 @@ import Foundation
 import SwiftKeychainWrapper
 
 
-enum TokenStorageError: Error {
+enum TokenStorageError: String, Error {
     case tokenNotFound
     case newValueError
 }

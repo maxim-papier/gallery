@@ -1,6 +1,6 @@
 import Foundation
 
-enum FetchProfileImageError: Error {
+enum FetchProfileImageError: String, Error {
     case invalidResponse
     case dataError
     case noImageDataFound

@@ -1,6 +1,6 @@
 import Foundation
 
-enum FetchProfileError: Error {
+enum FetchProfileError: String, Error {
     case noProfileData
 }
 
