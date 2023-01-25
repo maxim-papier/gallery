@@ -10,7 +10,7 @@ enum TokenStorageError: String, Error {
 
 struct OAuth2TokenStorage {
     
-    private let tokenKey = "BearerToken"    
+    private let tokenKey = "BearerToken"
 
     var token: String? {
         
