@@ -19,7 +19,11 @@ final class ProfileService {
     func fetchProfile(_ token: String, completion: @escaping (Result<Profile, Error>) -> Void) {
         
         assert(Thread.isMainThread)
-        task?.cancel()
+
+        if let currentTask = task {
+            currentTask.cancel()
+        }
+        
         
         var request = URLRequest.makeHTTPRequest(
             path: "/me",
@@ -28,6 +32,7 @@ final class ProfileService {
         )
         
         request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        
         
         task = session.objectTask(for: request) { [weak self] (result: Result<ProfileResult, Error>) in
             guard let self else { return }
