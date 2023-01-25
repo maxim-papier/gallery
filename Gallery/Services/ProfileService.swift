@@ -20,10 +20,7 @@ final class ProfileService {
         
         assert(Thread.isMainThread)
 
-        if let currentTask = task {
-            currentTask.cancel()
-        }
-        
+        task?.cancel()
         
         var request = URLRequest.makeHTTPRequest(
             path: "/me",

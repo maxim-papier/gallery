@@ -5,19 +5,16 @@ enum FetchPhotoError: String, Error {
 }
 
 
+
 final class ImageListService {
     
     private var task: URLSessionTask?
     private let session = URLSession.shared
     
     
-    private let notificationCenter: NotificationCenter
+    private let notificationCenter: NotificationCenter = NotificationCenter()
     let didChangeNotification = Notification.Name(rawValue: "ImagesListServiceDidChange")
-    
-    init(notificationCenter: NotificationCenter) {
-        self.notificationCenter = notificationCenter
-    }
-    
+        
     
     private let tokenStorage = OAuth2TokenStorage()
     private (set) var photos: [Photo] = [] {
@@ -33,15 +30,18 @@ final class ImageListService {
         return formatter
     }()
     
+    func prepareForDisplay(index: Int) {
+        guard index == photos.count - 1, task == nil else {
+            return
+        }
+        fetchPhotosNextPage()
+    }
+
+    
     
     // MARK: - Service
     
     func fetchPhotosNextPage() {
-        
-        assert(Thread.isMainThread)
-        
-        task?.cancel()
-        
         
         let token = tokenStorage.token
         let nextPage = lastLoadedPage == nil ? 1 : lastLoadedPage! + 1
@@ -75,9 +75,9 @@ final class ImageListService {
 }
 
 
-extension ImageListService {
+private extension ImageListService {
     
-    func photoRequest(with token: String, page: Int) -> URLRequest {
+        func photoRequest(with token: String, page: Int) -> URLRequest {
         
         var request = URLRequest.makeHTTPRequest(
             path: K.tokenURLPath,
