@@ -11,7 +11,7 @@ final class ImageListService {
     private let session = URLSession.shared
     
     
-    private let notificationCenter: NotificationCenter = NotificationCenter()
+    private let notificationCenter: NotificationCenter = .default
     let didChangeNotification = Notification.Name(rawValue: "ImagesListServiceDidChange")
     
     
@@ -65,6 +65,7 @@ final class ImageListService {
                 DispatchQueue.main.async { [weak self] in
                     guard let self else { return }
                     self.photos += photos
+                    self.lastLoadedPage = nextPage + 1
                 }
             case let .failure(error):
                 print("Task error: \(error.localizedDescription)")

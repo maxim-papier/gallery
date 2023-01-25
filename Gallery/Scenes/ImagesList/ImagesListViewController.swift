@@ -6,7 +6,7 @@ class ImagesListViewController: UIViewController {
     @IBOutlet private var tableView: UITableView!
     
     private let ShowSingleImageSegueID = "ShowSingleImage"
-    private let notificationCenter: NotificationCenter = NotificationCenter()
+    private let notificationCenter: NotificationCenter = .default
     private let imagesListService: ImageListService = ImageListService()
     private var imagesListObserver: NSObjectProtocol?
 
@@ -21,13 +21,12 @@ class ImagesListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        imagesListService.fetchPhotosNextPage()
-        
-        tableView.register(ImagesListCell.self, forCellReuseIdentifier: "\(ImagesListCell.self)")
-        
+                        
         tableView.delegate = self
         tableView.dataSource = self
+        
+        imagesListService.fetchPhotosNextPage()
+
         
     }
     
@@ -84,13 +83,14 @@ extension ImagesListViewController: UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return imagesListService.photos.count
+        let count = imagesListService.photos.count
+        print("COUNT = \(count)")
+        return count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-                
-        let cell = tableView.dequeueReusableCell(withIdentifier: "\(ImagesListCell.self)" , for: indexPath)
-        
+        print("CELL IS OK")
+        let cell = tableView.dequeueReusableCell(withIdentifier: ImagesListCell.reuseIdentifier , for: indexPath)
         guard let imagesListCell = cell as? ImagesListCell else {
             fatalError("ImageList cell error")
         }
