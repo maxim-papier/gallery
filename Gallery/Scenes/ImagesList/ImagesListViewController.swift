@@ -95,12 +95,12 @@ extension ImagesListViewController: UITableViewDataSource {
             fatalError("ImageList cell error")
         }
         
-        imagesListCell.previewImage.kf.setImage(with: UIImage(named: "stub"))
-        
+
         let photo = imagesListService.photos[indexPath.row]
         let url = photo.thumbnailImage
-        imagesListCell.previewImage.kf.setImage(with: url)
-        
+
+        imagesListCell.previewImage.kf.indicatorType = .activity        
+        imagesListCell.previewImage.kf.setImage(with: url, placeholder: UIImage(named: "stub"))
         
         return imagesListCell
     }
