@@ -5,7 +5,6 @@ enum FetchPhotoError: String, Error {
 }
 
 
-
 final class ImageListService {
     
     private var task: URLSessionTask?
@@ -14,7 +13,7 @@ final class ImageListService {
     
     private let notificationCenter: NotificationCenter = NotificationCenter()
     let didChangeNotification = Notification.Name(rawValue: "ImagesListServiceDidChange")
-        
+    
     
     private let tokenStorage = OAuth2TokenStorage()
     private (set) var photos: [Photo] = [] {
@@ -36,7 +35,7 @@ final class ImageListService {
         }
         fetchPhotosNextPage()
     }
-
+    
     
     
     // MARK: - Service
@@ -57,17 +56,18 @@ final class ImageListService {
             guard let self else { return }
             
             switch result {
+                
             case let .success(photoResults):
                 let photos = photoResults.map {
                     $0.convertToViewModel(formatter: self.dateFormatter)
                 }
-                
+                print("Task succeeded")
                 DispatchQueue.main.async { [weak self] in
                     guard let self else { return }
                     self.photos += photos
                 }
             case let .failure(error):
-                print(error.localizedDescription)
+                print("Task error: \(error.localizedDescription)")
             }
             self.task = nil
         }
@@ -77,24 +77,24 @@ final class ImageListService {
 
 private extension ImageListService {
     
-        func photoRequest(with token: String, page: Int) -> URLRequest {
+    func photoRequest(with token: String, page: Int) -> URLRequest {
         
         var request = URLRequest.makeHTTPRequest(
-            path: K.tokenURLPath,
+            path: K.photosURLPath,
             httpMethod: "GET",
             baseURL: K.defaultBaseAPIURL
         )
         
         request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         
-        let parameters: [String: Any] = [
-            "page": page,
-            "per_page": 10,
-            "order_by": "popular"
+        var components = URLComponents(url: request.url!, resolvingAgainstBaseURL: false)!
+        components.queryItems = [
+            URLQueryItem(name: "page", value: String(page)),
+            URLQueryItem(name: "per_page", value: "10"),
+            URLQueryItem(name: "order_by", value: "popular")
         ]
-        
-        request.httpBody = try? JSONSerialization.data(withJSONObject: parameters)
-        
+        request.url = components.url
+        print("REQUEST: \(request)")
         return request
     }
 }

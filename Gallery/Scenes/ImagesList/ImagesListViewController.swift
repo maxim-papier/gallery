@@ -22,6 +22,8 @@ class ImagesListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        imagesListService.fetchPhotosNextPage()
+        
         tableView.register(ImagesListCell.self, forCellReuseIdentifier: "\(ImagesListCell.self)")
         
         tableView.delegate = self

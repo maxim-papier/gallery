@@ -22,6 +22,6 @@ struct K {
     static let tokenURL = "https://unsplash.com/oauth/tokenS"
     static let tokenURLPath = "/oauth/token"
     
-    let photosURLPath = "/photos"
+    static let photosURLPath = "/photos"
     
 }
