@@ -5,6 +5,7 @@ class ImagesListViewController: UIViewController {
     
     @IBOutlet private var tableView: UITableView!
     
+    
     private let ShowSingleImageSegueID = "ShowSingleImage"
     private let notificationCenter: NotificationCenter = .default
     private let imagesListService: ImageListService = ImageListService()
@@ -89,7 +90,7 @@ extension ImagesListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print("CELL IS OK")
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: ImagesListCell.reuseIdentifier , for: indexPath)
         guard let imagesListCell = cell as? ImagesListCell else {
             fatalError("ImageList cell error")
@@ -98,9 +99,21 @@ extension ImagesListViewController: UITableViewDataSource {
 
         let photo = imagesListService.photos[indexPath.row]
         let url = photo.thumbnailImage
+        print("PHOTO ID: \(photo.id)")
+        print("PHOTO IS IT LIKED?: \(photo.isLiked)")
 
-        imagesListCell.previewImage.kf.indicatorType = .activity        
+        imagesListCell.previewImage.kf.indicatorType = .activity
         imagesListCell.previewImage.kf.setImage(with: url, placeholder: UIImage(named: "stub"))
+        
+        let isLiked = photo.isLiked
+        
+        let likePicture = {
+            isLiked == true ? UIImage(named: "likeButton_isActive") :
+            UIImage(named: "likeButton_isNotActive")
+        }()
+        
+        imagesListCell.likeButton.setImage(likePicture, for: .normal)
+
         
         return imagesListCell
     }
@@ -113,6 +126,56 @@ extension ImagesListViewController: UITableViewDataSource {
 
 
 // MARK: - ImagesListCellDelegate
+
+
+extension ImagesListViewController: imagesListCellDelegate {
+    
+    func imagesListCellDidTapLike(_ cell: ImagesListCell) {
+        
+        
+        guard let indexPath = tableView.indexPath(for: cell),
+           indexPath.row < imagesListService.photos.count else {
+            return
+        }
+        let photo = imagesListService.photos[indexPath.row]
+        let photoID = photo.id
+        let isLiked = photo.isLiked
+        
+        imagesListService.changeLike(for: photoID, with: isLiked) { result in
+        
+            switch result {
+            case.success(let isLiked):
+                let image: String = isLiked ? "likeButton_isActive" : "likeButton_isNotActive"
+            case.failure(let error):
+                print(error.localizedDescription)
+            }
+            
+        }
+
+        /*
+         guard let indexPath = tableView.indexPath(for: cell) else { return }
+         UIBlockingProgressHUD.show()
+         let photo = imagesList.photos[indexPath.row]
+         
+         imagesList.toggleLike(id: photo.id, isLike: !photo.isLiked) { result in
+             switch result {
+             case .success(let liked):
+                 let image: String = liked ? "Like" : "NoLike"
+                 cell.cellLike.setImage(UIImage(named: image), for: .normal)
+             case .failure(let error):
+                 print(error.localizedDescription)
+             }
+         }
+         UIBlockingProgressHUD.dismiss()
+
+         */
+        
+    }
+    
+    
+    
+    
+}
 
 
 

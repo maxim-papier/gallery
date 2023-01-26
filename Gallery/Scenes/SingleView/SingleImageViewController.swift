@@ -9,7 +9,7 @@ class SingleImageViewController: UIViewController {
             rescaleAndCenterImageInScrollView(image: image)
         }
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         applySettings()
