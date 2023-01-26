@@ -18,11 +18,15 @@ class SingleImageViewController: UIViewController {
     
     func displayImage() {
         
-        guard let placeholder = UIImage(named: "stub") else {
+        UIBlockingProgressHUD.show()
+        
+        guard let placeholder = UIImage(named: "stub_big") else {
             preconditionFailure("No image found")
         }
         
         imageView.kf.setImage(with: image, placeholder: placeholder) { result in
+            
+            UIBlockingProgressHUD.dismiss()
             
             switch result {
             case.success(let data):
@@ -36,13 +40,10 @@ class SingleImageViewController: UIViewController {
                     AlertService().showErrorAlert(on: self, error: error) {
                         self.dismiss(animated: true)
                     }
-                    
                 }
-                
             }
-            
         }
-        
+        rescaleAndCenterImageInScrollView(image: placeholder)
     }
     
     

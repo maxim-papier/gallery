@@ -27,11 +27,14 @@ final class ImagesListCell: UITableViewCell {
 
     }
     
-    /*
-     tableView.reloadRows(at: [indexPath], with: .automatic)
-     Предполагается, что метод reloadRows будет вызваться в комплишн-блоке метода kf.setImage.
-    */
+
+    func setLike(_ isLiked: Bool) {
+        
+        let image = isLiked == true ? UIImage(named: "likeButton_isActive") :
+            UIImage(named: "likeButton_isNotActive")
     
+        likeButton.setImage(image, for: .normal)
+    }
 }
 
 

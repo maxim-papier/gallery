@@ -96,21 +96,11 @@ extension ImagesListViewController: UITableViewDataSource {
         
         let photo = imagesListService.photos[indexPath.row]
         let url = photo.thumbnailImage
-        print("PHOTO ID: \(photo.id)")
-        print("PHOTO IS IT LIKED?: \(photo.isLiked)")
         
         imagesListCell.previewImage.kf.indicatorType = .activity
         imagesListCell.previewImage.kf.setImage(with: url, placeholder: UIImage(named: "stub"))
         
-        let isLiked = photo.isLiked
-        
-        let image = {
-            isLiked == true ? UIImage(named: "likeButton_isActive") :
-            UIImage(named: "likeButton_isNotActive")
-        }()
-        
-        imagesListCell.likeButton.setImage(image, for: .normal)
-        
+        imagesListCell.setLike(photo.isLiked)
         imagesListCell.delegate = self
         
         return imagesListCell
