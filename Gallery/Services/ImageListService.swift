@@ -106,7 +106,7 @@ private extension ImageListService {
 
 
 extension ImageListService {
-    func ImageListService(for photoID: String, with isLiked: Bool, _ completion: @escaping (Error?) -> Void) {
+    func changeLike(for photoID: String, with isLiked: Bool, _ completion: @escaping (Error?) -> Void) {
         guard let token = OAuth2TokenStorage().token else {
             completion(TokenStorageError.tokenNotFound)
             return
@@ -127,7 +127,9 @@ extension ImageListService {
                 return
             }
             if let index = self.photos.firstIndex(where: { $0.id == photoID }) {
-                self.photos[index].isLiked.toggle()
+                var newPhoto = self.photos[index]
+                newPhoto.isLiked = isLiked
+                self.photos[index] = newPhoto
             }
             completion(nil)
         }
