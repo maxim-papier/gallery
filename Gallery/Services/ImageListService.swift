@@ -113,7 +113,7 @@ extension ImageListService {
         }
         
         var request = URLRequest.makeHTTPRequest(
-            path: K.photosURLPath + "/\(photoID)/likes",
+            path: K.photosURLPath + "/\(photoID)/like",
             httpMethod: isLiked ? "POST" : "DELETE",
             baseURL: K.defaultBaseAPIURL
         )

@@ -139,24 +139,31 @@ extension ImagesListViewController: imagesListCellDelegate {
               indexPath.row < imagesListService.photos.count else {
             return
         }
+        
+        UIBlockingProgressHUD.show()
+        
         let photo = imagesListService.photos[indexPath.row]
         let photoID = photo.id
         let isLiked = photo.isLiked
         
         imagesListService.changeLike(for: photoID, with: !isLiked) { error in
             
-            if (error != nil) {
-                
+            
+            if let error {
+                UIBlockingProgressHUD.dismiss()
+                assertionFailure("Не лайкнуло \(error)")
+                return
+            } else {
+                UIBlockingProgressHUD.dismiss()
                 let image = !isLiked ? UIImage(named: "likeButton_isActive") : UIImage(named: "likeButton_isNotActive")
                 
                 DispatchQueue.main.async {
                     cell.likeButton.setImage(image, for: .normal)
                 }
                 
-            } else {
-                assertionFailure("Не лайкнуло")
-                return
             }
+            
+
         }
     }
     
