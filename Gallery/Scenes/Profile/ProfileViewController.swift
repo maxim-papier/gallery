@@ -1,5 +1,6 @@
 import UIKit
 import Kingfisher
+import WebKit
 
 final class ProfileViewController: UIViewController {
     
@@ -20,6 +21,23 @@ final class ProfileViewController: UIViewController {
         updateProfile()
         addObserverForNotifications()
         updateAvatar()
+        
+    }
+    
+    
+    @objc func logoutButtonTapped() {
+        
+        var tokenStorage = OAuth2TokenStorage()
+        OAuth2TokenStorage.clean()
+        tokenStorage.token = nil
+        
+        let startViewController = SplashViewController()
+        
+        guard let window = UIApplication.shared.windows.first else {
+            assertionFailure("can't find app")
+            return
+        }
+        window.rootViewController = startViewController
     }
     
 }
@@ -42,7 +60,7 @@ extension ProfileViewController {
         setLogoutButton()
         setConstraints()
         
-                
+        
         func setAvatar() {
             
             let profileImage = UIImage(named: "UserPic")
@@ -57,7 +75,7 @@ extension ProfileViewController {
             
         }
         
-
+        
         func setNameLabel() {
             
             nameLabel.text = "Name"
@@ -70,7 +88,7 @@ extension ProfileViewController {
             
         }
         
-                
+        
         func setLoginNameLabel() {
             
             loginNameLabel.text = "@username"
@@ -83,7 +101,7 @@ extension ProfileViewController {
             
         }
         
-                
+        
         func setDescription() {
             
             descriptionLabel.text = "Biography"
@@ -96,7 +114,7 @@ extension ProfileViewController {
             
         }
         
-                
+        
         func setLogoutButton() {
             
             let image = UIImage(named: "logout_icon")
@@ -107,13 +125,16 @@ extension ProfileViewController {
             logoutButton.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview(logoutButton)
             
+            logoutButton.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
+            
+            
         }
         
         
         // Constraints
         
         func setConstraints() {
-     
+            
             /// Avatar
             avatar.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor).isActive = true
             avatar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32).isActive = true
@@ -192,9 +213,14 @@ extension ProfileViewController {
         
         DispatchQueue.main.async {
             
-            let cache = ImageCache.default
-            cache.clearMemoryCache()
-            cache.clearDiskCache()
+            
+            // For debugging
+            /*
+             let cache = ImageCache.default
+             cache.clearMemoryCache()
+             cache.clearDiskCache()
+             */
+            
             self.avatar.kf.indicatorType = .activity
             self.avatar.kf.setImage(with: url, placeholder: UIImage(named: "placeholder.svg"))
         }
