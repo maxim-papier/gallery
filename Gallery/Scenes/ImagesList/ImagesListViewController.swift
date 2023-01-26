@@ -10,7 +10,7 @@ class ImagesListViewController: UIViewController {
     private let notificationCenter: NotificationCenter = .default
     private let imagesListService: ImageListService = ImageListService()
     private var imagesListObserver: NSObjectProtocol?
-
+    
     
     private lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -18,16 +18,16 @@ class ImagesListViewController: UIViewController {
         formatter.timeStyle = .none
         return formatter
     }()
-
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-                        
+        
         tableView.delegate = self
         tableView.dataSource = self
         
         imagesListService.fetchPhotosNextPage()
-
+        
         
     }
     
@@ -45,22 +45,22 @@ class ImagesListViewController: UIViewController {
     
     // When user tap on the cell
     /*
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        if segue.identifier == ShowSingleImageSegueID {
-            guard
-                let viewController = segue.destination as? SingleImageViewController,
-                let indexPath = sender as? IndexPath else { return }
-            
-            
-            let image = UIImage(named: photoNames[indexPath.row])
-            viewController.image = image
-        } else {
-            super.prepare(for: segue, sender: sender)
-        }
-        
-    }
-    */
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     
+     if segue.identifier == ShowSingleImageSegueID {
+     guard
+     let viewController = segue.destination as? SingleImageViewController,
+     let indexPath = sender as? IndexPath else { return }
+     
+     
+     let image = UIImage(named: photoNames[indexPath.row])
+     viewController.image = image
+     } else {
+     super.prepare(for: segue, sender: sender)
+     }
+     
+     }
+     */
     
 }
 
@@ -73,7 +73,7 @@ extension ImagesListViewController: UITableViewDelegate {
         performSegue(withIdentifier: ShowSingleImageSegueID, sender: indexPath)
         
     }
-        
+    
 }
 
 
@@ -96,24 +96,26 @@ extension ImagesListViewController: UITableViewDataSource {
             fatalError("ImageList cell error")
         }
         
-
+        
+        
         let photo = imagesListService.photos[indexPath.row]
         let url = photo.thumbnailImage
         print("PHOTO ID: \(photo.id)")
         print("PHOTO IS IT LIKED?: \(photo.isLiked)")
-
+        
         imagesListCell.previewImage.kf.indicatorType = .activity
         imagesListCell.previewImage.kf.setImage(with: url, placeholder: UIImage(named: "stub"))
         
         let isLiked = photo.isLiked
         
-        let likePicture = {
+        let image = {
             isLiked == true ? UIImage(named: "likeButton_isActive") :
             UIImage(named: "likeButton_isNotActive")
         }()
         
-        imagesListCell.likeButton.setImage(likePicture, for: .normal)
-
+        imagesListCell.likeButton.setImage(image, for: .normal)
+        
+        imagesListCell.delegate = self
         
         return imagesListCell
     }
@@ -134,48 +136,49 @@ extension ImagesListViewController: imagesListCellDelegate {
         
         
         guard let indexPath = tableView.indexPath(for: cell),
-           indexPath.row < imagesListService.photos.count else {
+              indexPath.row < imagesListService.photos.count else {
             return
         }
         let photo = imagesListService.photos[indexPath.row]
         let photoID = photo.id
         let isLiked = photo.isLiked
         
-        imagesListService.changeLike(for: photoID, with: isLiked) { result in
-        
-            switch result {
-            case.success(let isLiked):
-                let image: String = isLiked ? "likeButton_isActive" : "likeButton_isNotActive"
-            case.failure(let error):
-                print(error.localizedDescription)
-            }
+        imagesListService.changeLike(for: photoID, with: !isLiked) { error in
             
+            if (error != nil) {
+                
+                let image = !isLiked ? UIImage(named: "likeButton_isActive") : UIImage(named: "likeButton_isNotActive")
+                
+                DispatchQueue.main.async {
+                    cell.likeButton.setImage(image, for: .normal)
+                }
+                
+            } else {
+                print(error!.localizedDescription)
+            }
         }
-
-        /*
-         guard let indexPath = tableView.indexPath(for: cell) else { return }
-         UIBlockingProgressHUD.show()
-         let photo = imagesList.photos[indexPath.row]
-         
-         imagesList.toggleLike(id: photo.id, isLike: !photo.isLiked) { result in
-             switch result {
-             case .success(let liked):
-                 let image: String = liked ? "Like" : "NoLike"
-                 cell.cellLike.setImage(UIImage(named: image), for: .normal)
-             case .failure(let error):
-                 print(error.localizedDescription)
-             }
-         }
-         UIBlockingProgressHUD.dismiss()
-
-         */
-        
     }
     
-    
-    
-    
 }
+    /*
+     guard let indexPath = tableView.indexPath(for: cell) else { return }
+     UIBlockingProgressHUD.show()
+     let photo = imagesList.photos[indexPath.row]
+     
+     imagesList.toggleLike(id: photo.id, isLike: !photo.isLiked) { result in
+     switch result {
+     case .success(let liked):
+     let image: String = liked ? "Like" : "NoLike"
+     cell.cellLike.setImage(UIImage(named: image), for: .normal)
+     case .failure(let error):
+     print(error.localizedDescription)
+     }
+     }
+     UIBlockingProgressHUD.dismiss()
+     
+     */
+    
+
 
 
 
@@ -186,20 +189,20 @@ extension ImagesListViewController: imagesListCellDelegate {
 extension ImagesListViewController {
     
     private func observeImagesListChanges() {
-           imagesListObserver = notificationCenter.addObserver(
-               forName: imagesListService.didChangeNotification,
-               object: nil,
-               queue: .main
-           ) { [weak self] _ in
-               self?.updateTableViewAnimated()
-           }
-       }
-
-       private func stopObservingImagesListChanges() {
-           if let imagesListObserver {
-               notificationCenter.removeObserver(imagesListObserver)
-           }
-       }
+        imagesListObserver = notificationCenter.addObserver(
+            forName: imagesListService.didChangeNotification,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            self?.updateTableViewAnimated()
+        }
+    }
+    
+    private func stopObservingImagesListChanges() {
+        if let imagesListObserver {
+            notificationCenter.removeObserver(imagesListObserver)
+        }
+    }
     private func updateTableViewAnimated() {
         
         let oldCount = tableView.numberOfRows(inSection: 0)
