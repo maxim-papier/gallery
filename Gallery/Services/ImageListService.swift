@@ -111,27 +111,35 @@ extension ImageListService {
             completion(TokenStorageError.tokenNotFound)
             return
         }
-
+        
         var request = URLRequest.makeHTTPRequest(
             path: K.photosURLPath + "/\(photoID)/likes",
             httpMethod: isLiked ? "POST" : "DELETE",
             baseURL: K.defaultBaseAPIURL
         )
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-
+        
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            
             guard let response = response as? HTTPURLResponse, (200...299).contains(response.statusCode) else {
                 DispatchQueue.main.async {
                     completion(error ?? NetworkError.urlSessionError)
                 }
                 return
             }
-            if let index = self.photos.firstIndex(where: { $0.id == photoID }) {
-                var newPhoto = self.photos[index]
-                newPhoto.isLiked = isLiked
-                self.photos[index] = newPhoto
+            
+            if let _ = error {
+                DispatchQueue.main.async {
+                    completion(NetworkError.urlSessionError)
+                }
+            } else {
+                if let index = self.photos.firstIndex(where: { $0.id == photoID }) {
+                    var newPhoto = self.photos[index]
+                    newPhoto.isLiked = isLiked
+                    self.photos[index] = newPhoto
+                }
+                completion(nil)
             }
-            completion(nil)
         }
         task.resume()
     }
