@@ -2,20 +2,49 @@ import UIKit
 
 class SingleImageViewController: UIViewController {
     
-    var image: UIImage! {
+    var image: URL! {
         didSet {
             guard isViewLoaded else { return }
-            imageView.image = image
-            rescaleAndCenterImageInScrollView(image: image)
+            displayImage()
         }
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         applySettings()
-        imageView.image = image
-        rescaleAndCenterImageInScrollView(image: image)
+        displayImage()
     }
+    
+    
+    func displayImage() {
+        
+        guard let placeholder = UIImage(named: "stub") else {
+            preconditionFailure("No image found")
+        }
+        
+        imageView.kf.setImage(with: image, placeholder: placeholder) { result in
+            
+            switch result {
+            case.success(let data):
+                DispatchQueue.main.async { [weak self] in
+                    self?.rescaleAndCenterImageInScrollView(image: data.image)
+                }
+            case.failure(let error):
+                DispatchQueue.main.async { [weak self] in
+                    guard let self else { return }
+                    
+                    AlertService().showErrorAlert(on: self, error: error) {
+                        self.dismiss(animated: true)
+                    }
+                    
+                }
+                
+            }
+            
+        }
+        
+    }
+    
     
     @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var imageView: UIImageView!

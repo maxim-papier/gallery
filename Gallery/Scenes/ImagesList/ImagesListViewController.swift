@@ -44,25 +44,24 @@ class ImagesListViewController: UIViewController {
     
     
     // When user tap on the cell
-    /*
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     
-     if segue.identifier == ShowSingleImageSegueID {
-     guard
-     let viewController = segue.destination as? SingleImageViewController,
-     let indexPath = sender as? IndexPath else { return }
-     
-     
-     let image = UIImage(named: photoNames[indexPath.row])
-     viewController.image = image
-     } else {
-     super.prepare(for: segue, sender: sender)
-     }
-     
-     }
-     */
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        
+        guard
+            segue.identifier == ShowSingleImageSegueID,
+            let viewController = segue.destination as? SingleImageViewController,
+            let indexPath = sender as? IndexPath
+        else {
+            assertionFailure("Not expected")
+            return
+        }
+        
+        let url = imagesListService.photos[indexPath.row].largeImage
+        viewController.image = url
+    }
 }
+
 
 // MARK: - UITableViewDelegate
 
@@ -71,9 +70,7 @@ extension ImagesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         performSegue(withIdentifier: ShowSingleImageSegueID, sender: indexPath)
-        
     }
-    
 }
 
 
@@ -95,7 +92,6 @@ extension ImagesListViewController: UITableViewDataSource {
         guard let imagesListCell = cell as? ImagesListCell else {
             fatalError("ImageList cell error")
         }
-        
         
         
         let photo = imagesListService.photos[indexPath.row]
@@ -163,24 +159,7 @@ extension ImagesListViewController: imagesListCellDelegate {
         }
     }
 }
-    /*
-     guard let indexPath = tableView.indexPath(for: cell) else { return }
-     UIBlockingProgressHUD.show()
-     let photo = imagesList.photos[indexPath.row]
-     
-     imagesList.toggleLike(id: photo.id, isLike: !photo.isLiked) { result in
-     switch result {
-     case .success(let liked):
-     let image: String = liked ? "Like" : "NoLike"
-     cell.cellLike.setImage(UIImage(named: image), for: .normal)
-     case .failure(let error):
-     print(error.localizedDescription)
-     }
-     }
-     UIBlockingProgressHUD.dismiss()
-     
-     */
-    
+
 
 
 
