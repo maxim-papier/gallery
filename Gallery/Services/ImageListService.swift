@@ -106,38 +106,30 @@ private extension ImageListService {
 
 
 extension ImageListService {
-    
-    func changeLike(for photoID: String, with isLiked: Bool, _ completion: @escaping (Error?) -> Void) {
-        
-        let token = OAuth2TokenStorage().token
-        
-        guard let token = token else {
-            print(TokenStorageError.tokenNotFound)
+    func ImageListService(for photoID: String, with isLiked: Bool, _ completion: @escaping (Error?) -> Void) {
+        guard let token = OAuth2TokenStorage().token else {
+            completion(TokenStorageError.tokenNotFound)
             return
         }
-        
+
         var request = URLRequest.makeHTTPRequest(
             path: K.photosURLPath + "/\(photoID)/likes",
             httpMethod: isLiked ? "POST" : "DELETE",
             baseURL: K.defaultBaseAPIURL
         )
-        
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        
-        
-        guard var photo = self.photos.first(where: { $0.id == photoID } ) else {
-            completion(FetchPhotoError.photoNotExists)
-            return
-        }
-        
-        photo.isLiked = isLiked
-        
+
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            if error != nil {
+            guard let response = response as? HTTPURLResponse, (200...299).contains(response.statusCode) else {
+                DispatchQueue.main.async {
+                    completion(error ?? NetworkError.urlSessionError)
+                }
                 return
-            } else {
-                completion(NetworkError.urlSessionError)
             }
+            if let index = self.photos.firstIndex(where: { $0.id == photoID }) {
+                self.photos[index].isLiked.toggle()
+            }
+            completion(nil)
         }
         task.resume()
     }

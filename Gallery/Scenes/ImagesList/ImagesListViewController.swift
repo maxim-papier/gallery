@@ -154,7 +154,8 @@ extension ImagesListViewController: imagesListCellDelegate {
                 }
                 
             } else {
-                print(error!.localizedDescription)
+                assertionFailure("Не лайкнуло")
+                return
             }
         }
     }
