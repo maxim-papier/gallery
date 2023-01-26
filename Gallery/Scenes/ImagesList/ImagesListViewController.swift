@@ -100,6 +100,9 @@ extension ImagesListViewController: UITableViewDataSource {
         imagesListCell.previewImage.kf.indicatorType = .activity
         imagesListCell.previewImage.kf.setImage(with: url, placeholder: UIImage(named: "stub"))
         
+        let date = dateFormatter.string(from: photo.createdAt)
+        imagesListCell.dateLabel.text = date
+        
         imagesListCell.setLike(photo.isLiked)
         imagesListCell.delegate = self
         
@@ -137,7 +140,7 @@ extension ImagesListViewController: imagesListCellDelegate {
             UIBlockingProgressHUD.dismiss()
 
             if let error {
-                assertionFailure("Не лайкнуло \(error)")
+                assertionFailure("Like engine is broken :) \(error)")
                 return
             } else {
                 let image = !isLiked ? UIImage(named: "likeButton_isActive") : UIImage(named: "likeButton_isNotActive")

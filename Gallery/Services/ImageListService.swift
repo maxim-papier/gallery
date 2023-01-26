@@ -119,6 +119,7 @@ extension ImageListService {
         )
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         
+    
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             
             guard let response = response as? HTTPURLResponse, (200...299).contains(response.statusCode) else {
