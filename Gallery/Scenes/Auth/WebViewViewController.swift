@@ -1,37 +1,30 @@
 import UIKit
 import WebKit
 
-
-protocol WebViewViewControllerDelegate: AnyObject {
-    
-    // WebViewViewController got the code
-    func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String)
-    
-    // The user taped backward button and canceled registration
-    func webViewViewControllerDidCancel(_ vc: WebViewViewController)
-    
+public protocol WebViewViewControllerProtocol: AnyObject {
+    var presenter: WebViewPresenterProtocol? { get set }
+    func load(with request: URLRequest)
 }
 
 
-final class WebViewViewController: UIViewController {
+final class WebViewViewController: UIViewController & WebViewViewControllerProtocol {
+    
+    
+    var presenter: WebViewPresenterProtocol?
+    var delegate: WebViewViewControllerDelegate?
+    
+    private var estimatedProgressObservation: NSKeyValueObservation?
     
     @IBOutlet private var webView: WKWebView!
     @IBOutlet private var progressView: UIProgressView!
     @IBAction private func didTapBackButton(_ sender: Any) {
         delegate?.webViewViewControllerDidCancel(self)
     }
-    
-    
-    private var estimatedProgressObservation: NSKeyValueObservation?
-    var delegate: WebViewViewControllerDelegate?
-    
+
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         webView.navigationDelegate = self
-        loadWebView(url: composeAuthorizationURL())
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -43,34 +36,12 @@ final class WebViewViewController: UIViewController {
         super.viewWillDisappear(animated)
     }
     
-    
-    // Compose a URL for a further request
-    
-    private func composeAuthorizationURL() -> URL {
         
-        var urlComponents = URLComponents(string: K.authURL)!
-        
-        urlComponents.queryItems = [
-            URLQueryItem(name: "client_id", value: K.accessKey),
-            URLQueryItem(name: "redirect_uri", value: K.redirectUri),
-            URLQueryItem(name: "response_type", value: "code"),
-            URLQueryItem(name: "scope", value: K.accessScope)
-        ]
-        
-        let url = urlComponents.url!
-        return url
-        
-    }
     
-    
-    // Load authorization page
-    
-    private func loadWebView(url: URL) {
-        
-        let request = URLRequest(url: url)
+    func load(with request: URLRequest) {
         webView.load(request)
-        
     }
+
     
     
     // MARK: - PROGRESS BAR
@@ -142,3 +113,12 @@ extension WebViewViewController: WKNavigationDelegate {
 }
 
 
+protocol WebViewViewControllerDelegate: AnyObject {
+    
+    // WebViewViewController got the code
+    func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String)
+    
+    // The user taped backward button and canceled registration
+    func webViewViewControllerDidCancel(_ vc: WebViewViewController)
+    
+}
