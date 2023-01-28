@@ -1,6 +1,10 @@
 import UIKit
 
 
+protocol ImagesListViewControllerProtocol: AnyObject {
+    var presenter: ImagesListPresenterProtocol? { get }
+}
+
 class ImagesListViewController: UIViewController {
     
     
@@ -19,7 +23,7 @@ class ImagesListViewController: UIViewController {
         super.viewDidLoad()
         
         presenter = ImagesListPresenter(service: ImageListService())
-        presenter?.didLoad()
+        presenter?.load()
 
         tableView.delegate = self
         tableView.dataSource = self
@@ -37,42 +41,15 @@ class ImagesListViewController: UIViewController {
     }
 }
 
-// When user tap on the cell
-
-
-extension ImagesListViewController: UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: ShowSingleImageSegueID, sender: indexPath)
-    }
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        guard
-            segue.identifier == ShowSingleImageSegueID,
-            let viewController = segue.destination as? SingleImageViewController,
-            let indexPath = sender as? IndexPath
-        else {
-            assertionFailure("Not expected")
-            return
-        }
-        let image = presenter?.photo(index: indexPath.row)
-        let url = image?.largeImage
-        viewController.image = url
-    }
-    
-}
-
 
 // MARK: - UITableViewDataSource
 
 extension ImagesListViewController: UITableViewDataSource {
     
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let count = presenter?.photosCount ?? 0
         return count
     }
-    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
@@ -89,11 +66,8 @@ extension ImagesListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        
         presenter?.readyForDisplay(index: indexPath.row)
-
     }
-    
 }
 
 
@@ -103,12 +77,7 @@ extension ImagesListViewController: UITableViewDataSource {
 extension ImagesListViewController: imagesListCellDelegate {
     
     func imagesListCellDidTapLike(_ cell: ImagesListCell) {
-        
         guard let indexPath = tableView.indexPath(for: cell) else { return }
-        
-        DispatchQueue.main.async {
-            UIBlockingProgressHUD.show()
-        }
         presenter?.imagesListCellDidTapLike(cell, indexPath: indexPath)
     }
 }
@@ -120,16 +89,9 @@ extension ImagesListViewController {
 
     private func observeImagesListChanges() {
         
-        let imagesListService = ImageListService()
-        
-        imagesListObserver = notificationCenter.addObserver(
-            forName: imagesListService.didChangeNotification,
-            object: nil,
-            queue: .main
-        ) { [weak self] _ in
+        imagesListObserver = notificationCenter.addObserver(forName: presenter?.service.didChangeNotification, object: nil, queue: .main) { [weak self] _ in
             self?.updateTableViewAnimated()
         }
-        
     }
     
     private func stopObservingImagesListChanges() {
@@ -144,5 +106,28 @@ extension ImagesListViewController {
 }
 
 
+// When user tap on the cell
 
+extension ImagesListViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: ShowSingleImageSegueID, sender: indexPath)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        guard
+            segue.identifier == ShowSingleImageSegueID,
+            let viewController = segue.destination as? SingleImageViewController,
+            let indexPath = sender as? IndexPath
+        else {
+            print("Error: Invalid segue — \(segue.destination)or sender")
+            return
+        }
+        let image = presenter?.photo(index: indexPath.row)
+        let url = image?.largeImage
+        viewController.image = url
+    }
+    
+}
 

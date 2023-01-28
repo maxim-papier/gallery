@@ -5,8 +5,16 @@ enum FetchPhotoError: String, Error {
     case photoNotExists
 }
 
+protocol ImageListServiceProtocol {
+    var photos: [Photo] { get }
+    var didChangeNotification: Notification.Name { get }
+    func prepareForDisplay(index: Int)
+    func fetchPhotosNextPage()
+    func changeLike(for photoID: String, with isLiked: Bool, _ completion: @escaping (Error?) -> Void)
+}
 
-final class ImageListService {
+
+final class ImageListService: ImageListServiceProtocol {
     
     private var task: URLSessionTask?
     private let session = URLSession.shared

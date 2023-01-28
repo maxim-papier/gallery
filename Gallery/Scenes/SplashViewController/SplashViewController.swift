@@ -15,7 +15,7 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
     private let authViewVCID = "AuthViewControllerID"
     
     override func viewDidLoad() {
-        //tokenStorage.token = nil // for testing
+        tokenStorage.token = nil // for testing
     }
     
     override func viewDidAppear(_ animated: Bool) {

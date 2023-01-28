@@ -1,55 +1,40 @@
 import UIKit
-import Kingfisher
 
 protocol ImagesListPresenterProtocol: AnyObject {
-    
-    func fetchPhotosNextPage()
+    var photosCount: Int { get }
+    var service: ImageListServiceProtocol { get }
+    func load()
     func readyForDisplay(index: Int)
     func imagesListCellDidTapLike(_ cell: ImagesListCell, indexPath: IndexPath)
-    func didLoad()
     func configCell(for cell: ImagesListCell, with indexPath: IndexPath)
-    
-    var photosCount: Int { get }
     func photo(index: Int) -> Photo
-    
     func updateTableViewAnimated(tableView: UITableView)
-    
 }
+
 
 final class ImagesListPresenter: ImagesListPresenterProtocol {
     
+    var service: ImageListServiceProtocol
+    private var dateFormatter: DateFormatter
     
-    var service: ImageListService
-    
-    init(service: ImageListService) {
+    init(service: ImageListServiceProtocol) {
         self.service = service
+        self.dateFormatter = DateFormatter()
+        self.dateFormatter.dateStyle = .long
+        self.dateFormatter.timeStyle = .none
     }
     
-    var photosCount: Int {
-        let count = service.photos.count
-        print("CUNT \(count)")
-        return count
-    }
+    var photosCount: Int { service.photos.count }
     
-    private lazy var dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .long
-        formatter.timeStyle = .none
-        return formatter
-    }()
     
-    func didLoad() {
+    func load() {
         service.fetchPhotosNextPage()
     }
-    
-    
     
     func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
         
         let photo = service.photos[indexPath.row]
         let photoURL = photo.thumbnailImage
-        
-        print("PHOTO ID: \(photo.id)")
         
         cell.previewImage.kf.indicatorType = .activity
         cell.previewImage.kf.setImage(with: photoURL, placeholder: UIImage(named: "stub"))
@@ -63,13 +48,9 @@ final class ImagesListPresenter: ImagesListPresenterProtocol {
     }
     
     func photo(index: Int) -> Photo {
-        return service.photos[index]
+        service.photos[index]
     }
-    
-    func fetchPhotosNextPage() {
-        service.fetchPhotosNextPage()
-    }
-    
+        
     func readyForDisplay(index: Int) {
         service.prepareForDisplay(index: index)
     }
@@ -83,9 +64,7 @@ final class ImagesListPresenter: ImagesListPresenterProtocol {
             
             let newIndexPath = (oldCount..<newCount).map { IndexPath(row: $0, section: 0)
             }
-            
-            print("performBatchUpdates!!!")
-            
+                        
             tableView.performBatchUpdates {
                 tableView.insertRows(at: newIndexPath, with: .automatic)
             }
@@ -95,28 +74,25 @@ final class ImagesListPresenter: ImagesListPresenterProtocol {
     
     func imagesListCellDidTapLike(_ cell: ImagesListCell, indexPath: IndexPath) {
         
+        UIBlockingProgressHUD.show()
+        
         let photo = service.photos[indexPath.row]
         let photoID = photo.id
         let isLiked = photo.isLiked
-
+        
         service.changeLike(for: photoID, with: !isLiked) { error in
-
-            UIBlockingProgressHUD.dismiss()
-
-            if let error {
-                assertionFailure("Like engine is broken :) \(error)")
-                return
+            
+            DispatchQueue.main.async {
                 
-            } else {
-
-                let image = !isLiked ? UIImage(named: "likeButton_isActive") : UIImage(named: "likeButton_isNotActive")
-
-                DispatchQueue.main.async {
+                UIBlockingProgressHUD.dismiss()
+                
+                if let error = error {
+                    assertionFailure("Like engine is broken :) \(error)")
+                } else {
+                    let image = isLiked ? UIImage(named: "likeButton_isNotActive") : UIImage(named: "likeButton_isActive")
                     cell.likeButton.setImage(image, for: .normal)
                 }
             }
         }
-        
     }
-    
 }
