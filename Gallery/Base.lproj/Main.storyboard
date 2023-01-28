@@ -42,6 +42,9 @@
                                                     <rect key="frame" x="352" y="11" width="42" height="42"/>
                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                     <state key="normal" image="likeButton_isActive"/>
+                                                    <connections>
+                                                        <action selector="likeButton:" destination="HDH-Zq-8SI" eventType="touchUpInside" id="RAG-GK-y5h"/>
+                                                    </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="27 августа 2022" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LtW-KM-ORH" userLabel="Date Label">
                                                     <rect key="frame" x="28" y="132" width="366" height="16"/>
@@ -226,7 +229,7 @@
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.maskBounds" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <segue destination="Glh-Dx-D6M" kind="presentation" identifier="ShowWebView" modalPresentationStyle="fullScreen" id="zoN-ed-3AI"/>
+                                    <segue destination="Glh-Dx-D6M" kind="presentation" identifier="AuthVCToWebVC" modalPresentationStyle="fullScreen" id="zoN-ed-3AI"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -268,7 +271,7 @@
         <!--Web View View Controller-->
         <scene sceneID="eQC-sT-CWm">
             <objects>
-                <viewController id="Glh-Dx-D6M" customClass="WebViewViewController" customModule="Gallery" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WebViewVC" id="Glh-Dx-D6M" customClass="WebViewViewController" customModule="Gallery" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Pxg-a8-6xQ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

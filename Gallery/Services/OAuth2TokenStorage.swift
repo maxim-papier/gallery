@@ -1,5 +1,6 @@
 import Foundation
 import SwiftKeychainWrapper
+import WebKit
 
 
 enum TokenStorageError: String, Error {
@@ -10,7 +11,7 @@ enum TokenStorageError: String, Error {
 
 struct OAuth2TokenStorage {
     
-    private let tokenKey = "BearerToken"    
+    private let tokenKey = "BearerToken"
 
     var token: String? {
         
@@ -38,6 +39,4 @@ struct OAuth2TokenStorage {
             return
         }
     }
-    
-    
 }

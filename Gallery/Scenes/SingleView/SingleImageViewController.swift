@@ -2,20 +2,49 @@ import UIKit
 
 class SingleImageViewController: UIViewController {
     
-    var image: UIImage! {
+    var image: URL! {
         didSet {
             guard isViewLoaded else { return }
-            imageView.image = image
-            rescaleAndCenterImageInScrollView(image: image)
+            displayImage()
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         applySettings()
-        imageView.image = image
-        rescaleAndCenterImageInScrollView(image: image)
+        displayImage()
     }
+    
+    
+    func displayImage() {
+        
+        UIBlockingProgressHUD.show()
+        
+        guard let placeholder = UIImage(named: "stub_big") else {
+            preconditionFailure("No image found")
+        }
+        
+        imageView.kf.setImage(with: image, placeholder: placeholder) { result in
+            
+            DispatchQueue.main.async { [weak self] in
+                guard let self else { return }
+                
+                UIBlockingProgressHUD.dismiss()
+                
+                switch result {
+                case.success(let data):
+                    self.rescaleAndCenterImageInScrollView(image: data.image)
+                    
+                case.failure(let error):
+                    AlertService().showErrorAlert(on: self, error: error) {
+                        self.dismiss(animated: true)
+                    }
+                }
+            }
+        }
+        rescaleAndCenterImageInScrollView(image: placeholder)
+    }
+    
     
     @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var imageView: UIImageView!
@@ -97,8 +126,6 @@ extension SingleImageViewController {
         let x = (newContentSize.width - visibleRectSize.width) / 2
         let y = (newContentSize.height - visibleRectSize.height) / 2
         scrollView.setContentOffset(CGPoint(x: x, y: y), animated: false)
-        
     }
-    
 }
 
