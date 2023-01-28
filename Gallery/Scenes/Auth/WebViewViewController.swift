@@ -4,6 +4,8 @@ import WebKit
 public protocol WebViewViewControllerProtocol: AnyObject {
     var presenter: WebViewPresenterProtocol? { get set }
     func load(with request: URLRequest)
+    func setProgressValue(_ newValue: Float)
+    func setProgressHidden(_ isHidden: Bool)
 }
 
 
@@ -15,6 +17,7 @@ final class WebViewViewController: UIViewController & WebViewViewControllerProto
     
     private var estimatedProgressObservation: NSKeyValueObservation?
     
+    
     @IBOutlet private var webView: WKWebView!
     @IBOutlet private var progressView: UIProgressView!
     @IBAction private func didTapBackButton(_ sender: Any) {
@@ -25,55 +28,61 @@ final class WebViewViewController: UIViewController & WebViewViewControllerProto
     override func viewDidLoad() {
         super.viewDidLoad()
         webView.navigationDelegate = self
+        presenter?.viewDidLoad()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setObserver()
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), context: nil)
     }
     
         
-    
     func load(with request: URLRequest) {
         webView.load(request)
     }
-
-    
-    
-    // MARK: - PROGRESS BAR
-    
-    // Add the observer
-    
-    private func setObserver() {
-        
-        estimatedProgressObservation = webView.observe(
-            \.estimatedProgress,
-             options: [],
-             changeHandler: { [ weak self] _, _ in
-                 guard let self else { return }
-                 self.updateProgress()
-             })
-        
-    }
-    
-    
-    // Progress
-    
-    private func updateProgress() {
-        
-        progressView.progress = Float(webView.estimatedProgress)
-        progressView.isHidden = fabs(webView.estimatedProgress - 1.0) <= 0.0001
-        
-    }
-    
 }
 
 
-// MARK: - EXTENTIONS
+// MARK: - PROGRESS BAR
+
+extension WebViewViewController {
+    
+    func setProgressValue(_ newValue: Float) {
+        progressView.progress = newValue
+    }
+
+    func setProgressHidden(_ isHidden: Bool) {
+        progressView.isHidden = isHidden
+    }
+
+
+    /// Add the observer
+
+    private func setObserver() {
+        webView.addObserver(
+            self,
+            forKeyPath: #keyPath(WKWebView.estimatedProgress),
+            options: .new,
+            context: nil)
+    }
+
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        if keyPath == #keyPath(WKWebView.estimatedProgress) {
+            presenter?.didUpdateProgressValue(webView.estimatedProgress)
+        } else {
+            super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
+        }
+    }
+}
+
+
+//
 
 extension WebViewViewController: WKNavigationDelegate {
  

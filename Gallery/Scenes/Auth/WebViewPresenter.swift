@@ -5,6 +5,7 @@ import Foundation
 public protocol WebViewPresenterProtocol {
     var view: WebViewViewControllerProtocol? { get set }
     func viewDidLoad()
+    func didUpdateProgressValue(_ newValue: Double)
 }
 
 
@@ -16,6 +17,7 @@ final class WebViewPresenter: WebViewPresenterProtocol {
     
     func viewDidLoad() {
         loadWebView(url: composeAuthURL())
+        didUpdateProgressValue(0)
     }
 }
 
@@ -45,5 +47,23 @@ extension WebViewPresenter {
     private func loadWebView(url: URL) {
         let request = URLRequest(url: url)
         view?.load(with: request)
+    }
+}
+
+
+// Progress logic
+
+extension WebViewPresenter {
+    
+    func didUpdateProgressValue(_ newValue: Double) {
+        let newProgressValue = Float(newValue)
+        view?.setProgressValue(newProgressValue)
+        
+        let shouldHideProgress = shouldHideProgress(for: newProgressValue)
+        view?.setProgressHidden(shouldHideProgress)
+    }
+    
+    func shouldHideProgress(for value: Float) -> Bool {
+        abs(value - 1.0) <= 0.0001
     }
 }
