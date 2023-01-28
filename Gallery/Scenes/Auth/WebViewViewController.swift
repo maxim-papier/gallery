@@ -99,26 +99,15 @@ extension WebViewViewController: WKNavigationDelegate {
         } else {
             decisionHandler(.allow)
         }
-        
     }
     
-    
-    // Check if navigation action was right (getting "code")
- 
     private func code(from navigationAction: WKNavigationAction) -> String? {
-        
-        guard
-            let url = navigationAction.request.url,
-            let urlComponents = URLComponents(string: url.absoluteString),
-            urlComponents.path == "/oauth/authorize/native",
-            let items = urlComponents.queryItems,
-            let codeItem = items.first(where: { $0.name == "code" })
-        else { return nil }
-        
-        return codeItem.value
-        
+        if let url = navigationAction.request.url {
+            return presenter?.code(from: url)
+        }
+        return nil
     }
- 
+    
 }
 
 

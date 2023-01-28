@@ -1,19 +1,18 @@
 import Foundation
-
+import WebKit
 
 
 public protocol WebViewPresenterProtocol {
     var view: WebViewViewControllerProtocol? { get set }
     func viewDidLoad()
     func didUpdateProgressValue(_ newValue: Double)
+    func code(from url: URL) -> String?
 }
 
 
 final class WebViewPresenter: WebViewPresenterProtocol {
     
-    
     weak var view: WebViewViewControllerProtocol?
-    
     
     func viewDidLoad() {
         loadWebView(url: composeAuthURL())
@@ -22,10 +21,10 @@ final class WebViewPresenter: WebViewPresenterProtocol {
 }
 
 
+// Compose a URL for a further request
+
 extension WebViewPresenter {
-    
-    // Compose a URL for a further request
-    
+        
     private func composeAuthURL() -> URL {
         
         var urlComponents = URLComponents(string: K.authURL)!
@@ -47,6 +46,25 @@ extension WebViewPresenter {
     private func loadWebView(url: URL) {
         let request = URLRequest(url: url)
         view?.load(with: request)
+    }
+}
+
+
+// Check if navigation action was right (getting "code")
+
+extension WebViewPresenter {
+         
+    func code(from url: URL) -> String? {
+        
+        guard
+            let urlComponents = URLComponents(string: url.absoluteString),
+            urlComponents.path == "/oauth/authorize/native",
+            let items = urlComponents.queryItems,
+            let codeItem = items.first(where: { $0.name == "code" })
+        else { return nil }
+        
+        return codeItem.value
+        
     }
 }
 
