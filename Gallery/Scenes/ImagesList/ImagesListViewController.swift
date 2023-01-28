@@ -154,11 +154,6 @@ extension ImagesListViewController: imagesListCellDelegate {
 }
 
 
-
-
-
-
-
 // MARK: - Observe ImagesList Changes
 
 extension ImagesListViewController {
