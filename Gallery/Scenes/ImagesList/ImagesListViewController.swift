@@ -7,6 +7,7 @@ class ImagesListViewController: UIViewController {
     @IBOutlet private var tableView: UITableView!
     
     var presenter: ImagesListPresenterProtocol?
+
         
     private let ShowSingleImageSegueID = "ImagesListToSingleImage"
     
@@ -16,7 +17,8 @@ class ImagesListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        presenter = ImagesListPresenter(service: ImageListService())
         presenter?.didLoad()
 
         tableView.delegate = self
