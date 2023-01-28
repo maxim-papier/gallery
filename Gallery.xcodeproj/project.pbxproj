@@ -27,13 +27,14 @@
 		8D43F50728FB946900A88BCE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D43F50528FB946900A88BCE /* LaunchScreen.storyboard */; };
 		8D5997082918AF21000D87A6 /* ImagesListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5997072918AF21000D87A6 /* ImagesListCell.swift */; };
 		8D638379297BBF2A0004BEB3 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D638378297BBF2A0004BEB3 /* TabBarController.swift */; };
-		8D6474132984C4700012E6B4 /* CookieCleanerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6474122984C4700012E6B4 /* CookieCleanerService.swift */; };
 		8D6474112984302A0012E6B4 /* WebViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6474102984302A0012E6B4 /* WebViewPresenter.swift */; };
+		8D6474132984C4700012E6B4 /* CookieCleanerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6474122984C4700012E6B4 /* CookieCleanerService.swift */; };
 		8D6474152984F0E60012E6B4 /* AuthConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6474142984F0E60012E6B4 /* AuthConfiguration.swift */; };
 		8D6474172984F2BA0012E6B4 /* AuthHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6474162984F2BA0012E6B4 /* AuthHelper.swift */; };
 		8D64741F2984FBD40012E6B4 /* GalleryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D64741E2984FBD40012E6B4 /* GalleryTests.swift */; };
 		8D6474262984FE780012E6B4 /* WebViewPresenterSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6474252984FE780012E6B4 /* WebViewPresenterSpy.swift */; };
 		8D647428298505790012E6B4 /* WebViewVCSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D647427298505790012E6B4 /* WebViewVCSpy.swift */; };
+		8D64742A298551F40012E6B4 /* ImagesListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D647429298551F40012E6B4 /* ImagesListPresenter.swift */; };
 		8D787DF2296C22FE00026524 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D787DF1296C22FE00026524 /* SplashViewController.swift */; };
 		8D816410296969E500CC74FE /* OAuth2TokenStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D81640F296969E500CC74FE /* OAuth2TokenStorage.swift */; };
 		8D92C74029792A7700DA0072 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D92C73F29792A7700DA0072 /* Alert.swift */; };
@@ -80,14 +81,15 @@
 		8D43F50828FB946900A88BCE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D5997072918AF21000D87A6 /* ImagesListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListCell.swift; sourceTree = "<group>"; };
 		8D638378297BBF2A0004BEB3 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
-		8D6474122984C4700012E6B4 /* CookieCleanerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookieCleanerService.swift; sourceTree = "<group>"; };
 		8D6474102984302A0012E6B4 /* WebViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewPresenter.swift; sourceTree = "<group>"; };
+		8D6474122984C4700012E6B4 /* CookieCleanerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookieCleanerService.swift; sourceTree = "<group>"; };
 		8D6474142984F0E60012E6B4 /* AuthConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthConfiguration.swift; sourceTree = "<group>"; };
 		8D6474162984F2BA0012E6B4 /* AuthHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHelper.swift; sourceTree = "<group>"; };
 		8D64741C2984FBD40012E6B4 /* GalleryTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GalleryTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D64741E2984FBD40012E6B4 /* GalleryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryTests.swift; sourceTree = "<group>"; };
 		8D6474252984FE780012E6B4 /* WebViewPresenterSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewPresenterSpy.swift; sourceTree = "<group>"; };
 		8D647427298505790012E6B4 /* WebViewVCSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewVCSpy.swift; sourceTree = "<group>"; };
+		8D647429298551F40012E6B4 /* ImagesListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListPresenter.swift; sourceTree = "<group>"; };
 		8D787DF1296C22FE00026524 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		8D81640F296969E500CC74FE /* OAuth2TokenStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuth2TokenStorage.swift; sourceTree = "<group>"; };
 		8D92C73F29792A7700DA0072 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
@@ -207,6 +209,7 @@
 			isa = PBXGroup;
 			children = (
 				8D43F4FE28FB946800A88BCE /* ImagesListViewController.swift */,
+				8D647429298551F40012E6B4 /* ImagesListPresenter.swift */,
 				8D5997072918AF21000D87A6 /* ImagesListCell.swift */,
 			);
 			path = ImagesList;
@@ -408,6 +411,7 @@
 				8DED8CCC2976902C000C2945 /* NetworkClient.swift in Sources */,
 				8D6474132984C4700012E6B4 /* CookieCleanerService.swift in Sources */,
 				8DD32370297C29470046C155 /* Colors.swift in Sources */,
+				8D64742A298551F40012E6B4 /* ImagesListPresenter.swift in Sources */,
 				8D638379297BBF2A0004BEB3 /* TabBarController.swift in Sources */,
 				8DED8CCA29754151000C2945 /* UserResult.swift in Sources */,
 				8D43F4FB28FB946800A88BCE /* AppDelegate.swift in Sources */,

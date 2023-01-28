@@ -29,12 +29,11 @@ final class ImageListService {
     }()
 
     func prepareForDisplay(index: Int) {
-        guard index == photos.count - 1, task == nil else {
+        guard index == photos.count - 3, task == nil else {
             return
         }
         fetchPhotosNextPage()
     }
-    
     
     
     // MARK: - Service

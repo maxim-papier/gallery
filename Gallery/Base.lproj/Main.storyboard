@@ -93,7 +93,7 @@
                     <navigationItem key="navigationItem" id="y7m-zI-VWl"/>
                     <connections>
                         <outlet property="tableView" destination="PFI-VJ-pel" id="xJ5-8H-HJw"/>
-                        <segue destination="HLf-dc-9jD" kind="presentation" identifier="ShowSingleImage" modalPresentationStyle="fullScreen" id="Xzi-g7-Izf"/>
+                        <segue destination="HLf-dc-9jD" kind="presentation" identifier="ImagesListToSingleImage" modalPresentationStyle="fullScreen" id="Xzi-g7-Izf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -229,7 +229,7 @@
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.maskBounds" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <segue destination="Glh-Dx-D6M" kind="presentation" identifier="AuthVCToWebVC" modalPresentationStyle="fullScreen" id="zoN-ed-3AI"/>
+                                    <segue destination="Glh-Dx-D6M" kind="presentation" identifier="AuthToWebView" modalPresentationStyle="fullScreen" id="zoN-ed-3AI"/>
                                 </connections>
                             </button>
                         </subviews>
