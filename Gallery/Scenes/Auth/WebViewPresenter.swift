@@ -13,39 +13,17 @@ public protocol WebViewPresenterProtocol {
 final class WebViewPresenter: WebViewPresenterProtocol {
     
     weak var view: WebViewViewControllerProtocol?
+
+    var authHelper: AuthHelperProtocol
+    init(authHelper: AuthHelperProtocol) {
+        self.authHelper = authHelper
+    }
+
     
     func viewDidLoad() {
-        loadWebView(url: composeAuthURL())
-        didUpdateProgressValue(0)
-    }
-}
-
-
-// Compose a URL for a further request
-
-extension WebViewPresenter {
-        
-    private func composeAuthURL() -> URL {
-        
-        var urlComponents = URLComponents(string: K.authURL)!
-        
-        urlComponents.queryItems = [
-            URLQueryItem(name: "client_id", value: K.accessKey),
-            URLQueryItem(name: "redirect_uri", value: K.redirectUri),
-            URLQueryItem(name: "response_type", value: "code"),
-            URLQueryItem(name: "scope", value: K.accessScope)
-        ]
-        
-        let url = urlComponents.url!
-        return url
-    }
-    
-    
-    // Load authorization page
-    
-    private func loadWebView(url: URL) {
-        let request = URLRequest(url: url)
+        let request = authHelper.authRequest()
         view?.load(with: request)
+        didUpdateProgressValue(0)
     }
 }
 
@@ -55,16 +33,7 @@ extension WebViewPresenter {
 extension WebViewPresenter {
          
     func code(from url: URL) -> String? {
-        
-        guard
-            let urlComponents = URLComponents(string: url.absoluteString),
-            urlComponents.path == "/oauth/authorize/native",
-            let items = urlComponents.queryItems,
-            let codeItem = items.first(where: { $0.name == "code" })
-        else { return nil }
-        
-        return codeItem.value
-        
+        authHelper.code(from: url)
     }
 }
 
