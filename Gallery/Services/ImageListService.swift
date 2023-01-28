@@ -11,7 +11,6 @@ final class ImageListService {
     private var task: URLSessionTask?
     private let session = URLSession.shared
     
-    
     private let notificationCenter: NotificationCenter = .default
     let didChangeNotification = Notification.Name(rawValue: "ImagesListServiceDidChange")
     
