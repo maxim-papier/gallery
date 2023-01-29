@@ -19,7 +19,9 @@ final class ProfilePresenter: ProfilePresenterProtocol {
     let profileImageService = ProfileImageService.shared
     
     var logoutHelper: LogoutHelperProtocol
-    init(logoutHelper: LogoutHelperProtocol) {
+    
+    init(view: ProfileViewControllerProtocol?, logoutHelper: LogoutHelperProtocol) {
+        self.view = view
         self.logoutHelper = logoutHelper
     }
     

@@ -4,7 +4,6 @@ final class ProfilePresenterMock: ProfilePresenterProtocol {
     
     var view: ProfileViewControllerProtocol?
     
-    
     func didTapYes() { }
     
     func updateProfile() {

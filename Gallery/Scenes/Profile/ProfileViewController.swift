@@ -15,6 +15,7 @@ final class ProfileViewController: UIViewController  {
     
     var presenter: ProfilePresenterProtocol?
     
+    private var profileImageServiceObserver: NSObjectProtocol?
     private let token = OAuth2TokenStorage().token
     
     let avatar = UIImageView()
@@ -22,17 +23,18 @@ final class ProfileViewController: UIViewController  {
     let loginNameLabel = UILabel()
     let descriptionLabel = UILabel()
     let logoutButton = UIButton()
-    
-    private var profileImageServiceObserver: NSObjectProtocol?
-    
+        
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupUI()
         addObserverForNotifications()
+                
+        presenter = ProfilePresenter(
+            view: self,
+            logoutHelper: LogoutHelper())
         
-        presenter = ProfilePresenter(logoutHelper: LogoutHelper())
         presenter?.view = self
         presenter?.viewDidLoad()
         
@@ -45,10 +47,8 @@ final class ProfileViewController: UIViewController  {
     
     func didTapLogout(show alert: AlertService) {
         
-        alert.showLogoutAlert(on: self) { [self] in
-                        
-            presenter?.didTapYes()
-            
+        alert.showLogoutAlert(on: self) {
+            self.presenter?.didTapYes()
             let startViewController = SplashViewController()
             
             guard let window = UIApplication.shared.windows.first else {
@@ -63,13 +63,63 @@ final class ProfileViewController: UIViewController  {
 }
 
 
+// MARK: - Adding an observer
+
+extension ProfileViewController {
+    
+    private func addObserverForNotifications() {
+        
+        profileImageServiceObserver = NotificationCenter.default.addObserver(
+            forName: ProfileImageService.DidChangeNotification,
+            object: nil,
+            queue: .main,
+            using: { [weak self] _ in
+                guard let self else { return }
+                self.presenter?.updateAvatar()
+            }
+        )
+    }
+}
+
+
+// MARK: - UI updates section
+
+
+extension ProfileViewController: ProfileViewControllerProtocol {
+
+    
+    func updateProfile(profile: Profile) {
+        
+        nameLabel.text = profile.name
+        loginNameLabel.text = profile.loginName
+        descriptionLabel.text = profile.bio
+    }
+    
+    
+    func updateAvatar(with url: URL) {
+
+        DispatchQueue.main.async {
+            
+//             // For debugging needs
+//             let cache = ImageCache.default
+//             cache.clearMemoryCache()
+//             cache.clearDiskCache()
+             
+            self.avatar.kf.indicatorType = .activity
+            self.avatar.kf.setImage(with: url, placeholder: UIImage(named: "placeholder.svg"))
+        }
+    }
+}
+
+
+
 // MARK: - UI
 
 private extension ProfileViewController {
     
     func setupUI() {
         
-        // MARK: - SETUP UI
+        // SETUP UI
         
         view.backgroundColor = UIColor.blackYP
         setAvatar()
@@ -176,55 +226,3 @@ private extension ProfileViewController {
         }
     }
 }
-
-
-// MARK: - Adding an observer
-
-extension ProfileViewController {
-    
-    private func addObserverForNotifications() {
-        
-        profileImageServiceObserver = NotificationCenter.default.addObserver(
-            forName: ProfileImageService.DidChangeNotification,
-            object: nil,
-            queue: .main,
-            using: { [weak self] _ in
-                guard let self else { return }
-                self.presenter?.updateAvatar()
-            }
-        )
-    }
-}
-
-// MARK: - UI updates section
-
-
-extension ProfileViewController: ProfileViewControllerProtocol {
-
-    
-    func updateProfile(profile: Profile) {
-        
-        nameLabel.text = profile.name
-        loginNameLabel.text = profile.loginName
-        descriptionLabel.text = profile.bio
-    }
-    
-    
-    func updateAvatar(with url: URL) {
-
-        DispatchQueue.main.async {
-            
-            // For debugging needs
-            /*
-             let cache = ImageCache.default
-             cache.clearMemoryCache()
-             cache.clearDiskCache()
-             */
-            
-            self.avatar.kf.indicatorType = .activity
-            self.avatar.kf.setImage(with: url, placeholder: UIImage(named: "placeholder.svg"))
-        }
-    }
-}
-
-
