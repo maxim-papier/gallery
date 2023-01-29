@@ -18,6 +18,10 @@ final class ProfilePresenterMock: ProfilePresenterProtocol {
         )
         print("PRO-------\(profile)")
         view?.updateProfile(profile: profile)
+        
+
+        
+        
     }
     
     func didTapLogout() {

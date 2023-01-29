@@ -208,11 +208,11 @@
 				8D97A81629541975000E4001 /* Models */,
 				8D05F24B296FF53D008B19F4 /* Scenes */,
 				8D43F50028FB946800A88BCE /* Main.storyboard */,
+				8D43F50828FB946900A88BCE /* Info.plist */,
 				8D43F50328FB946900A88BCE /* Assets.xcassets */,
 				8DCC22FA29460FC6008E84AA /* Constants.swift */,
 				8D13536B292269430009C517 /* Fonts */,
 				8D43F50528FB946900A88BCE /* LaunchScreen.storyboard */,
-				8D43F50828FB946900A88BCE /* Info.plist */,
 				8D43F4FA28FB946800A88BCE /* AppDelegate.swift */,
 				8D43F4FC28FB946800A88BCE /* SceneDelegate.swift */,
 			);

@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-protocol ProfilePresenterProtocol: AnyObject {
+protocol ProfilePresenterProtocol {
     var view: ProfileViewControllerProtocol? { get set }
     func viewDidLoad()
     func updateProfile()
@@ -9,7 +9,6 @@ protocol ProfilePresenterProtocol: AnyObject {
     func didTapLogout()
     func didTapYes()
 }
-
 
 final class ProfilePresenter: ProfilePresenterProtocol {
     
@@ -31,7 +30,7 @@ final class ProfilePresenter: ProfilePresenterProtocol {
         updateAvatar()
     }
     
-    func updateAvatar() {
+    func updateProfile() {
         
         guard let profile = profileService.profile else {
             print("Error: profile not found.")
@@ -40,7 +39,7 @@ final class ProfilePresenter: ProfilePresenterProtocol {
         view?.updateProfile(profile: profile)
     }
     
-    func updateProfile() {
+    func updateAvatar() {
         
         guard
             let profileImageURL = ProfileImageService.shared.avatarURL,
@@ -64,9 +63,4 @@ final class ProfilePresenter: ProfilePresenterProtocol {
     func didTapYes() {
         logoutHelper.didLogout()
     }
-
-    
-
-
-    
 }

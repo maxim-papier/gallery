@@ -11,7 +11,7 @@ protocol ProfileViewControllerProtocol {
 }
 
 
-final class ProfileViewController: UIViewController  {
+final class ProfileViewController: UIViewController {
     
     var presenter: ProfilePresenterProtocol?
     
@@ -30,12 +30,6 @@ final class ProfileViewController: UIViewController  {
         
         setupUI()
         addObserverForNotifications()
-                
-        presenter = ProfilePresenter(
-            view: self,
-            logoutHelper: LogoutHelper())
-        
-        presenter?.view = self
         presenter?.viewDidLoad()
         
     }
@@ -56,10 +50,8 @@ final class ProfileViewController: UIViewController  {
                 return
             }
             window.rootViewController = startViewController
-            
         }
     }
-    
 }
 
 
@@ -89,12 +81,10 @@ extension ProfileViewController: ProfileViewControllerProtocol {
 
     
     func updateProfile(profile: Profile) {
-        
         nameLabel.text = profile.name
         loginNameLabel.text = profile.loginName
         descriptionLabel.text = profile.bio
     }
-    
     
     func updateAvatar(with url: URL) {
 
