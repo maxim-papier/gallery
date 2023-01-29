@@ -3,9 +3,7 @@ import XCTest
 
 final class WebViewTests: XCTestCase {
     
-    
     // MARK: - AUTH TESTS
-    
     
     // The WebViewVC calls the presenter's viewDidLoad method.
     // Let's check that this is really happening.
@@ -24,8 +22,8 @@ final class WebViewTests: XCTestCase {
         
         /// than
         XCTAssertTrue(presenter.viewDidLoadCalled)
-        
     }
+    
     
     // Check whether the presenter calls the loadRequest() method
     // of the VC after the call.viewDidLoad()
@@ -44,8 +42,8 @@ final class WebViewTests: XCTestCase {
         
         /// then
         XCTAssertTrue(vc.loadRequestCalled)
-        
     }
+    
     
     // Make sure that the presenter's shouldHideProgress method
     // is working properly
@@ -62,8 +60,8 @@ final class WebViewTests: XCTestCase {
         
         /// then
         XCTAssertFalse(shouldHideProgress)
-        
     }
+    
     
     // Make sure that progressBar value == 1 the shouldHideProgress
     // returns true.
@@ -81,6 +79,7 @@ final class WebViewTests: XCTestCase {
         /// then
         XCTAssertTrue(shouldHideProgress)
     }
+    
     
     // Сheck that the URL received from authURL contains all
     // the necessary components.
@@ -101,8 +100,8 @@ final class WebViewTests: XCTestCase {
         XCTAssertTrue(urlString.contains(configuration.redirectURI))
         XCTAssertTrue(urlString.contains("code"))
         XCTAssertTrue(urlString.contains(configuration.accessScope))
-        
     }
+    
     
     // Check that AuthHelper gets correct code from the URL
     
@@ -119,7 +118,5 @@ final class WebViewTests: XCTestCase {
         
         // then
         XCTAssertEqual(code, "test code")
-        
     }
-    
 }

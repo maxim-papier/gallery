@@ -1,11 +1,11 @@
 import UIKit
 
-protocol ImagesListPresenterProtocol: AnyObject {
+protocol ImagesListPresenterProtocol {
     var photosCount: Int { get }
-    var service: ImageListServiceProtocol { get }
+    var service: ImageListService { get }
     func load()
     func readyForDisplay(index: Int)
-    func imagesListCellDidTapLike(_ cell: ImagesListCell, indexPath: IndexPath)
+    func cellDidTapLike(_ cell: ImagesListCell, indexPath: IndexPath)
     func configCell(for cell: ImagesListCell, with indexPath: IndexPath)
     func photo(index: Int) -> Photo
     func updateTableViewAnimated(tableView: UITableView)
@@ -14,10 +14,10 @@ protocol ImagesListPresenterProtocol: AnyObject {
 
 final class ImagesListPresenter: ImagesListPresenterProtocol {
     
-    var service: ImageListServiceProtocol
+    var service: ImageListService
     private var dateFormatter: DateFormatter
     
-    init(service: ImageListServiceProtocol) {
+    init(service: ImageListService) {
         self.service = service
         self.dateFormatter = DateFormatter()
         self.dateFormatter.dateStyle = .long
@@ -25,7 +25,6 @@ final class ImagesListPresenter: ImagesListPresenterProtocol {
     }
     
     var photosCount: Int { service.photos.count }
-    
     
     func load() {
         service.fetchPhotosNextPage()
@@ -44,7 +43,6 @@ final class ImagesListPresenter: ImagesListPresenterProtocol {
         
         let date = dateFormatter.string(from: photo.createdAt)
         cell.dateLabel.text = date
-        
     }
     
     func photo(index: Int) -> Photo {
@@ -72,7 +70,7 @@ final class ImagesListPresenter: ImagesListPresenterProtocol {
     }
     
     
-    func imagesListCellDidTapLike(_ cell: ImagesListCell, indexPath: IndexPath) {
+    func cellDidTapLike(_ cell: ImagesListCell, indexPath: IndexPath) {
         
         UIBlockingProgressHUD.show()
         

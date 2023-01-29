@@ -5,9 +5,7 @@ enum FetchPhotoError: String, Error {
     case photoNotExists
 }
 
-protocol ImageListServiceProtocol {
-    var photos: [Photo] { get }
-    var didChangeNotification: Notification.Name { get }
+public protocol ImageListServiceProtocol {
     func prepareForDisplay(index: Int)
     func fetchPhotosNextPage()
     func changeLike(for photoID: String, with isLiked: Bool, _ completion: @escaping (Error?) -> Void)
@@ -30,10 +28,7 @@ final class ImageListService: ImageListServiceProtocol {
     
     private var lastLoadedPage: Int?
     
-    private let dateFormatter: ISO8601DateFormatter = {
-        let formatter = ISO8601DateFormatter()
-        return formatter
-    }()
+    private let dateFormatter = ISO8601DateFormatter()
 
     func prepareForDisplay(index: Int) {
         guard index == photos.count - 3, task == nil else {

@@ -5,6 +5,7 @@ protocol ImagesListViewControllerProtocol: AnyObject {
     var presenter: ImagesListPresenterProtocol? { get }
 }
 
+
 class ImagesListViewController: UIViewController {
     
     
@@ -78,7 +79,7 @@ extension ImagesListViewController: imagesListCellDelegate {
     
     func imagesListCellDidTapLike(_ cell: ImagesListCell) {
         guard let indexPath = tableView.indexPath(for: cell) else { return }
-        presenter?.imagesListCellDidTapLike(cell, indexPath: indexPath)
+        presenter?.cellDidTapLike(cell, indexPath: indexPath)
     }
 }
 
@@ -89,7 +90,9 @@ extension ImagesListViewController {
 
     private func observeImagesListChanges() {
         
-        imagesListObserver = notificationCenter.addObserver(forName: presenter?.service.didChangeNotification, object: nil, queue: .main) { [weak self] _ in
+        let imageService = ImageListService()
+        
+        imagesListObserver = notificationCenter.addObserver(forName: imageService.didChangeNotification, object: nil, queue: .main) { [weak self] _ in
             self?.updateTableViewAnimated()
         }
     }

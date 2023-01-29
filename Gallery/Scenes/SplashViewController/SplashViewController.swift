@@ -15,7 +15,7 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
     private let authViewVCID = "AuthViewControllerID"
     
     override func viewDidLoad() {
-        tokenStorage.token = nil // for testing
+        // tokenStorage.token = nil // for testing
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -23,7 +23,6 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
         setupUI()
         switchToAuthOrTabBar()
     }
-    
 }
 
 
@@ -47,9 +46,7 @@ extension SplashViewController {
         
         logoImage.widthAnchor.constraint(equalToConstant: 70).isActive = true
         logoImage.heightAnchor.constraint(equalToConstant: 70).isActive = true
-
     }
-    
 }
 
 // MARK: - Checking if this is logged in user:
@@ -71,10 +68,8 @@ extension SplashViewController {
             
             nextVC.modalPresentationStyle = .fullScreen
             self.present(nextVC, animated: true, completion: nil)
-
         
             nextVC.delegate = self
-            
         }
     }
 }
@@ -93,9 +88,7 @@ extension SplashViewController {
         let tabBarController = UIStoryboard(name: "Main", bundle: .main).instantiateViewController(withIdentifier: tabBarVCID)
         
         window.rootViewController = tabBarController
-        
     }
-    
 }
 
 
@@ -126,15 +119,9 @@ extension SplashViewController {
                 case .failure(let error):
                     self.showErrorAlert(for: error)
                 }
-                
-
-                
             }
-            
         }
-        
     }
-        
 }
 
 
@@ -190,9 +177,7 @@ extension SplashViewController {
         alert.showErrorAlert(on: activeVC, error: message) {
             activeVC.dismiss(animated: true)
         }
-        
     }
-    
 }
 
 

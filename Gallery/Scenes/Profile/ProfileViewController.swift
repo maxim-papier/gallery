@@ -3,8 +3,17 @@ import Kingfisher
 import WebKit
 
 
-final class ProfileViewController: UIViewController {
+protocol ProfileViewControllerProtocol {
+    var presenter: ProfilePresenterProtocol? { get set }
+    func updateProfile(profile: Profile)
+    func updateAvatar(with url: URL)
+    func didTapLogout(show alert: AlertService)
+}
+
+
+final class ProfileViewController: UIViewController  {
     
+    var presenter: ProfilePresenterProtocol?
     
     private let token = OAuth2TokenStorage().token
     
@@ -19,31 +28,38 @@ final class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setupUI()
-        updateProfile()
         addObserverForNotifications()
-        updateAvatar()
+        
+        presenter = ProfilePresenter(logoutHelper: LogoutHelper())
+        presenter?.view = self
+        presenter?.viewDidLoad()
+        
     }
     
     
     @objc private func logoutButtonTapped() {
+        presenter?.didTapLogout()
+    }
+    
+    func didTapLogout(show alert: AlertService) {
         
-        let alert = AlertService()
-        alert.showLogoutAlert(on: self) {
-            
-            var tokenStorage = OAuth2TokenStorage()
-            CookieCleanerService.clean()
-            tokenStorage.token = nil
+        alert.showLogoutAlert(on: self) { [self] in
+                        
+            presenter?.didTapYes()
             
             let startViewController = SplashViewController()
             
             guard let window = UIApplication.shared.windows.first else {
-                assertionFailure("can't find app")
+                assertionFailure("Can't find app!")
                 return
             }
             window.rootViewController = startViewController
+            
         }
     }
+    
 }
 
 
@@ -88,7 +104,7 @@ private extension ProfileViewController {
             
             nameLabel.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview(nameLabel)
-    
+            
         }
         
         
@@ -174,7 +190,7 @@ extension ProfileViewController {
             queue: .main,
             using: { [weak self] _ in
                 guard let self else { return }
-                self.updateAvatar()
+                self.presenter?.updateAvatar()
             }
         )
     }
@@ -183,35 +199,22 @@ extension ProfileViewController {
 // MARK: - UI updates section
 
 
-extension ProfileViewController {
+extension ProfileViewController: ProfileViewControllerProtocol {
+
     
-    private func updateProfile() {
+    func updateProfile(profile: Profile) {
         
-        let profileService = ProfileService.shared
-        let profile = profileService.profile
-        
-        nameLabel.text = profile?.name
-        loginNameLabel.text = profile?.loginName
-        descriptionLabel.text = profile?.bio
-        
+        nameLabel.text = profile.name
+        loginNameLabel.text = profile.loginName
+        descriptionLabel.text = profile.bio
     }
     
     
-    func updateAvatar() {
-        
-        guard
-            let profileImageURL = ProfileImageService.shared.avatarURL,
-            let url = URL(string: profileImageURL)
-                
-        else {
-            print("Error creating URL with profileImageURL = \(String(describing: ProfileImageService.shared.avatarURL))")
-            return
-        }
-        
+    func updateAvatar(with url: URL) {
+
         DispatchQueue.main.async {
             
-            
-            // For debugging
+            // For debugging needs
             /*
              let cache = ImageCache.default
              cache.clearMemoryCache()

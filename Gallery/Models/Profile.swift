@@ -1,6 +1,6 @@
 import Foundation
 
-struct Profile {
+struct Profile: Codable {
     let username: String
     let name: String
     let loginName: String
@@ -12,6 +12,4 @@ struct Profile {
         loginName = "@" + result.username
         bio = result.bio
     }
-    
 }
-
