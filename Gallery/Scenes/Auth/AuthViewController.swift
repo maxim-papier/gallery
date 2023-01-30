@@ -8,7 +8,7 @@ protocol AuthViewControllerDelegate: AnyObject {
 final class AuthViewController: UIViewController {
     
     
-    private let segueID = "AuthVCToWebVC"
+    private let segueID = "AuthToWebView"
     weak var delegate: AuthViewControllerDelegate?
 
     

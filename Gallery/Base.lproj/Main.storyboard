@@ -22,15 +22,15 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
                                 <color key="backgroundColor" name="YP Black"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationWidth="0.0" reuseIdentifier="ImagesListCell" rowHeight="156" id="HDH-Zq-8SI" customClass="ImagesListCell" customModule="Gallery" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="50" width="414" height="156"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationWidth="0.0" reuseIdentifier="ImagesListCell" rowHeight="263" id="HDH-Zq-8SI" customClass="ImagesListCell" customModule="Gallery" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="50" width="414" height="263"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" verticalHuggingPriority="251" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="HDH-Zq-8SI" id="oQb-kr-YfS">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="156"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="263"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" image="0" translatesAutoresizingMaskIntoConstraints="NO" id="grT-68-ZmP" userLabel="Preview Image">
-                                                    <rect key="frame" x="20" y="11" width="374" height="145"/>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" image="stub" translatesAutoresizingMaskIntoConstraints="NO" id="grT-68-ZmP" userLabel="Preview Image">
+                                                    <rect key="frame" x="20" y="11" width="374" height="252"/>
                                                     <directionalEdgeInsets key="directionalLayoutMargins" top="8" leading="8" bottom="8" trailing="8"/>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -47,7 +47,7 @@
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="27 августа 2022" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LtW-KM-ORH" userLabel="Date Label">
-                                                    <rect key="frame" x="28" y="132" width="366" height="16"/>
+                                                    <rect key="frame" x="28" y="239" width="366" height="16"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
@@ -93,12 +93,12 @@
                     <navigationItem key="navigationItem" id="y7m-zI-VWl"/>
                     <connections>
                         <outlet property="tableView" destination="PFI-VJ-pel" id="xJ5-8H-HJw"/>
-                        <segue destination="HLf-dc-9jD" kind="presentation" identifier="ShowSingleImage" modalPresentationStyle="fullScreen" id="Xzi-g7-Izf"/>
+                        <segue destination="HLf-dc-9jD" kind="presentation" identifier="ImagesListToSingleImage" modalPresentationStyle="fullScreen" id="Xzi-g7-Izf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="51" y="-34"/>
+            <point key="canvasLocation" x="50.724637681159422" y="-34.151785714285715"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Qk1-bf-O7L">
@@ -229,7 +229,7 @@
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.maskBounds" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <segue destination="Glh-Dx-D6M" kind="presentation" identifier="AuthVCToWebVC" modalPresentationStyle="fullScreen" id="zoN-ed-3AI"/>
+                                    <segue destination="Glh-Dx-D6M" kind="presentation" identifier="AuthToWebView" modalPresentationStyle="fullScreen" id="zoN-ed-3AI"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -330,6 +330,7 @@
         <image name="backward_icon" width="24" height="24"/>
         <image name="likeButton_isActive" width="42" height="42"/>
         <image name="sharing_icon" width="30" height="30"/>
+        <image name="stub" width="168" height="224"/>
         <image name="tab_editorial_active" width="30" height="30"/>
         <namedColor name="YP Black">
             <color red="0.10196078431372549" green="0.10588235294117647" blue="0.13333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

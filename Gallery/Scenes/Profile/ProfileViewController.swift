@@ -3,9 +3,21 @@ import Kingfisher
 import WebKit
 
 
+protocol ProfileViewControllerProtocol: AnyObject {
+    
+    var presenter: ProfilePresenterProtocol? { get set }
+    
+    func updateProfile(profile: Profile)
+    func updateAvatar(with url: URL)
+    func didTapLogout(show alert: AlertService)
+}
+
+
 final class ProfileViewController: UIViewController {
     
+    var presenter: ProfilePresenterProtocol?
     
+    private var profileImageServiceObserver: NSObjectProtocol?
     private let token = OAuth2TokenStorage().token
     
     let avatar = UIImageView()
@@ -14,31 +26,45 @@ final class ProfileViewController: UIViewController {
     let descriptionLabel = UILabel()
     let logoutButton = UIButton()
     
-    private var profileImageServiceObserver: NSObjectProtocol?
-    
+    var avatarGradient = CAGradientLayer()
+    var nameLabelGradient = CAGradientLayer()
+    var loginNameGradient = CAGradientLayer()
+    var descriptionGradient = CAGradientLayer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        updateProfile()
+        
+        avatarGradient = Gradient(width: 70, height: 70).getAnimatedLayer()
+        nameLabelGradient = Gradient(width: 256, height: 20).getAnimatedLayer()
+        loginNameGradient = Gradient(width: 128, height: 20).getAnimatedLayer()
+        descriptionGradient = Gradient(width: 64, height: 20).getAnimatedLayer()
+        
+        avatar.layer.addSublayer(avatarGradient)
+        nameLabel.layer.addSublayer(nameLabelGradient)
+        loginNameLabel.layer.addSublayer(loginNameGradient)
+        descriptionLabel.layer.addSublayer(descriptionGradient)
+        
         addObserverForNotifications()
-        updateAvatar()
+        presenter?.viewDidLoad()
+        
+        
+        
     }
     
     
     @objc private func logoutButtonTapped() {
+        presenter?.didTapLogout()
+    }
+    
+    func didTapLogout(show alert: AlertService) {
         
-        let alert = AlertService()
         alert.showLogoutAlert(on: self) {
-            
-            var tokenStorage = OAuth2TokenStorage()
-            CookieCleanerService.clean()
-            tokenStorage.token = nil
-            
+            self.presenter?.didTapYes()
             let startViewController = SplashViewController()
             
             guard let window = UIApplication.shared.windows.first else {
-                assertionFailure("can't find app")
+                assertionFailure("Can't find app!")
                 return
             }
             window.rootViewController = startViewController
@@ -47,13 +73,77 @@ final class ProfileViewController: UIViewController {
 }
 
 
+// MARK: - Adding an observer
+
+extension ProfileViewController {
+    
+    private func addObserverForNotifications() {
+        
+        profileImageServiceObserver = NotificationCenter.default.addObserver(
+            forName: ProfileImageService.DidChangeNotification,
+            object: nil,
+            queue: .main,
+            using: { [weak self] _ in
+                guard let self else { return }
+                self.presenter?.updateAvatar()
+            }
+        )
+        presenter?.updateAvatar()
+        presenter?.updateProfile()
+
+    }
+}
+
+
+// MARK: - UI updates section
+
+
+extension ProfileViewController: ProfileViewControllerProtocol {
+
+    
+    func updateProfile(profile: Profile) {
+        self.nameLabel.text = profile.name
+        self.loginNameLabel.text = profile.loginName
+        self.descriptionLabel.text = profile.bio
+        
+        self.nameLabelGradient.removeFromSuperlayer()
+        self.loginNameGradient.removeFromSuperlayer()
+        self.descriptionGradient.removeFromSuperlayer()
+    }
+    
+    func updateAvatar(with url: URL) {
+
+        DispatchQueue.main.async {
+            
+//             // For debugging needs
+//             let cache = ImageCache.default
+//             cache.clearMemoryCache()
+//             cache.clearDiskCache()
+             
+            // self.avatar.kf.indicatorType = .activity
+            self.avatar.kf.setImage(with: url, placeholder: UIImage(named: "placeholder.svg")) {
+                result in
+                switch result {
+                case .success:
+                    self.avatarGradient.removeFromSuperlayer()
+                case .failure(let error):
+                    print("\(error) while loading avatar image!")
+                    return
+                }
+            }
+        }
+    }
+}
+
+
+
 // MARK: - UI
 
 private extension ProfileViewController {
     
     func setupUI() {
         
-        // MARK: - SETUP UI
+        // SETUP UI
         
         view.backgroundColor = UIColor.blackYP
         setAvatar()
@@ -88,7 +178,8 @@ private extension ProfileViewController {
             
             nameLabel.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview(nameLabel)
-    
+            
+            
         }
         
         
@@ -160,68 +251,3 @@ private extension ProfileViewController {
         }
     }
 }
-
-
-// MARK: - Adding an observer
-
-extension ProfileViewController {
-    
-    private func addObserverForNotifications() {
-        
-        profileImageServiceObserver = NotificationCenter.default.addObserver(
-            forName: ProfileImageService.DidChangeNotification,
-            object: nil,
-            queue: .main,
-            using: { [weak self] _ in
-                guard let self else { return }
-                self.updateAvatar()
-            }
-        )
-    }
-}
-
-// MARK: - UI updates section
-
-
-extension ProfileViewController {
-    
-    private func updateProfile() {
-        
-        let profileService = ProfileService.shared
-        let profile = profileService.profile
-        
-        nameLabel.text = profile?.name
-        loginNameLabel.text = profile?.loginName
-        descriptionLabel.text = profile?.bio
-        
-    }
-    
-    
-    func updateAvatar() {
-        
-        guard
-            let profileImageURL = ProfileImageService.shared.avatarURL,
-            let url = URL(string: profileImageURL)
-                
-        else {
-            print("Error creating URL with profileImageURL = \(String(describing: ProfileImageService.shared.avatarURL))")
-            return
-        }
-        
-        DispatchQueue.main.async {
-            
-            
-            // For debugging
-            /*
-             let cache = ImageCache.default
-             cache.clearMemoryCache()
-             cache.clearDiskCache()
-             */
-            
-            self.avatar.kf.indicatorType = .activity
-            self.avatar.kf.setImage(with: url, placeholder: UIImage(named: "placeholder.svg"))
-        }
-    }
-}
-
-

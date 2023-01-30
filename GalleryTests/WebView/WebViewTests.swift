@@ -3,9 +3,7 @@ import XCTest
 
 final class WebViewTests: XCTestCase {
     
-    
     // MARK: - AUTH TESTS
-    
     
     // The WebViewVC calls the presenter's viewDidLoad method.
     // Let's check that this is really happening.
@@ -22,10 +20,10 @@ final class WebViewTests: XCTestCase {
         /// when
         let _ = vc?.view
         
-        /// than
+        /// then
         XCTAssertTrue(presenter.viewDidLoadCalled)
-        
     }
+    
     
     // Check whether the presenter calls the loadRequest() method
     // of the VC after the call.viewDidLoad()
@@ -44,8 +42,8 @@ final class WebViewTests: XCTestCase {
         
         /// then
         XCTAssertTrue(vc.loadRequestCalled)
-        
     }
+    
     
     // Make sure that the presenter's shouldHideProgress method
     // is working properly
@@ -62,8 +60,8 @@ final class WebViewTests: XCTestCase {
         
         /// then
         XCTAssertFalse(shouldHideProgress)
-        
     }
+    
     
     // Make sure that progressBar value == 1 the shouldHideProgress
     // returns true.
@@ -82,27 +80,27 @@ final class WebViewTests: XCTestCase {
         XCTAssertTrue(shouldHideProgress)
     }
     
+    
     // Сheck that the URL received from authURL contains all
     // the necessary components.
     
     func testAuthHelperAuthURL() {
         
         /// given
-        let configuration = AuthConfiguration.standard
-        let authHelper = AuthHelper(configuration: configuration)
+        let authHelper = AuthHelper()
         
         /// when
         let url = authHelper.authURL()
         let urlString = url.absoluteString
 
         /// then
-        XCTAssertTrue(urlString.contains(configuration.authURLString))
-        XCTAssertTrue(urlString.contains(configuration.accessKey))
-        XCTAssertTrue(urlString.contains(configuration.redirectURI))
+        XCTAssertTrue(urlString.contains(K.authURL))
+        XCTAssertTrue(urlString.contains(K.accessKey))
+        XCTAssertTrue(urlString.contains(K.redirectUri))
         XCTAssertTrue(urlString.contains("code"))
-        XCTAssertTrue(urlString.contains(configuration.accessScope))
-        
+        XCTAssertTrue(urlString.contains(K.accessScope))
     }
+    
     
     // Check that AuthHelper gets correct code from the URL
     
@@ -119,7 +117,5 @@ final class WebViewTests: XCTestCase {
         
         // then
         XCTAssertEqual(code, "test code")
-        
     }
-    
 }
