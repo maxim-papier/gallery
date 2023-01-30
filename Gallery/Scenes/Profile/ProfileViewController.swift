@@ -23,14 +23,30 @@ final class ProfileViewController: UIViewController {
     let loginNameLabel = UILabel()
     let descriptionLabel = UILabel()
     let logoutButton = UIButton()
-        
+    
+    var avatarGradient = CAGradientLayer()
+    var nameLabelGradient = CAGradientLayer()
+    var loginNameGradient = CAGradientLayer()
+    var descriptionGradient = CAGradientLayer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupUI()
+        
+        avatarGradient = Gradient(width: 70, height: 70).getAnimatedLayer()
+        nameLabelGradient = Gradient(width: 256, height: 20).getAnimatedLayer()
+        loginNameGradient = Gradient(width: 128, height: 20).getAnimatedLayer()
+        descriptionGradient = Gradient(width: 64, height: 20).getAnimatedLayer()
+        
+        avatar.layer.addSublayer(avatarGradient)
+        nameLabel.layer.addSublayer(nameLabelGradient)
+        loginNameLabel.layer.addSublayer(loginNameGradient)
+        descriptionLabel.layer.addSublayer(descriptionGradient)
+        
         addObserverForNotifications()
         presenter?.viewDidLoad()
+        
+        
         
     }
     
@@ -70,6 +86,9 @@ extension ProfileViewController {
                 self.presenter?.updateAvatar()
             }
         )
+        presenter?.updateAvatar()
+        presenter?.updateProfile()
+
     }
 }
 
@@ -81,9 +100,13 @@ extension ProfileViewController: ProfileViewControllerProtocol {
 
     
     func updateProfile(profile: Profile) {
-        nameLabel.text = profile.name
-        loginNameLabel.text = profile.loginName
-        descriptionLabel.text = profile.bio
+        self.nameLabel.text = profile.name
+        self.loginNameLabel.text = profile.loginName
+        self.descriptionLabel.text = profile.bio
+        
+        self.nameLabelGradient.removeFromSuperlayer()
+        self.loginNameGradient.removeFromSuperlayer()
+        self.descriptionGradient.removeFromSuperlayer()
     }
     
     func updateAvatar(with url: URL) {
@@ -91,12 +114,21 @@ extension ProfileViewController: ProfileViewControllerProtocol {
         DispatchQueue.main.async {
             
 //             // For debugging needs
-//             let cache = ImageCache.default
-//             cache.clearMemoryCache()
-//             cache.clearDiskCache()
+             let cache = ImageCache.default
+             cache.clearMemoryCache()
+             cache.clearDiskCache()
              
-            self.avatar.kf.indicatorType = .activity
-            self.avatar.kf.setImage(with: url, placeholder: UIImage(named: "placeholder.svg"))
+            // self.avatar.kf.indicatorType = .activity
+            self.avatar.kf.setImage(with: url, placeholder: UIImage(named: "placeholder.svg")) {
+                result in
+                switch result {
+                case .success:
+                    self.avatarGradient.removeFromSuperlayer()
+                case .failure(let error):
+                    print("\(error) while loading avatar image!")
+                    return
+                }
+            }
         }
     }
 }
@@ -144,6 +176,7 @@ private extension ProfileViewController {
             
             nameLabel.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview(nameLabel)
+            
             
         }
         

@@ -35,8 +35,24 @@ final class ImagesListPresenter: ImagesListPresenterProtocol {
         let photo = service.photos[indexPath.row]
         let photoURL = photo.thumbnailImage
         
-        cell.previewImage.kf.indicatorType = .activity
-        cell.previewImage.kf.setImage(with: photoURL, placeholder: UIImage(named: "stub"))
+        //cell.previewImage.image = UIImage(named: "stub")
+        
+        let thumbnailGradient = Gradient(
+            width: cell.previewImage.bounds.width,
+            height: cell.previewImage.bounds.height,
+            radius: 16
+        ).getAnimatedLayer()
+        
+        cell.previewImage.layer.addSublayer(thumbnailGradient)
+        cell.previewImage.layer.zPosition = 1
+
+    
+        // cell.previewImage.kf.indicatorType = .activity
+        cell.previewImage.kf.setImage(with: photoURL, placeholder: UIImage(named: "stub")) { _ in
+            cell.previewImage.contentMode = .scaleAspectFill
+            thumbnailGradient.removeFromSuperlayer()
+            cell.previewImage.layer.zPosition = 0
+        }
         
         let isLiked = photo.isLiked
         cell.setLike(isLiked)

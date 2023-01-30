@@ -1,7 +1,12 @@
 import Foundation
 
-let AccessKey = "z2VYT0g1D8R5nrW5l4nnxw5bpGhZmcLfVH5Q2QUqSSo"
-let SecretKey = "Trirf9j27yJ5VZS1t8Z1KgeKBDSX4vsFpgAhTi0X2U4"
+
+let AccessKey = "45V_47NAE3YXOsxEma47rlcGz8W9gJQKwM68gqIGcjo"
+let SecretKey = "Iuk0CV-2rMm4MSaTUvQ3UzPfWb1xdCsPHpe9u-FjUTc"
+
+//let AccessKey = "z2VYT0g1D8R5nrW5l4nnxw5bpGhZmcLfVH5Q2QUqSSo"
+//let SecretKey = "Trirf9j27yJ5VZS1t8Z1KgeKBDSX4vsFpgAhTi0X2U4"
+
 let RedirectURI = "urn:ietf:wg:oauth:2.0:oob"
 let AccessScope = "public+read_user+write_likes"
 

@@ -12,10 +12,7 @@ class ImagesListViewController: UIViewController {
     @IBOutlet private var tableView: UITableView!
     
     var presenter: ImagesListPresenterProtocol?
-
-        
     private let ShowSingleImageSegueID = "ImagesListToSingleImage"
-    
     private let notificationCenter: NotificationCenter = .default
     private var imagesListObserver: NSObjectProtocol?
         
@@ -28,7 +25,6 @@ class ImagesListViewController: UIViewController {
 
         tableView.delegate = self
         tableView.dataSource = self
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -124,7 +120,7 @@ extension ImagesListViewController: UITableViewDelegate {
             let viewController = segue.destination as? SingleImageViewController,
             let indexPath = sender as? IndexPath
         else {
-            print("Error: Invalid segue — \(segue.destination)or sender")
+            print("Error: Invalid segue — \(segue.destination) or sender")
             return
         }
         let image = presenter?.photo(index: indexPath.row)
