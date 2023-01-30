@@ -37,7 +37,6 @@
 		8D638379297BBF2A0004BEB3 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D638378297BBF2A0004BEB3 /* TabBarController.swift */; };
 		8D6474112984302A0012E6B4 /* WebViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6474102984302A0012E6B4 /* WebViewPresenter.swift */; };
 		8D6474132984C4700012E6B4 /* CookieCleanerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6474122984C4700012E6B4 /* CookieCleanerService.swift */; };
-		8D6474152984F0E60012E6B4 /* AuthConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6474142984F0E60012E6B4 /* AuthConfiguration.swift */; };
 		8D6474172984F2BA0012E6B4 /* AuthHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6474162984F2BA0012E6B4 /* AuthHelper.swift */; };
 		8D64741F2984FBD40012E6B4 /* WebViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D64741E2984FBD40012E6B4 /* WebViewTests.swift */; };
 		8D6474262984FE780012E6B4 /* WebViewPresenterSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6474252984FE780012E6B4 /* WebViewPresenterSpy.swift */; };
@@ -100,7 +99,6 @@
 		8D638378297BBF2A0004BEB3 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		8D6474102984302A0012E6B4 /* WebViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewPresenter.swift; sourceTree = "<group>"; };
 		8D6474122984C4700012E6B4 /* CookieCleanerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookieCleanerService.swift; sourceTree = "<group>"; };
-		8D6474142984F0E60012E6B4 /* AuthConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthConfiguration.swift; sourceTree = "<group>"; };
 		8D6474162984F2BA0012E6B4 /* AuthHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHelper.swift; sourceTree = "<group>"; };
 		8D64741C2984FBD40012E6B4 /* GalleryTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GalleryTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D64741E2984FBD40012E6B4 /* WebViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewTests.swift; sourceTree = "<group>"; };
@@ -321,7 +319,6 @@
 		8DD3EFC02946B502000FEA48 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
-				8D6474142984F0E60012E6B4 /* AuthConfiguration.swift */,
 				8DD3EFC12946B52F000FEA48 /* AuthViewController.swift */,
 				8DD3EFC32946B624000FEA48 /* WebViewViewController.swift */,
 				8D6474102984302A0012E6B4 /* WebViewPresenter.swift */,
@@ -449,7 +446,6 @@
 				8D43F4FF28FB946800A88BCE /* ImagesListViewController.swift in Sources */,
 				8D5997082918AF21000D87A6 /* ImagesListCell.swift in Sources */,
 				8D3ABBD729882D5F005A605B /* ImagesListPresenterSpy.swift in Sources */,
-				8D6474152984F0E60012E6B4 /* AuthConfiguration.swift in Sources */,
 				8D13536D29226CF80009C517 /* ProfileViewController.swift in Sources */,
 				8DCC22FB29460FC6008E84AA /* Constants.swift in Sources */,
 				8D27B3B12980D65900136E07 /* Photo.swift in Sources */,

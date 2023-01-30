@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-protocol ProfilePresenterProtocol {
+protocol ProfilePresenterProtocol: AnyObject {
     
     var view: ProfileViewControllerProtocol? { get set }
     

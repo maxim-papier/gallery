@@ -17,7 +17,7 @@ protocol ImagesListPresenterProtocol {
 
 final class ImagesListPresenter: ImagesListPresenterProtocol {
     
-    var view: ImagesListViewControllerProtocol?
+    weak var view: ImagesListViewControllerProtocol?
     
     var service: ImageListService
     private var dateFormatter: DateFormatter

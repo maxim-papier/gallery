@@ -1,26 +1,19 @@
 import UIKit
 
 final class Gradient {
-    
     let width, height: CGFloat
-    let radius: CGFloat?
+    let radius: CGFloat
     
-    init(width: CGFloat, height: CGFloat, radius: CGFloat) {
+    init(width: CGFloat, height: CGFloat, radius: CGFloat = 0) {
         self.width = width
         self.height = height
         self.radius = radius
     }
     
-    init(width: CGFloat, height: CGFloat) {
-        self.radius = nil
-        self.width = width
-        self.height = height
-    }
-    
     func getAnimatedLayer() -> CAGradientLayer {
         let gradient = CAGradientLayer()
-
         gradient.frame = CGRect(origin: .zero, size: CGSize(width: width, height: height))
+        gradient.cornerRadius = radius
         gradient.locations = [0, 0.1, 0.3]
         gradient.colors = [
             UIColor(red: 0.682, green: 0.686, blue: 0.706, alpha: 1).cgColor,
@@ -30,12 +23,6 @@ final class Gradient {
         gradient.startPoint = CGPoint(x: 0, y: 0.5)
         gradient.endPoint = CGPoint(x: 1, y: 0.5)
         gradient.masksToBounds = true
-
-        if let radius = radius {
-            gradient.cornerRadius = radius
-        } else {
-            gradient.cornerRadius = height / 2
-        }
 
         let gradientChangeAnimation = CABasicAnimation(keyPath: "locations")
         gradientChangeAnimation.duration = 1.0

@@ -3,7 +3,7 @@ import Kingfisher
 import WebKit
 
 
-protocol ProfileViewControllerProtocol {
+protocol ProfileViewControllerProtocol: AnyObject {
     
     var presenter: ProfilePresenterProtocol? { get set }
     
@@ -15,7 +15,7 @@ protocol ProfileViewControllerProtocol {
 
 final class ProfileViewController: UIViewController {
     
-    var presenter: ProfilePresenterProtocol?
+    weak var presenter: ProfilePresenterProtocol?
     
     private var profileImageServiceObserver: NSObjectProtocol?
     private let token = OAuth2TokenStorage().token
