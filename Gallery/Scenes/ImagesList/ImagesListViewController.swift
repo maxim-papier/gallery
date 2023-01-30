@@ -2,7 +2,7 @@ import UIKit
 
 
 protocol ImagesListViewControllerProtocol: AnyObject {
-    var presenter: ImagesListPresenterProtocol? { get }
+    var presenter: ImagesListPresenterProtocol? { get set }
 }
 
 
@@ -12,6 +12,7 @@ class ImagesListViewController: UIViewController {
     @IBOutlet private var tableView: UITableView!
     
     var presenter: ImagesListPresenterProtocol?
+    
     private let ShowSingleImageSegueID = "ImagesListToSingleImage"
     private let notificationCenter: NotificationCenter = .default
     private var imagesListObserver: NSObjectProtocol?
@@ -19,8 +20,6 @@ class ImagesListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        presenter = ImagesListPresenter(service: ImageListService())
         presenter?.load()
 
         tableView.delegate = self

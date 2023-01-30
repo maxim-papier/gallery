@@ -4,7 +4,9 @@ import WebKit
 
 
 protocol ProfileViewControllerProtocol {
+    
     var presenter: ProfilePresenterProtocol? { get set }
+    
     func updateProfile(profile: Profile)
     func updateAvatar(with url: URL)
     func didTapLogout(show alert: AlertService)
@@ -114,9 +116,9 @@ extension ProfileViewController: ProfileViewControllerProtocol {
         DispatchQueue.main.async {
             
 //             // For debugging needs
-             let cache = ImageCache.default
-             cache.clearMemoryCache()
-             cache.clearDiskCache()
+//             let cache = ImageCache.default
+//             cache.clearMemoryCache()
+//             cache.clearDiskCache()
              
             // self.avatar.kf.indicatorType = .activity
             self.avatar.kf.setImage(with: url, placeholder: UIImage(named: "placeholder.svg")) {

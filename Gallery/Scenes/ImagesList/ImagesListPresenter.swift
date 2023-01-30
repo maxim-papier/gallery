@@ -1,7 +1,10 @@
 import UIKit
 
 protocol ImagesListPresenterProtocol {
+    
+    var view: ImagesListViewControllerProtocol? { get set }
     var photosCount: Int { get }
+    
     var service: ImageListService { get }
     func load()
     func readyForDisplay(index: Int)
@@ -13,6 +16,8 @@ protocol ImagesListPresenterProtocol {
 
 
 final class ImagesListPresenter: ImagesListPresenterProtocol {
+    
+    var view: ImagesListViewControllerProtocol?
     
     var service: ImageListService
     private var dateFormatter: DateFormatter

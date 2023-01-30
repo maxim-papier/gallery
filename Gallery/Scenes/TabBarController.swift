@@ -8,7 +8,16 @@ final class TabBarController: UITabBarController {
         
         let storyboard = UIStoryboard(name: "Main", bundle: .main)
         
-        let imageListViewController = storyboard.instantiateViewController(withIdentifier: "ImagesListViewController")
+        let storyBoardID = "ImagesListViewController"
+        
+        guard let imagesListVC = storyboard.instantiateViewController(withIdentifier: storyBoardID) as? ImagesListViewController else {
+            fatalError("Failed to prepare for \(storyboard)")
+        }
+        
+        let imageListService = ImageListService()
+        
+        imagesListVC.presenter = ImagesListPresenter(service: imageListService)
+        
         
         let profileVC = ProfileViewController()
         
@@ -17,11 +26,9 @@ final class TabBarController: UITabBarController {
             image: UIImage(named: "tab_profile_active"),
             selectedImage: nil
         )
-        
         profileVC.presenter = ProfilePresenter(view: profileVC, logoutHelper: LogoutHelper())
-    
         
-        self.viewControllers = [imageListViewController, profileVC]
+        self.viewControllers = [imagesListVC, profileVC]
         
     }
     
