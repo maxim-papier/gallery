@@ -20,7 +20,7 @@ final class WebViewTests: XCTestCase {
         /// when
         let _ = vc?.view
         
-        /// than
+        /// then
         XCTAssertTrue(presenter.viewDidLoadCalled)
     }
     
