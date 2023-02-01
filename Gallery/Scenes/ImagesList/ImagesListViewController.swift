@@ -1,24 +1,20 @@
 import UIKit
 
-
 protocol ImagesListViewControllerProtocol: AnyObject {
     var presenter: ImagesListPresenterProtocol? { get set }
     func cellDidLike(error: Error?, indexPath: IndexPath, isLiked: Bool)
 }
 
 
-class ImagesListViewController: UIViewController {
-    
+final class ImagesListViewController: UIViewController, ImagesListViewControllerProtocol {
     
     @IBOutlet private var tableView: UITableView!
-    
     var presenter: ImagesListPresenterProtocol?
     
     private let showSingleImageSegueID = "ImagesListToSingleImage"
     private let notificationCenter: NotificationCenter = .default
     private var imagesListObserver: NSObjectProtocol?
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter?.load()
@@ -67,7 +63,6 @@ extension ImagesListViewController: UITableViewDataSource {
         return cell
     }
     
-    
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         presenter?.readyForDisplay(index: indexPath.row)
     }
@@ -104,25 +99,24 @@ extension ImagesListViewController: ImagesListCellDelegate {
     
     func cellDidTapLike(_ cell: ImagesListCell) {
         
-        // UIBlockingProgressHUD.show()
+        UIBlockingProgressHUD.show()
         
         guard let indexPath = tableView.indexPath(for: cell) else { return }
         presenter?.cellDidTapLike(at: indexPath)
     }
     
     func cellDidLike(error: Error?, indexPath: IndexPath, isLiked: Bool) {
-        
-        // UIBlockingProgressHUD.dismiss()
-        
-        guard let cell = tableView.cellForRow(at: indexPath) as? ImagesListCell else {
-            return
-        }
-        guard let error = error else {
+        DispatchQueue.main.async {
+
+            UIBlockingProgressHUD.dismiss()
             
-            cell.setLike(isLiked)
-            return
+            guard let cell = self.tableView.cellForRow(at: indexPath) as? ImagesListCell else { return }
+            guard let error = error else {
+                cell.setLike(isLiked)
+                return
+            }
+            assertionFailure("Like engine is broken :) \(error)")
         }
-        assertionFailure("Like engine is broken :) \(error)")
     }
 }
 
@@ -174,7 +168,6 @@ extension ImagesListViewController: UITableViewDelegate {
         let url = image?.largeImage
         viewController.image = url
     }
-    
 }
 
 

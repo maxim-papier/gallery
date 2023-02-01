@@ -71,7 +71,6 @@ final class ImagesListPresenter: ImagesListPresenterProtocol {
         }
     }
     
-    
     func cellDidTapLike(at indexPath: IndexPath) {
         
         let photo = service.photos[indexPath.row]
@@ -86,7 +85,7 @@ final class ImagesListPresenter: ImagesListPresenterProtocol {
     }
     
     func cellDidLike(error: Error?, indexPath: IndexPath, isLiked: Bool) {
-        view?.cellDidLike(error: error, indexPath: indexPath, isLiked: isLiked)
+        view?.cellDidLike(error: error, indexPath: indexPath, isLiked: !isLiked)
     }
     
 }

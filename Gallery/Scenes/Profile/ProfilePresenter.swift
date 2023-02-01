@@ -25,7 +25,6 @@ final class ProfilePresenter: ProfilePresenterProtocol {
         self.view = view
         self.logoutHelper = logoutHelper
     }
-    
 
     func viewDidLoad() {
         updateProfile()

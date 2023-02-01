@@ -22,6 +22,4 @@ final class AlertService: AlertServiceProtocol {
         alert.addAction(UIAlertAction(title: "Да", style: .default, handler: { _ in handler() }))
         vc.present(alert, animated: true)
     }
-
 }
-

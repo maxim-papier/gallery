@@ -19,5 +19,4 @@ final class ProfileVCSpy: ProfileViewControllerProtocol {
     func didTapLogout(show alert: AlertService) {
         gotAlertToShow = true
     }
-    
 }

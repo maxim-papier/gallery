@@ -26,6 +26,8 @@ final class ImagesListCell: UITableViewCell {
     func setLike(_ isLiked: Bool) {
 
         let image = isLiked ? UIImage(named: "likeButton_isActive") : UIImage(named: "likeButton_isNotActive")
-        likeButton.setImage(image, for: .normal)
+        DispatchQueue.main.async {
+            self.likeButton.setImage(image, for: .normal)
+        }
     }
 }

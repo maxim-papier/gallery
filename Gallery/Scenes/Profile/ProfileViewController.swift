@@ -115,8 +115,6 @@ extension ProfileViewController: ProfileViewControllerProtocol {
         // cache.clearDiskCache()
 
         DispatchQueue.main.async {
-                         
-            // self.avatar.kf.indicatorType = .activity
             self.avatar.kf.setImage(with: url, placeholder: UIImage(named: "placeholder.svg")) {
                 result in
                 switch result {
@@ -130,8 +128,6 @@ extension ProfileViewController: ProfileViewControllerProtocol {
     }
 }
 
-
-
 // MARK: - UI
 
 private extension ProfileViewController {
@@ -139,7 +135,7 @@ private extension ProfileViewController {
     func setupUI() {
         
         // SETUP UI
-        
+
         view.backgroundColor = UIColor.blackYP
         setAvatar()
         setNameLabel()
@@ -149,7 +145,7 @@ private extension ProfileViewController {
         setLogoutButton()
         setConstraints()
         
-        
+
         func setAvatar() {
             
             let profileImage = UIImage(named: "UserPic")
@@ -173,11 +169,9 @@ private extension ProfileViewController {
             
             nameLabel.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview(nameLabel)
-            
-            
         }
         
-        
+    
         func setLoginNameLabel() {
             
             loginNameLabel.text = "@username"
@@ -187,7 +181,6 @@ private extension ProfileViewController {
             
             loginNameLabel.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview(loginNameLabel)
-            
         }
         
         
@@ -200,7 +193,6 @@ private extension ProfileViewController {
             
             descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview(descriptionLabel)
-            
         }
         
         

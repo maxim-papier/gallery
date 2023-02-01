@@ -7,7 +7,6 @@ protocol AuthHelperProtocol {
 
 final class AuthHelper: AuthHelperProtocol {
     
-    
     func authRequest() -> URLRequest {
         let url = authURL()
         return URLRequest(url: url)
@@ -37,5 +36,4 @@ final class AuthHelper: AuthHelperProtocol {
         
         return codeItem.value
     }
-    
 }

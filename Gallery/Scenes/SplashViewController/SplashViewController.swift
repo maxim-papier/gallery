@@ -131,11 +131,9 @@ extension SplashViewController {
         
         profileService.fetchProfile(token) { [weak self] result in
             guard let self else { return }
-            
+        
             DispatchQueue.main.async {
-                
                 switch result {
-                    
                 case.success(_):
                     self.fetchProfileImageURL()
                     self.switchToTabBarController()
@@ -179,5 +177,3 @@ extension SplashViewController {
         }
     }
 }
-
-

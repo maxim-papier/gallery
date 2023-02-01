@@ -69,9 +69,7 @@ extension URLSession {
                 completionOnMainThread(.failure(NetworkError.decodingError))
             }
         }
-        
         task.resume()
         return task
-        
     }
 }

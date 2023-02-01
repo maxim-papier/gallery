@@ -81,7 +81,6 @@ extension OAuth2Service {
         request.httpBody = try? JSONSerialization.data(withJSONObject: parameters)
         return request
     }
-    
 }
 
 
