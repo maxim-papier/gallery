@@ -14,10 +14,10 @@ protocol ProfilePresenterProtocol: AnyObject {
 
 final class ProfilePresenter: ProfilePresenterProtocol {
     
-    var view: ProfileViewControllerProtocol?
+    weak var view: ProfileViewControllerProtocol?
     
-    let profileService = ProfileService.shared
-    let profileImageService = ProfileImageService.shared
+    private let profileService = ProfileService.shared
+    private let profileImageService = ProfileImageService.shared
     
     var logoutHelper: LogoutHelperProtocol
     
@@ -31,6 +31,7 @@ final class ProfilePresenter: ProfilePresenterProtocol {
         updateProfile()
         updateAvatar()
     }
+
     
     func updateProfile() {
         
@@ -56,10 +57,8 @@ final class ProfilePresenter: ProfilePresenterProtocol {
     }
     
     func didTapLogout() {
-        
         let alert = logoutHelper.showLogoutAlert()
         view?.didTapLogout(show: alert)
-        
     }
     
     func didTapYes() {

@@ -2,98 +2,87 @@
 import XCTest
 
 final class WebViewTests: XCTestCase {
-    
-    // MARK: - AUTH TESTS
-    
-    // The WebViewVC calls the presenter's viewDidLoad method.
-    // Let's check that this is really happening.
-    
+        
+    ///The WebViewVC calls the presenter's viewDidLoad method.
+    ///Let's check that this is really happening.
     func testVCCallsViewDidLoad() {
         
-        /// given
+        // given
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "WebViewVC") as? WebViewViewController
         
         let presenter = WebViewPresenterSpy()
         vc?.presenter = presenter
         
-        /// when
+        // when
         let _ = vc?.view
         
-        /// then
+        // then
         XCTAssertTrue(presenter.viewDidLoadCalled)
     }
     
-    
-    // Check whether the presenter calls the loadRequest() method
-    // of the VC after the call.viewDidLoad()
-    
+    /// Check whether the presenter calls the loadRequest() method
+    /// of the VC after the call.viewDidLoad()
     func testPresenterCallsLoadRequest() {
         
-        /// given
+        // given
         let vc = WebViewVCSpy()
         let authHelper = AuthHelper()
         let presenter = WebViewPresenter(authHelper: authHelper)
         vc.presenter = presenter
         presenter.view = vc
         
-        /// when
+        // when
         presenter.viewDidLoad()
         
-        /// then
+        // then
         XCTAssertTrue(vc.loadRequestCalled)
     }
     
-    
-    // Make sure that the presenter's shouldHideProgress method
-    // is working properly
-    
+    /// Make sure that the presenter's shouldHideProgress method
+    /// is working properly
     func testProgressBarVisibleWhenProgressValueLessThenOne() {
         
-        /// given
+        // given
         let authHelper = AuthHelper()
         let presenter = WebViewPresenter(authHelper: authHelper)
         let progress: Float = 0.5
         
-        /// when
+        // when
         let shouldHideProgress: Bool = presenter.shouldHideProgress(for: progress)
         
-        /// then
+        // then
         XCTAssertFalse(shouldHideProgress)
     }
     
-    
-    // Make sure that progressBar value == 1 the shouldHideProgress
-    // returns true.
-    
+    ///Make sure that progressBar value == 1 the shouldHideProgress
+    ///returns true.
     func testProgressBarHiddenWhenProgressValueIsOne() {
         
-        /// given
+        // given
         let authHelper = AuthHelper()
         let presenter = WebViewPresenter(authHelper: authHelper)
         let progress: Float = 1.0
         
-        /// when
+        // when
         let shouldHideProgress: Bool = presenter.shouldHideProgress(for: progress)
         
-        /// then
+        // then
         XCTAssertTrue(shouldHideProgress)
     }
     
-    
-    // Сheck that the URL received from authURL contains all
-    // the necessary components.
-    
+    /// Сheck that the URL received from authURL contains all
+    /// the necessary components.
     func testAuthHelperAuthURL() {
         
-        /// given
+        // given
         let authHelper = AuthHelper()
         
-        /// when
+        // when
         let url = authHelper.authURL()
         let urlString = url.absoluteString
 
-        /// then
+        // then
         XCTAssertTrue(urlString.contains(K.authURL))
         XCTAssertTrue(urlString.contains(K.accessKey))
         XCTAssertTrue(urlString.contains(K.redirectUri))
@@ -101,12 +90,10 @@ final class WebViewTests: XCTestCase {
         XCTAssertTrue(urlString.contains(K.accessScope))
     }
     
-    
-    // Check that AuthHelper gets correct code from the URL
-    
+    /// Check that AuthHelper gets correct code from the URL
     func testCodeFromURL() {
         
-        /// given
+        // given
         var urlComponents = URLComponents(string: "https://unsplash.com/oauth/authorize/native")!
         urlComponents.queryItems = [URLQueryItem(name: "code", value: "test code")]
         let url = urlComponents.url!

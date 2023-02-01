@@ -5,11 +5,9 @@ import UIKit
 
 final class ImagesListTest: XCTestCase {
     
-    
     func testVCCallsLoad() {
         
-        ///given
-        
+        //given
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let storyBoardID = "ImagesListViewController"
 
@@ -18,11 +16,10 @@ final class ImagesListTest: XCTestCase {
         let presenter = ImagesListPresenterSpy()
         vc?.presenter = presenter
         
-        
-        /// when
+        // when
         let _ = vc?.view
         
-        ///then
+        //then
         XCTAssertTrue(presenter.loadDidCalled)
     }
 }

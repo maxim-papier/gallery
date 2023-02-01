@@ -7,7 +7,6 @@ protocol LogoutHelperProtocol {
 
 final class LogoutHelper: LogoutHelperProtocol {
     
-    
     func showLogoutAlert() -> AlertService {
         let alert = AlertService()
         return alert
@@ -19,7 +18,3 @@ final class LogoutHelper: LogoutHelperProtocol {
         tokenStorage.token = nil
     }
 }
-
-
-
-

@@ -42,16 +42,16 @@ final class ImagesListPresenter: ImagesListPresenterProtocol {
         
         //cell.previewImage.image = UIImage(named: "stub")
         
-        let thumbnailGradient = Gradient(
+        let thumbnailGradient = AnimatedGradientCreator().getAnimatedLayer(
             width: cell.previewImage.bounds.width,
             height: cell.previewImage.bounds.height,
             radius: 16
-        ).getAnimatedLayer()
+        )
         
         cell.previewImage.layer.addSublayer(thumbnailGradient)
         cell.previewImage.layer.zPosition = 1
 
-    
+        
         // cell.previewImage.kf.indicatorType = .activity
         cell.previewImage.kf.setImage(with: photoURL, placeholder: UIImage(named: "stub")) { _ in
             cell.previewImage.contentMode = .scaleAspectFill
