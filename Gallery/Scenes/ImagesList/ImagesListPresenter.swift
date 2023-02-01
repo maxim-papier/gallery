@@ -38,29 +38,10 @@ final class ImagesListPresenter: ImagesListPresenterProtocol {
     func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
         
         let photo = service.photos[indexPath.row]
-        let photoURL = photo.thumbnailImage
-                
-        let thumbnailGradient = AnimatedGradientCreator().getAnimatedLayer(
-            width: cell.previewImage.bounds.width,
-            height: cell.previewImage.bounds.height,
-            radius: 16
-        )
-        
-        cell.previewImage.layer.addSublayer(thumbnailGradient)
-        cell.previewImage.layer.zPosition = 1
-        
-        DispatchQueue.main.async {
-            cell.previewImage.kf.setImage(with: photoURL) { _ in
-                cell.previewImage.contentMode = .scaleAspectFill
-                thumbnailGradient.removeFromSuperlayer()
-                cell.previewImage.layer.zPosition = 0
-            }
-        }
-        
         let isLiked = photo.isLiked
-        cell.setLike(isLiked)
-        
         let date = dateFormatter.string(from: photo.createdAt)
+
+        cell.setLike(isLiked)
         cell.dateLabel.text = date
     }
     

@@ -49,20 +49,47 @@ extension ImagesListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: ImagesListCell.reuseIdentifier , for: indexPath)
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: "ImagesListCell",
+            for: indexPath
+        ) as! ImagesListCell
         
-        guard let imagesListCell = cell as? ImagesListCell else {
+        presenter?.configCell(for: cell, with: indexPath)
+        
+        guard let photoURL = presenter?.service.photos[indexPath.row].thumbnailImage else {
             fatalError("ImageList cell error")
         }
         
-        presenter?.configCell(for: imagesListCell, with: indexPath)
-        imagesListCell.delegate = self
-        
-        return imagesListCell
+        configureImage(cell: cell, with: photoURL)
+        return cell
     }
+
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         presenter?.readyForDisplay(index: indexPath.row)
+    }
+}
+
+
+extension ImagesListViewController {
+    
+    func configureImage(cell: ImagesListCell, with photoURL: URL) {
+        let thumbnailGradient = AnimatedGradientCreator().getAnimatedLayer(
+            width: cell.previewImage.bounds.width,
+            height: cell.previewImage.bounds.height,
+            radius: 16
+        )
+        
+        cell.previewImage.layer.addSublayer(thumbnailGradient)
+        cell.previewImage.layer.zPosition = 1
+        
+        DispatchQueue.main.async {
+            cell.previewImage.kf.setImage(with: photoURL) { _ in
+                cell.previewImage.contentMode = .scaleAspectFill
+                thumbnailGradient.removeFromSuperlayer()
+                cell.previewImage.layer.zPosition = 0
+            }
+        }
     }
 }
 
@@ -128,3 +155,7 @@ extension ImagesListViewController: UITableViewDelegate {
     }
     
 }
+
+
+
+
