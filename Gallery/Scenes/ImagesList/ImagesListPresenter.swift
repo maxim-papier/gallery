@@ -8,8 +8,8 @@ protocol ImagesListPresenterProtocol {
     var service: ImageListService { get }
     func load()
     func readyForDisplay(index: Int)
-    func cellDidTapLike(_ cell: ImagesListCell, indexPath: IndexPath)
     func configCell(for cell: ImagesListCell, with indexPath: IndexPath)
+    func cellDidTapLike(at indexPath: IndexPath)
     func photo(index: Int) -> Photo
     func updateTableViewAnimated(tableView: UITableView)
 }
@@ -40,7 +40,7 @@ final class ImagesListPresenter: ImagesListPresenterProtocol {
         let photo = service.photos[indexPath.row]
         let isLiked = photo.isLiked
         let date = dateFormatter.string(from: photo.createdAt)
-
+        
         cell.setLike(isLiked)
         cell.dateLabel.text = date
     }
@@ -72,27 +72,21 @@ final class ImagesListPresenter: ImagesListPresenterProtocol {
     }
     
     
-    func cellDidTapLike(_ cell: ImagesListCell, indexPath: IndexPath) {
-        
-        UIBlockingProgressHUD.show()
+    func cellDidTapLike(at indexPath: IndexPath) {
         
         let photo = service.photos[indexPath.row]
         let photoID = photo.id
         let isLiked = photo.isLiked
         
-        service.changeLike(for: photoID, with: !isLiked) { error in
-            
-            DispatchQueue.main.async {
-                
-                UIBlockingProgressHUD.dismiss()
-                
-                if let error = error {
-                    assertionFailure("Like engine is broken :) \(error)")
-                } else {
-                    let image = isLiked ? UIImage(named: "likeButton_isNotActive") : UIImage(named: "likeButton_isActive")
-                    cell.likeButton.setImage(image, for: .normal)
-                }
+        service.changeLike(
+            for: photoID,
+            with: !isLiked) { [weak self] error in
+                self?.cellDidLike(error: error, indexPath: indexPath, isLiked: isLiked)
             }
-        }
     }
+    
+    func cellDidLike(error: Error?, indexPath: IndexPath, isLiked: Bool) {
+        view?.cellDidLike(error: error, indexPath: indexPath, isLiked: isLiked)
+    }
+    
 }

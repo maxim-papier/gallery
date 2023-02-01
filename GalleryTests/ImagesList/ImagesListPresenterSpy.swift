@@ -15,7 +15,7 @@ final class ImagesListPresenterSpy: ImagesListPresenterProtocol {
     func readyForDisplay(index: Int) { service.prepareForDisplay(index: index) }
     func photo(index: Int) -> Photo { return service.photos[index] }
     
-    func cellDidTapLike(_ cell: ImagesListCell, indexPath: IndexPath) {}
+    func cellDidTapLike(at indexPath: IndexPath) {}
     func updateTableViewAnimated(tableView: UITableView) {}
     func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {}
 }

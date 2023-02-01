@@ -1,23 +1,21 @@
 import UIKit
 import Kingfisher
 
-
-protocol imagesListCellDelegate: AnyObject {
-    func imagesListCellDidTapLike(_ cell: ImagesListCell)
+protocol ImagesListCellDelegate: AnyObject {
+    func cellDidTapLike(_ cell: ImagesListCell)
 }
 
 final class ImagesListCell: UITableViewCell {
     
-    
     static let reuseIdentifier = "ImagesListCell"
-    weak var delegate: imagesListCellDelegate?
+    weak var delegate: ImagesListCellDelegate?
     
     @IBOutlet weak var previewImage: UIImageView!
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var dateLabel: UILabel!
     
     @IBAction func likeButton(_ sender: Any) {
-        delegate?.imagesListCellDidTapLike(self)
+        delegate?.cellDidTapLike(self)
     }
     
     override func prepareForReuse() {
@@ -26,12 +24,8 @@ final class ImagesListCell: UITableViewCell {
     }
     
     func setLike(_ isLiked: Bool) {
-        
-        let image = isLiked ? UIImage(named: "likeButton_isActive") :
-            UIImage(named: "likeButton_isNotActive")
-    
+
+        let image = isLiked ? UIImage(named: "likeButton_isActive") : UIImage(named: "likeButton_isNotActive")
         likeButton.setImage(image, for: .normal)
-    }    
+    }
 }
-
-

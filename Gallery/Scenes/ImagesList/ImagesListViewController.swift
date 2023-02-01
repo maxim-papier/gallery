@@ -3,6 +3,7 @@ import UIKit
 
 protocol ImagesListViewControllerProtocol: AnyObject {
     var presenter: ImagesListPresenterProtocol? { get set }
+    func cellDidLike(error: Error?, indexPath: IndexPath, isLiked: Bool)
 }
 
 
@@ -16,12 +17,12 @@ class ImagesListViewController: UIViewController {
     private let showSingleImageSegueID = "ImagesListToSingleImage"
     private let notificationCenter: NotificationCenter = .default
     private var imagesListObserver: NSObjectProtocol?
-        
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter?.load()
-
+        
         tableView.delegate = self
         tableView.dataSource = self
     }
@@ -59,11 +60,13 @@ extension ImagesListViewController: UITableViewDataSource {
         guard let photoURL = presenter?.service.photos[indexPath.row].thumbnailImage else {
             fatalError("ImageList cell error")
         }
-        
         configureImage(cell: cell, with: photoURL)
+        
+        cell.delegate = self
+        
         return cell
     }
-
+    
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         presenter?.readyForDisplay(index: indexPath.row)
@@ -97,11 +100,29 @@ extension ImagesListViewController {
 // MARK: - ImagesListCellDelegate
 
 
-extension ImagesListViewController: imagesListCellDelegate {
+extension ImagesListViewController: ImagesListCellDelegate {
     
-    func imagesListCellDidTapLike(_ cell: ImagesListCell) {
+    func cellDidTapLike(_ cell: ImagesListCell) {
+        
+        // UIBlockingProgressHUD.show()
+        
         guard let indexPath = tableView.indexPath(for: cell) else { return }
-        presenter?.cellDidTapLike(cell, indexPath: indexPath)
+        presenter?.cellDidTapLike(at: indexPath)
+    }
+    
+    func cellDidLike(error: Error?, indexPath: IndexPath, isLiked: Bool) {
+        
+        // UIBlockingProgressHUD.dismiss()
+        
+        guard let cell = tableView.cellForRow(at: indexPath) as? ImagesListCell else {
+            return
+        }
+        guard let error = error else {
+            
+            cell.setLike(isLiked)
+            return
+        }
+        assertionFailure("Like engine is broken :) \(error)")
     }
 }
 
@@ -109,7 +130,7 @@ extension ImagesListViewController: imagesListCellDelegate {
 // MARK: - Observe ImagesList Changes
 
 extension ImagesListViewController {
-
+    
     private func observeImagesListChanges() {
         
         let imageService = ImageListService()
