@@ -13,7 +13,7 @@ class ImagesListViewController: UIViewController {
     
     var presenter: ImagesListPresenterProtocol?
     
-    private let ShowSingleImageSegueID = "ImagesListToSingleImage"
+    private let showSingleImageSegueID = "ImagesListToSingleImage"
     private let notificationCenter: NotificationCenter = .default
     private var imagesListObserver: NSObjectProtocol?
         
@@ -109,13 +109,13 @@ extension ImagesListViewController {
 extension ImagesListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: ShowSingleImageSegueID, sender: indexPath)
+        performSegue(withIdentifier: showSingleImageSegueID, sender: indexPath)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         guard
-            segue.identifier == ShowSingleImageSegueID,
+            segue.identifier == showSingleImageSegueID,
             let viewController = segue.destination as? SingleImageViewController,
             let indexPath = sender as? IndexPath
         else {
@@ -128,4 +128,3 @@ extension ImagesListViewController: UITableViewDelegate {
     }
     
 }
-

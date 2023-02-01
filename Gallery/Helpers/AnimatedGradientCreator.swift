@@ -1,17 +1,11 @@
 import UIKit
 
-final class Gradient {
-    let width, height: CGFloat
-    let radius: CGFloat
+final class AnimatedGradientCreator {
+        
+    func getAnimatedLayer(width: CGFloat, height: CGFloat, radius: CGFloat = 0) -> CAGradientLayer {
     
-    init(width: CGFloat, height: CGFloat, radius: CGFloat = 0) {
-        self.width = width
-        self.height = height
-        self.radius = radius
-    }
-    
-    func getAnimatedLayer() -> CAGradientLayer {
         let gradient = CAGradientLayer()
+        
         gradient.frame = CGRect(origin: .zero, size: CGSize(width: width, height: height))
         gradient.cornerRadius = radius
         gradient.locations = [0, 0.1, 0.3]
@@ -25,6 +19,7 @@ final class Gradient {
         gradient.masksToBounds = true
 
         let gradientChangeAnimation = CABasicAnimation(keyPath: "locations")
+        
         gradientChangeAnimation.duration = 1.0
         gradientChangeAnimation.autoreverses = true
         gradientChangeAnimation.repeatCount = .infinity

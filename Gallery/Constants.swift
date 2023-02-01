@@ -3,8 +3,8 @@ import Foundation
 struct K {
     
     // First account
-    static let accessKey = "45V_47NAE3YXOsxEma47rlcGz8W9gJQKwM68gqIGcjo"
-    static let secretKey = "Iuk0CV-2rMm4MSaTUvQ3UzPfWb1xdCsPHpe9u-FjUTc"
+        static let accessKey = "45V_47NAE3YXOsxEma47rlcGz8W9gJQKwM68gqIGcjo"
+        static let secretKey = "Iuk0CV-2rMm4MSaTUvQ3UzPfWb1xdCsPHpe9u-FjUTc"
     
     // Second account (if there're no limits)
 //    static let accessKey = "z2VYT0g1D8R5nrW5l4nnxw5bpGhZmcLfVH5Q2QUqSSo"

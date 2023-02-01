@@ -62,7 +62,7 @@ extension WebViewViewController {
     }
 
 
-    /// Add the observer
+    // Add the observer
 
     private func setObserver() {
         webView.addObserver(

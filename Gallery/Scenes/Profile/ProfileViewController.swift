@@ -35,10 +35,10 @@ final class ProfileViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         
-        avatarGradient = Gradient(width: 70, height: 70).getAnimatedLayer()
-        nameLabelGradient = Gradient(width: 256, height: 20).getAnimatedLayer()
-        loginNameGradient = Gradient(width: 128, height: 20).getAnimatedLayer()
-        descriptionGradient = Gradient(width: 64, height: 20).getAnimatedLayer()
+        avatarGradient = AnimatedGradientCreator().getAnimatedLayer(width: 70, height: 70)
+        nameLabelGradient = AnimatedGradientCreator().getAnimatedLayer(width: 256, height: 20)
+        loginNameGradient = AnimatedGradientCreator().getAnimatedLayer(width: 128, height: 20)
+        descriptionGradient = AnimatedGradientCreator().getAnimatedLayer(width: 64, height: 20)
         
         avatar.layer.addSublayer(avatarGradient)
         nameLabel.layer.addSublayer(nameLabelGradient)
@@ -47,11 +47,7 @@ final class ProfileViewController: UIViewController {
         
         addObserverForNotifications()
         presenter?.viewDidLoad()
-        
-        
-        
     }
-    
     
     @objc private func logoutButtonTapped() {
         presenter?.didTapLogout()
@@ -113,13 +109,13 @@ extension ProfileViewController: ProfileViewControllerProtocol {
     
     func updateAvatar(with url: URL) {
 
+        // For debugging needs
+        // let cache = ImageCache.default
+        // cache.clearMemoryCache()
+        // cache.clearDiskCache()
+
         DispatchQueue.main.async {
-            
-//             // For debugging needs
-//             let cache = ImageCache.default
-//             cache.clearMemoryCache()
-//             cache.clearDiskCache()
-             
+                         
             // self.avatar.kf.indicatorType = .activity
             self.avatar.kf.setImage(with: url, placeholder: UIImage(named: "placeholder.svg")) {
                 result in
@@ -128,7 +124,6 @@ extension ProfileViewController: ProfileViewControllerProtocol {
                     self.avatarGradient.removeFromSuperlayer()
                 case .failure(let error):
                     print("\(error) while loading avatar image!")
-                    return
                 }
             }
         }
@@ -227,25 +222,25 @@ private extension ProfileViewController {
         
         func setConstraints() {
             
-            /// Avatar
+            // Avatar
             avatar.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor).isActive = true
             avatar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32).isActive = true
             avatar.widthAnchor.constraint(equalToConstant: 70).isActive = true
             avatar.heightAnchor.constraint(equalToConstant: 70).isActive = true
             
-            /// Name
+            // Name
             nameLabel.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor).isActive = true
             nameLabel.topAnchor.constraint(equalTo: avatar.bottomAnchor, constant: 8).isActive = true
             
-            /// Login
+            // Login
             loginNameLabel.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor).isActive = true
             loginNameLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8).isActive = true
             
-            /// Bio/Description
+            // Bio/Description
             descriptionLabel.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor).isActive = true
             descriptionLabel.topAnchor.constraint(equalTo: loginNameLabel.bottomAnchor, constant: 8).isActive = true
             
-            /// Logout Button
+            // Logout Button
             logoutButton.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor, constant: -8).isActive = true
             logoutButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 55).isActive = true
         }
