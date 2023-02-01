@@ -110,9 +110,9 @@ extension ProfileViewController: ProfileViewControllerProtocol {
     func updateAvatar(with url: URL) {
 
         // For debugging needs
-        let cache = ImageCache.default
-        cache.clearMemoryCache()
-        cache.clearDiskCache()
+        // let cache = ImageCache.default
+        // cache.clearMemoryCache()
+        // cache.clearDiskCache()
 
         DispatchQueue.main.async {
                          

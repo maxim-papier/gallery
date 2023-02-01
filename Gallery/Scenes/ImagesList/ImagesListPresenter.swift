@@ -39,9 +39,7 @@ final class ImagesListPresenter: ImagesListPresenterProtocol {
         
         let photo = service.photos[indexPath.row]
         let photoURL = photo.thumbnailImage
-        
-        //cell.previewImage.image = UIImage(named: "stub")
-        
+                
         let thumbnailGradient = AnimatedGradientCreator().getAnimatedLayer(
             width: cell.previewImage.bounds.width,
             height: cell.previewImage.bounds.height,
@@ -50,13 +48,13 @@ final class ImagesListPresenter: ImagesListPresenterProtocol {
         
         cell.previewImage.layer.addSublayer(thumbnailGradient)
         cell.previewImage.layer.zPosition = 1
-
         
-        // cell.previewImage.kf.indicatorType = .activity
-        cell.previewImage.kf.setImage(with: photoURL, placeholder: UIImage(named: "stub")) { _ in
-            cell.previewImage.contentMode = .scaleAspectFill
-            thumbnailGradient.removeFromSuperlayer()
-            cell.previewImage.layer.zPosition = 0
+        DispatchQueue.main.async {
+            cell.previewImage.kf.setImage(with: photoURL) { _ in
+                cell.previewImage.contentMode = .scaleAspectFill
+                thumbnailGradient.removeFromSuperlayer()
+                cell.previewImage.layer.zPosition = 0
+            }
         }
         
         let isLiked = photo.isLiked
@@ -69,7 +67,7 @@ final class ImagesListPresenter: ImagesListPresenterProtocol {
     func photo(index: Int) -> Photo {
         service.photos[index]
     }
-        
+    
     func readyForDisplay(index: Int) {
         service.prepareForDisplay(index: index)
     }
@@ -80,12 +78,14 @@ final class ImagesListPresenter: ImagesListPresenterProtocol {
         let newCount = service.photos.count
         
         if oldCount < newCount {
-            
-            let newIndexPath = (oldCount..<newCount).map { IndexPath(row: $0, section: 0)
+            let newIndexPath = (oldCount..<newCount).map {
+                IndexPath(row: $0, section: 0)
             }
-                        
             tableView.performBatchUpdates {
-                tableView.insertRows(at: newIndexPath, with: .automatic)
+                tableView.insertRows(
+                    at: newIndexPath,
+                    with: .automatic
+                )
             }
         }
     }
