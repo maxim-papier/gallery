@@ -7,15 +7,6 @@ protocol AuthHelperProtocol {
 
 final class AuthHelper: AuthHelperProtocol {
     
-    let configuration: AuthConfiguration
-
-    init(configuration: AuthConfiguration = .standard) {
-        self.configuration = configuration
-    }
-}
-
-extension AuthHelper {
-    
     func authRequest() -> URLRequest {
         let url = authURL()
         return URLRequest(url: url)
@@ -23,12 +14,12 @@ extension AuthHelper {
     
     func authURL() -> URL {
         
-        var urlComponents = URLComponents(string: configuration.authURLString)!
+        var urlComponents = URLComponents(string: K.authURL)!
         urlComponents.queryItems = [
-            URLQueryItem(name: "client_id", value: configuration.accessKey),
-            URLQueryItem(name: "redirect_uri", value: configuration.redirectURI),
+            URLQueryItem(name: "client_id", value: K.accessKey),
+            URLQueryItem(name: "redirect_uri", value: K.redirectUri),
             URLQueryItem(name: "response_type", value: "code"),
-            URLQueryItem(name: "scope", value: configuration.accessScope)
+            URLQueryItem(name: "scope", value: K.accessScope)
         ]
         let url = urlComponents.url!
         return url

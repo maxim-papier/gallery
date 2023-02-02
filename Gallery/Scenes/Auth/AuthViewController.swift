@@ -6,11 +6,9 @@ protocol AuthViewControllerDelegate: AnyObject {
 
 
 final class AuthViewController: UIViewController {
-    
-    
-    private let segueID = "AuthVCToWebVC"
+        
+    private let segueID = "AuthToWebView"
     weak var delegate: AuthViewControllerDelegate?
-
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
@@ -31,7 +29,6 @@ final class AuthViewController: UIViewController {
 extension AuthViewController: WebViewViewControllerDelegate {
     
     func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String) {
-        
         delegate?.authViewController(self, didAuthenticateWithCode: code)
     }
     

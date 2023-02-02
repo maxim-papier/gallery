@@ -17,7 +17,6 @@ final class WebViewViewController: UIViewController & WebViewViewControllerProto
     
     private var estimatedProgressObservation: NSKeyValueObservation?
     
-    
     @IBOutlet private var webView: WKWebView!
     @IBOutlet private var progressView: UIProgressView!
     @IBAction private func didTapBackButton(_ sender: Any) {
@@ -62,7 +61,7 @@ extension WebViewViewController {
     }
 
 
-    /// Add the observer
+    // Add the observer
 
     private func setObserver() {
         webView.addObserver(
@@ -118,5 +117,4 @@ protocol WebViewViewControllerDelegate: AnyObject {
     
     // The user taped backward button and canceled registration
     func webViewViewControllerDidCancel(_ vc: WebViewViewController)
-    
 }

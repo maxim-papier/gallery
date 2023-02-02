@@ -1,6 +1,12 @@
 import UIKit
 
-final class AlertService {
+public protocol AlertServiceProtocol {
+    func showErrorAlert(on vc: UIViewController, error: Error, handler: @escaping () -> Void)
+    func showLogoutAlert(on vc: UIViewController, handler: @escaping () -> Void)
+}
+
+
+final class AlertService: AlertServiceProtocol {
         
     init() {}
     
@@ -16,6 +22,4 @@ final class AlertService {
         alert.addAction(UIAlertAction(title: "Да", style: .default, handler: { _ in handler() }))
         vc.present(alert, animated: true)
     }
-
 }
-

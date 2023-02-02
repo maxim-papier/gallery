@@ -5,12 +5,17 @@ enum FetchPhotoError: String, Error {
     case photoNotExists
 }
 
+public protocol ImageListServiceProtocol {
+    func prepareForDisplay(index: Int)
+    func fetchPhotosNextPage()
+    func changeLike(for photoID: String, with isLiked: Bool, _ completion: @escaping (Error?) -> Void)
+}
 
-final class ImageListService {
+
+final class ImageListService: ImageListServiceProtocol {
     
     private var task: URLSessionTask?
     private let session = URLSession.shared
-    
     
     private let notificationCenter: NotificationCenter = .default
     let didChangeNotification = Notification.Name(rawValue: "ImagesListServiceDidChange")
@@ -23,18 +28,14 @@ final class ImageListService {
     
     private var lastLoadedPage: Int?
     
-    private let dateFormatter: ISO8601DateFormatter = {
-        let formatter = ISO8601DateFormatter()
-        return formatter
-    }()
+    private let dateFormatter = ISO8601DateFormatter()
 
     func prepareForDisplay(index: Int) {
-        guard index == photos.count - 1, task == nil else {
+        guard index == photos.count - 3, task == nil else {
             return
         }
         fetchPhotosNextPage()
     }
-    
     
     
     // MARK: - Service
